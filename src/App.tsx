@@ -66,8 +66,23 @@ export default function App() {
       }
     };
 
+    const handleOnline = () => {
+      showToast('Back online — all resources connected', 'success');
+    };
+
+    const handleOffline = () => {
+      showToast('Offline mode active — using cached portfolio assets', 'info');
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   const showToast = (message: string, type: 'success' | 'info' = 'success') => {
@@ -102,7 +117,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
       <div id="top" />
 
       {/* Primary Sticky Header */}
@@ -117,7 +132,7 @@ export default function App() {
         onShowToast={showToast}
       />
 
-      <main>
+      <main className="w-full overflow-x-hidden">
         {/* Hero Section */}
         <Hero
           language={language}

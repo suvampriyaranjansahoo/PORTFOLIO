@@ -26,7 +26,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
   const t = TRANSLATIONS[language]?.hero || TRANSLATIONS['en'].hero;
 
   return (
-    <section className="relative pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section className="relative overflow-hidden pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-4 sm:px-6">
       {/* Subtle ambient lighting accent behind Hero */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[280px] bg-amber-500/5 dark:bg-amber-400/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 

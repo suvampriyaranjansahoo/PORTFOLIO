@@ -577,9 +577,9 @@ export const TrafficD3Chart: React.FC = () => {
 
         {/* Hovered Point Info Card Overlay */}
         {hoveredPoint && (
-          <div className="absolute top-16 right-8 p-3 rounded-xl bg-white/95 dark:bg-[#0e1116]/95 backdrop-blur-md border border-[#a66a12]/40 shadow-xl text-xs font-mono pointer-events-none animate-in fade-in duration-100 min-w-[200px]">
+          <div className="absolute top-14 sm:top-16 right-3 sm:right-8 p-3 rounded-xl bg-white/95 dark:bg-[#0e1116]/95 backdrop-blur-md border border-[#a66a12]/40 shadow-xl text-xs font-mono pointer-events-none animate-in fade-in duration-100 min-w-[180px] max-w-[calc(100%-24px)] z-10">
             <div className="text-[11px] font-bold text-[#a66a12] border-b border-[#dfe3e9] dark:border-[#30363d] pb-1 mb-1.5 flex items-center justify-between">
-              <span>{d3.timeFormat('%A, %B %d, %Y')(hoveredPoint.date)}</span>
+              <span>{d3.timeFormat('%a, %b %d, %Y')(hoveredPoint.date)}</span>
               <Calendar className="w-3 h-3 opacity-60" />
             </div>
             <div className="space-y-1">
