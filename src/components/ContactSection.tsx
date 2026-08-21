@@ -74,6 +74,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <span>GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
+
+            <a
+              href={`tel:${PERSONAL_INFO.phone.replace(/[^0-9+]/g, '')}`}
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#f6f7f9] dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#262c36] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white text-sm font-mono transition-colors"
+            >
+              <span>{PERSONAL_INFO.phone}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 

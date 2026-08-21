@@ -9,18 +9,20 @@ import {
   Briefcase,
   GraduationCap
 } from 'lucide-react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import { PERSONAL_INFO, RESUME_ROLES } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { KineticHeadline } from './KineticHeadline';
 import { InteractiveCard } from './InteractiveCard';
+import { ResumeRole } from '../types';
 
 interface HeroProps {
   language?: Language;
   onOpenCommand: () => void;
   onOpenRecruiter: () => void;
+  onSelectResume: (role: ResumeRole) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOpenRecruiter }) => {
+export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOpenRecruiter, onSelectResume }) => {
   const t = TRANSLATIONS[language]?.hero || TRANSLATIONS['en'].hero;
 
   return (
@@ -80,6 +82,12 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               <span>VIEW SELECTED WORK</span>
               <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
+            <button
+              onClick={() => onSelectResume(RESUME_ROLES[1])}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#bfc5cf] dark:border-[#30363d] text-[#101318] dark:text-white text-sm font-semibold hover:border-[#a66a12] hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c] transition-all shadow-2xs hover:-translate-y-0.5 cursor-pointer"
+            >
+              <span>DOWNLOAD RESUME</span>
+            </button>
             <a
               href="#contact"
               id="hero-contact-btn"
@@ -109,6 +117,14 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors group"
             >
               <span>LinkedIn</span>
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+            <span className="text-[#dfe3e9] dark:text-[#30363d]">/</span>
+            <a
+              href={`tel:${PERSONAL_INFO.phone.replace(/[^0-9+]/g, '')}`}
+              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors group"
+            >
+              <span>{PERSONAL_INFO.phone}</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
             <span className="text-[#dfe3e9] dark:text-[#30363d]">/</span>
@@ -157,7 +173,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
                 </div>
                 <div className="flex flex-col items-end gap-1">
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                    8.18 CGPA
+                    8.18 / 10 CGPA
                   </span>
                   <span className="text-[9px] font-mono text-[#5c6472] dark:text-[#8b93a1]">
                     Graduating 2026

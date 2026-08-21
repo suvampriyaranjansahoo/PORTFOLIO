@@ -286,9 +286,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               
               <div className="flex items-center justify-between pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 flex items-center justify-center font-display font-bold text-lg text-[#a66a12]">
-                    SP
-                  </div>
+                  <img src={`${PERSONAL_INFO.links.github}.png`} alt={PERSONAL_INFO.name} className="w-12 h-12 rounded-xl object-cover border border-[#dfe3e9] dark:border-[#262c36] shadow-sm" />
                   <div>
                     <div className="font-semibold text-sm text-[#101318] dark:text-white">
                       {PERSONAL_INFO.name}
@@ -361,7 +359,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#8b93a1]">Location:</span>
-                  <span className="text-[#101318] dark:text-white text-right">Gurgaon / Bhubaneswar / Remote</span>
+                  <span className="text-[#101318] dark:text-white text-right">Gurgaon, Haryana & Bhubaneswar, Odisha, India</span>
                 </div>
               </div>
 

@@ -63,7 +63,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
               <div className="text-[10px] font-mono text-[#8b93a1]">Customer Churn</div>
             </div>
             <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-              <div className="font-mono font-bold text-lg text-[#a66a12]">8.18</div>
+              <div className="font-mono font-bold text-lg text-[#a66a12]">8.18 / 10</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">CGPA (ITER CSE)</div>
             </div>
           </div>

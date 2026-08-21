@@ -149,7 +149,8 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
                   <div className="mt-auto space-y-2">
                     <h3 className="text-lg font-bold text-white font-display">12th · PCM</h3>
-                    <div className="text-sm text-[#8b93a1]">Saraswati Vidya Mandir, Berhampur</div>
+                    <div className="text-sm text-[#8b93a1]">Saraswati Vidya Mandir</div>
+                    <div className="text-xs text-[#5c6472]">Neelakantha Nagar, Berhampur, Odisha</div>
                     <div className="text-xs font-mono text-[#5c6472]">2021</div>
                   </div>
                 </div>
@@ -175,7 +176,8 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
                   <div className="mt-auto space-y-2">
                     <h3 className="text-lg font-bold text-white font-display">10th</h3>
-                    <div className="text-sm text-[#8b93a1]">SSVM, Nayagarh</div>
+                    <div className="text-sm text-[#8b93a1]">Saraswati Shishu Vidya Mandir</div>
+                    <div className="text-xs text-[#5c6472]">Nayagarh, Odisha</div>
                     <div className="text-xs font-mono text-[#5c6472]">2019</div>
                   </div>
                 </div>

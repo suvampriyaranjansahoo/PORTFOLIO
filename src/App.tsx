@@ -146,6 +146,7 @@ export default function App() {
           language={language}
           onOpenCommand={() => setCommandPaletteOpen(true)}
           onOpenRecruiter={() => setRecruiterModalOpen(true)}
+          onSelectResume={handleDownloadResume}
         />
 
         {/* Recruiter Proof Points & Live Animated Metrics */}

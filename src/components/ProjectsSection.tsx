@@ -191,9 +191,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       {project.tagline}
                     </div>
 
-                    {/* Problem Question */}
-                    <div className="mb-4 text-sm font-medium text-slate-800 dark:text-slate-200 border-l-2 border-indigo-500 pl-3 italic">
-                      "{project.question}"
+                    {/* Category Label */}
+                    <div className="mb-2">
+                      <span className="inline-block px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 text-[10px] font-mono uppercase font-bold border border-indigo-500/20">
+                        {categories.find(c => c.id === project.category)?.label || project.category}
+                      </span>
+                    </div>
+
+                    {/* Problem Statement */}
+                    <div className="mb-4">
+                      <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                        PROBLEM STATEMENT
+                      </div>
+                      <div className="text-sm font-medium text-slate-800 dark:text-slate-200 border-l-2 border-indigo-500 pl-3 italic">
+                        "{project.question}"
+                      </div>
                     </div>
 
                     {/* Core Architectural Flow Badge */}
@@ -237,30 +249,51 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </div>
                   </div>
 
-                  {/* Actions Bar with Luminous CTA Button */}
-                  <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-3">
-                    {project.caseStudyId ? (
-                      <button
-                        id={`case-study-btn-${project.id}`}
-                        onClick={() => onOpenCaseStudy(project.caseStudyId!)}
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-md shadow-indigo-500/20 group/btn cursor-pointer"
-                        title={readingTime ? `Read deep-dive (${readingTime.detailText})` : 'Read case study'}
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>{t?.caseStudyBtn || "View Case Study"}</span>
-                        {readingTime && (
-                          <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-white/20 text-white">
-                            {readingTime.displayText}
-                          </span>
-                        )}
-                        <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                      </button>
-                    ) : (
-                      <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                        <Check className="w-3 h-3 text-emerald-500" />
-                        <span>Production Ready</span>
-                      </span>
-                    )}
+                    {/* Actions Bar with Luminous CTA Button */}
+                  <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      {project.caseStudyId ? (
+                        <button
+                          id={`case-study-btn-${project.id}`}
+                          onClick={() => onOpenCaseStudy(project.caseStudyId!)}
+                          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-md shadow-indigo-500/20 group/btn cursor-pointer"
+                          title={readingTime ? `Read deep-dive (${readingTime.detailText})` : 'Read case study'}
+                        >
+                          <BookOpen className="w-3.5 h-3.5" />
+                          <span>{t?.caseStudyBtn || "View Case Study"}</span>
+                          {readingTime && (
+                            <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-white/20 text-white">
+                              {readingTime.displayText}
+                            </span>
+                          )}
+                          <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                        </button>
+                      ) : (
+                        <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                          <Check className="w-3 h-3 text-emerald-500" />
+                          <span>Production Ready</span>
+                        </span>
+                      )}
+
+                      {project.id === 'prioritype' && (
+                        <a
+                          href="#demos"
+                          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 transition-all"
+                        >
+                          <span>Try the RICE Prioritization Tool</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {project.id === 'financial-analytics' && (
+                        <a
+                          href="#demos"
+                          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all"
+                        >
+                          <span>Open SQL Playground</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
 
                     <a
                       href={project.githubUrl}
