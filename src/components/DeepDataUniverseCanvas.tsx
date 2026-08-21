@@ -831,7 +831,7 @@ export const DeepDataUniverseCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[1] opacity-95 dark:opacity-100 transition-opacity"
+      className="fixed inset-0 pointer-events-none z-[1] opacity-40 dark:opacity-100 transition-opacity duration-300"
     />
   );
 };

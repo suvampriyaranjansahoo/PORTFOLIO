@@ -232,17 +232,36 @@ input[type="range"] {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  will-change: backdrop-filter, transform;
-  border: 1px solid rgba(99, 102, 241, 0.16);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(203, 213, 225, 0.85);
   border-radius: calc(1.5rem - 1.5px);
   box-shadow: 
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.04),
-    0 14px 34px -4px rgba(15, 23, 42, 0.08),
-    0 2px 6px 0 rgba(15, 23, 42, 0.03);
+    inset 0 1px 1px 0 rgba(255, 255, 255, 1),
+    0 10px 25px -4px rgba(15, 23, 42, 0.06),
+    0 2px 6px 0 rgba(15, 23, 42, 0.02);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ensure text inside cards stays sharp and does not rasterize to blurry textures */
+.glass-morphism-card p,
+.glass-morphism-card span,
+.glass-morphism-card h1,
+.glass-morphism-card h2,
+.glass-morphism-card h3,
+.glass-morphism-card h4,
+.glass-morphism-card a,
+.glass-morphism-card button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Dynamic 'Light Field' Reflection Pseudo-Element */
@@ -257,10 +276,10 @@ input[type="range"] {
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   background: radial-gradient(
     420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(99, 102, 241, 0.16) 0%,
-    rgba(168, 85, 247, 0.09) 35%,
-    rgba(56, 189, 248, 0.04) 65%,
-    transparent 80%
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.25) 40%,
+    rgba(99, 102, 241, 0.05) 70%,
+    transparent 85%
   );
   transform: translateZ(1px);
 }
@@ -271,10 +290,9 @@ input[type="range"] {
 }
 
 .dark .glass-morphism-card {
-  background: rgba(10, 15, 30, 0.82);
+  background: rgba(10, 15, 30, 0.84);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  will-change: backdrop-filter, transform;
   border: 1px solid rgba(139, 92, 246, 0.22);
   border-radius: calc(1.5rem - 1.5px);
   box-shadow: 
@@ -292,6 +310,64 @@ input[type="range"] {
     rgba(56, 189, 248, 0.05) 65%,
     transparent 80%
   );
+}
+
+/* =========================================================================
+   Diagnostic & Debug Overlay for Glassmorphism & GPU Layout Clipping
+   ========================================================================= */
+.border-debug,
+.glass-morphism-card.border-debug,
+[data-glass-debug="true"] .glass-morphism-card {
+  outline: 2px dashed rgba(245, 158, 11, 0.85) !important;
+  outline-offset: 3px;
+  position: relative;
+}
+
+.border-debug::after,
+.glass-morphism-card.border-debug::after,
+[data-glass-debug="true"] .glass-morphism-card::after {
+  content: 'GPU STACK [z:' attr(data-z-index) '] BLUR:' attr(data-blur-status);
+  position: absolute;
+  top: -12px;
+  right: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #0f172a;
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.border-debug-pass,
+.glass-morphism-card.border-debug-pass {
+  outline: 2px dashed rgba(16, 185, 129, 0.8) !important;
+  outline-offset: 3px;
+}
+
+.border-debug-pass::after,
+.glass-morphism-card.border-debug-pass::after {
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.5);
+}
+
+.border-debug-warning,
+.glass-morphism-card.border-debug-warning {
+  outline: 2px dashed rgba(239, 68, 68, 0.9) !important;
+  outline-offset: 3px;
+}
+
+.border-debug-warning::after,
+.glass-morphism-card.border-debug-warning::after {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.6);
+  background: #450a0a;
 }
 
 /* Realistic Glass Reflection Sheen */

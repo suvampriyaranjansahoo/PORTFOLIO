@@ -58,17 +58,30 @@ export const KineticHeadline: React.FC<KineticHeadlineProps> = ({
   }, []);
 
   return (
-    <h1 ref={containerRef} className={`flex flex-wrap select-none ${className}`}>
+    <h1 
+      ref={containerRef} 
+      className={`flex flex-wrap select-none font-display font-bold text-3xl xs:text-4xl sm:text-6xl lg:text-7xl tracking-[-0.035em] leading-[1.06] ${className}`}
+      style={{
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+        textRendering: 'optimizeLegibility',
+      }}
+    >
       {text.split(' ').map((word, wordIdx) => (
-        <span key={wordIdx} className="inline-flex whitespace-nowrap mr-3 sm:mr-4.5 last:mr-0">
+        <span key={wordIdx} className="inline-flex whitespace-nowrap mr-2.5 sm:mr-4 last:mr-0">
           {word.split('').map((char, charIdx) => {
             const isAccent = char === accentChar;
             return (
               <span
                 key={charIdx}
-                className={`kinetic-char inline-block will-change-transform transition-transform duration-100 ease-out ${
+                className={`kinetic-char inline-block transition-transform duration-100 ease-out ${
                   isAccent ? accentClass : ''
                 }`}
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  transform: 'translate3d(0, 0, 0)',
+                }}
               >
                 {char}
               </span>

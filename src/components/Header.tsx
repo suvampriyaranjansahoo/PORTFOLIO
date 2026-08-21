@@ -125,9 +125,9 @@ export const Header: React.FC<HeaderProps> = ({
         <a 
           href="#top" 
           id="brand-logo-link"
-          className="font-display font-bold text-sm sm:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1 whitespace-nowrap text-[#101318] dark:text-white shrink min-w-0"
+          className="font-display font-bold text-sm sm:text-base lg:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1 whitespace-nowrap text-[#101318] dark:text-white shrink-0 min-w-fit"
         >
-          <span className="truncate max-w-[150px] xs:max-w-[200px] sm:max-w-none">{PERSONAL_INFO.name}</span>
+          <span className="font-bold">{PERSONAL_INFO.name}</span>
           <span className="text-[#a66a12]">.</span>
         </a>
 

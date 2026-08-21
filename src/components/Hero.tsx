@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
 
             <KineticHeadline
               text={PERSONAL_INFO.name}
-              className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-[-0.035em] leading-[1.04] text-[#101318] dark:text-white"
+              className="text-[#101318] dark:text-white"
             />
           </div>
 
