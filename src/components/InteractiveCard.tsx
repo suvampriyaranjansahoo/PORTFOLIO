@@ -52,6 +52,11 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       const x = clientX - rect.left;
       const y = clientY - rect.top;
       
+      if (cardRef.current) {
+        cardRef.current.style.setProperty('--mouse-x', `${x}px`);
+        cardRef.current.style.setProperty('--mouse-y', `${y}px`);
+      }
+
       // Calculate exact card center point
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
@@ -103,7 +108,9 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
           : 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease',
         willChange: 'transform',
         isolation: 'isolate',
-      }}
+        ['--mouse-x' as string]: `${coords.x}px`,
+        ['--mouse-y' as string]: `${coords.y}px`,
+      } as React.CSSProperties}
       className={`relative rounded-[1.5rem] group holo-border-active p-[1.5px] transition-all duration-300 ${
         isColSpan2 ? 'md:col-span-2' : ''
       } ${containerClassName}`}
@@ -137,7 +144,9 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         style={{ 
           transform: 'translateZ(14px)',
           transformStyle: 'preserve-3d',
-        }}
+          ['--mouse-x' as string]: `${coords.x}px`,
+          ['--mouse-y' as string]: `${coords.y}px`,
+        } as React.CSSProperties}
       >
         {/* Dynamic Light Field / Glass Caustics */}
         <div 

@@ -245,6 +245,31 @@ input[type="range"] {
     0 2px 6px 0 rgba(15, 23, 42, 0.03);
 }
 
+/* Dynamic 'Light Field' Reflection Pseudo-Element */
+.glass-morphism-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(99, 102, 241, 0.16) 0%,
+    rgba(168, 85, 247, 0.09) 35%,
+    rgba(56, 189, 248, 0.04) 65%,
+    transparent 80%
+  );
+  transform: translateZ(1px);
+}
+
+.glass-morphism-card:hover::before,
+.group:hover .glass-morphism-card::before {
+  opacity: 1;
+}
+
 .dark .glass-morphism-card {
   background: rgba(10, 15, 30, 0.82);
   backdrop-filter: blur(28px);
@@ -257,6 +282,16 @@ input[type="range"] {
     inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
     0 16px 42px -6px rgba(2, 6, 23, 0.65),
     0 0 28px -6px rgba(99, 102, 241, 0.2);
+}
+
+.dark .glass-morphism-card::before {
+  background: radial-gradient(
+    450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(99, 102, 241, 0.22) 0%,
+    rgba(168, 85, 247, 0.12) 35%,
+    rgba(56, 189, 248, 0.05) 65%,
+    transparent 80%
+  );
 }
 
 /* Realistic Glass Reflection Sheen */
