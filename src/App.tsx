@@ -119,7 +119,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f4f6fb] dark:bg-[#050811] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
       <div id="top" />
 
       {/* Interactive Ambient Dynamic Mesh & Spotlight Background */}
