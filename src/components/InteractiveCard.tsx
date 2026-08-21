@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactNode } from 'react';
+import React, { useRef, useState, useCallback, ReactNode } from 'react';
 
 interface InteractiveCardProps {
   children: ReactNode;
@@ -9,6 +9,7 @@ interface InteractiveCardProps {
   edgeLighting?: boolean;
   onClick?: () => void;
   id?: string;
+  renderSpatialPreview?: (isHovered: boolean, coords: { x: number; y: number }) => ReactNode;
 }
 
 export const InteractiveCard: React.FC<InteractiveCardProps> = ({
@@ -20,9 +21,12 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
   edgeLighting = true,
   onClick,
   id,
+  renderSpatialPreview,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [normalized, setNormalized] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [rotate, setRotate] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -30,30 +34,55 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
   const isColSpan2 = className.includes('md:col-span-2') || containerClassName.includes('md:col-span-2');
   const cleanClassName = className.replace('md:col-span-2', '').trim();
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setCoords({ x, y });
 
-    // Subtle, elegant 3D perspective tilt (bounded to +/- 6.5 degrees for premium feel)
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -6.5;
-    const rotateY = ((x - centerX) / centerX) * 6.5;
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
 
-    setRotate({ x: rotateX, y: rotateY });
-  };
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      
+      // Calculate local mouse position within the card
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      
+      // Calculate exact card center point
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate normalized delta coordinates (-1 to 1) from the center point
+      const deltaX = (x - centerX) / centerX;
+      const deltaY = (y - centerY) / centerY;
+
+      setCoords({ x, y });
+      setNormalized({ x: deltaX, y: deltaY });
+
+      // Calculate precision rotation angles from center
+      const maxTilt = 6.5;
+      const rotateX = -deltaY * maxTilt;
+      const rotateY = deltaX * maxTilt;
+
+      setRotate({ x: rotateX, y: rotateY });
+    });
+  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
     setIsHovered(false);
     setRotate({ x: 0, y: 0 });
+    setNormalized({ x: 0, y: 0 });
   };
 
   return (
@@ -66,62 +95,100 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       onMouseLeave={handleMouseLeave}
       style={{
         transform: isHovered
-          ? `perspective(1100px) rotateX(${rotate.x.toFixed(2)}deg) rotateY(${rotate.y.toFixed(2)}deg) translateZ(18px) translateY(-6px)`
-          : 'perspective(1100px) rotateX(0deg) rotateY(0deg) translateZ(0px) translateY(0px)',
+          ? `perspective(1200px) rotateX(${rotate.x.toFixed(2)}deg) rotateY(${rotate.y.toFixed(2)}deg) translateZ(24px) translateY(-8px)`
+          : 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0px) translateY(0px)',
         transformStyle: 'preserve-3d',
-        transition: isHovered ? 'transform 0.08s ease-out' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: isHovered 
+          ? 'transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease' 
+          : 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease',
         willChange: 'transform',
         isolation: 'isolate',
       }}
-      className={`relative rounded-[1.25rem] group holo-border-active p-[1.5px] shadow-xl transition-all duration-300 ${
+      className={`relative rounded-[1.5rem] group holo-border-active p-[1.5px] transition-all duration-300 ${
         isColSpan2 ? 'md:col-span-2' : ''
       } ${containerClassName}`}
     >
-      {/* Soft Ambient Dynamic Glow Following Cursor */}
+      {/* 1. Ambient Radial Glow Expanding Behind Card */}
       <div
-        className="pointer-events-none absolute -inset-px rounded-[1.25rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-30 overflow-hidden"
+        className="pointer-events-none absolute -inset-6 rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl"
         style={{
           background: isHovered
-            ? `radial-gradient(420px circle at ${coords.x}px ${coords.y}px, ${glowColor}, rgba(168, 85, 247, 0.12) 40%, transparent 75%)`
+            ? `radial-gradient(500px circle at ${coords.x + 24}px ${coords.y + 24}px, ${
+                featured ? 'rgba(99, 102, 241, 0.28)' : glowColor
+              }, rgba(168, 85, 247, 0.14) 45%, rgba(56, 189, 248, 0.08) 70%, transparent 85%)`
             : 'none',
         }}
       />
 
-      {/* Top Specular Metallic Purple-to-Blue Highlight */}
+      {/* 2. Top Specular Metallic Edge Illumination */}
       {edgeLighting && (
-        <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-400/60 via-purple-400/70 via-sky-400/60 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300 z-25 pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-400/80 via-purple-400/90 via-sky-400/80 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300 z-30 pointer-events-none" />
       )}
 
-      {/* Subtle Corner Geometric Glass Accents */}
-      <div className="absolute top-2.5 left-2.5 w-2 h-2 border-t border-l border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
-      <div className="absolute top-2.5 right-2.5 w-2 h-2 border-t border-r border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
-      <div className="absolute bottom-2.5 left-2.5 w-2 h-2 border-b border-l border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
-      <div className="absolute bottom-2.5 right-2.5 w-2 h-2 border-b border-r border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
+      {/* 3. Subtle Corner Geometric Glass Reticles */}
+      <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t border-l border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-25" />
+      <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-25" />
+      <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b border-l border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-25" />
+      <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b border-r border-indigo-400/50 dark:border-indigo-400/40 opacity-40 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-25" />
 
-      {/* Floating Glassmorphic Pane with Layered 3D Depth */}
+      {/* 4. Primary Smoked Glass Shell */}
       <div 
-        className={`relative z-10 w-full h-full rounded-[calc(1.25rem-1.5px)] glass-morphism-card overflow-hidden ${cleanClassName}`}
-        style={{ transform: 'translateZ(14px)' }}
+        className={`relative z-10 w-full h-full rounded-[calc(1.5rem-1.5px)] glass-morphism-card overflow-hidden flex flex-col justify-between ${cleanClassName}`}
+        style={{ 
+          transform: 'translateZ(14px)',
+          transformStyle: 'preserve-3d',
+        }}
       >
-        {/* Realistic Diagonal Glass Sheen Reflection */}
-        <div className="glass-reflection-sheen" />
-
-        {/* Dynamic Light Sheen Reacting to Cursor X Position */}
+        {/* Dynamic Light Field / Glass Caustics */}
         <div 
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-15"
           style={{
             background: isHovered 
-              ? `linear-gradient(${115 + (coords.x / 40)}deg, rgba(255, 255, 255, 0.07) 0%, transparent 60%)` 
+              ? `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08) 35%, rgba(56, 189, 248, 0.04) 65%, transparent 80%)`
               : 'none'
           }}
         />
 
-        {/* Inner Card Content */}
-        <div className="relative z-10 w-full h-full">
+        {/* Viewing Angle Shifting Holographic Diagonal Sheen */}
+        <div 
+          className="pointer-events-none absolute inset-0 opacity-40 group-hover:opacity-90 transition-opacity duration-300 z-20"
+          style={{
+            background: isHovered 
+              ? `linear-gradient(${120 + normalized.x * 25}deg, rgba(255, 255, 255, 0.12) 0%, rgba(139, 92, 246, 0.05) 30%, transparent 65%)` 
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 50%)'
+          }}
+        />
+
+        {/* Secondary Glass Substrate Grid */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-0" />
+
+        {/* Spatial Preview Interface (if provided) with Parallax Depth Separation */}
+        {renderSpatialPreview && (
+          <div 
+            className="relative z-20 mb-4 transition-transform duration-200"
+            style={{
+              transform: isHovered 
+                ? `translateZ(28px) translateX(${normalized.x * 4}px) translateY(${normalized.y * 3}px)`
+                : 'translateZ(0px)',
+              transformStyle: 'preserve-3d',
+            }}
+          >
+            {renderSpatialPreview(isHovered, coords)}
+          </div>
+        )}
+
+        {/* Recessed / Floating Inner Content */}
+        <div 
+          className="relative z-10 w-full flex-1 flex flex-col justify-between"
+          style={{
+            transform: isHovered ? 'translateZ(18px)' : 'translateZ(0px)',
+            transition: 'transform 0.15s ease-out',
+            transformStyle: 'preserve-3d',
+          }}
+        >
           {children}
         </div>
       </div>
     </div>
   );
 };
-
