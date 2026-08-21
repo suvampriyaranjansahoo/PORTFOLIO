@@ -4,20 +4,15 @@ import {
   ArrowUpRight, 
   Command, 
   Mail, 
-  Sparkles, 
-  CheckCircle2, 
-  Terminal,
+  Sparkles,
   Database,
-  BarChart3,
-  Award,
-  GraduationCap,
-  Briefcase
+  Briefcase,
+  GraduationCap
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { KineticHeadline } from './KineticHeadline';
 import { InteractiveCard } from './InteractiveCard';
-import { SparklinePreview } from './SparklinePreview';
 
 interface HeroProps {
   language?: Language;
@@ -40,10 +35,9 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
             <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] animate-pulse"></span>
             {t.eyebrow}
           </span>
-
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>{t.available}</span>
+            <span>Open to full-time and graduate opportunities</span>
           </div>
         </div>
 
@@ -64,9 +58,8 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
         <div className="lg:col-span-8 space-y-6">
           <div className="space-y-2">
             <p className="font-mono text-xs sm:text-sm text-[#a66a12] font-semibold tracking-wider uppercase">
-              {t.roleHeadline}
+              DATA · PRODUCT · BUSINESS ANALYTICS
             </p>
-
             <KineticHeadline
               text={PERSONAL_INFO.name}
               className="text-[#101318] dark:text-white"
@@ -74,7 +67,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
           </div>
 
           <p className="text-base sm:text-lg lg:text-xl text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed max-w-2xl font-normal">
-            {t.tagline}
+            I turn messy data into decisions — from customer retention and financial risk to product prioritization and real-time analytics.
           </p>
 
           {/* Action buttons */}
@@ -84,27 +77,17 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               id="hero-view-work-btn"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-sm font-semibold hover:bg-[#202633] dark:hover:bg-gray-100 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
             >
-              <span>{t.viewWork}</span>
+              <span>VIEW SELECTED WORK</span>
               <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
-
             <a
               href="#contact"
               id="hero-contact-btn"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#bfc5cf] dark:border-[#30363d] text-[#101318] dark:text-white text-sm font-semibold hover:border-[#a66a12] hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c] transition-all shadow-2xs hover:-translate-y-0.5"
             >
               <Mail className="w-4 h-4 text-[#a66a12]" />
-              <span>{t.contactMe}</span>
+              <span>CONTACT ME</span>
             </a>
-
-            <button
-              onClick={onOpenRecruiter}
-              id="hero-recruiter-brief-btn"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/30 text-sm font-mono font-medium transition-all cursor-pointer hover:-translate-y-0.5 shadow-2xs"
-            >
-              <Sparkles className="w-4 h-4 text-[#a66a12]" />
-              <span>{t.recruiterBrief}</span>
-            </button>
           </div>
 
           {/* Socials & Quick Command Palette trigger */}
@@ -118,9 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               <span>GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
-
             <span className="text-[#dfe3e9] dark:text-[#30363d]">/</span>
-
             <a
               href={PERSONAL_INFO.links.linkedin}
               target="_blank"
@@ -130,9 +111,15 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               <span>LinkedIn</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
-
             <span className="text-[#dfe3e9] dark:text-[#30363d]">/</span>
-
+            <button
+              onClick={onOpenRecruiter}
+              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors group cursor-pointer"
+            >
+              <span>Resume</span>
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
+            <span className="text-[#dfe3e9] dark:text-[#30363d]">/</span>
             <button
               id="hero-command-palette-btn"
               onClick={onOpenCommand}
@@ -150,58 +137,73 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
           <InteractiveCard
             featured={true}
             glowColor="rgba(216, 163, 79, 0.45)"
-            className="p-6 sm:p-7 space-y-5"
+            className="p-6 sm:p-7 space-y-6"
           >
-            <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 border border-[#a66a12]/30 flex items-center justify-center font-mono font-bold text-sm text-[#a66a12] shadow-xs">
-                  SPS
-                </div>
-                <div>
-                  <div className="text-xs font-mono font-bold text-[#101318] dark:text-white">
-                    B.Tech CSE '26
+            {/* Academic Signal */}
+            <div className="pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                    <GraduationCap className="w-4 h-4" />
                   </div>
-                  <div className="text-[11px] text-[#8b93a1]">
-                    SOA University, Odisha
+                  <div>
+                    <h4 className="text-[11px] font-bold text-[#101318] dark:text-white leading-tight">
+                      B.Tech Computer Science
+                    </h4>
+                    <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">
+                      ITER, SOA University
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="flex flex-col items-end gap-1">
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
-                  8.18 CGPA
-                </span>
-                <SparklinePreview data={[7.8, 7.9, 8.0, 8.12, 8.18]} color="#10b981" width={48} height={16} />
-              </div>
-            </div>
-
-            <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-              {t.asideCopy}
-            </p>
-
-            {/* Quick Live Telemetry Indicator */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[11px] font-mono">
-              <div className="flex items-center gap-1.5 text-[#5c6472] dark:text-[#8b93a1]">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Live Telemetry</span>
-              </div>
-              <span className="text-[#a66a12] font-semibold">120K+ rows benchmarked</span>
-            </div>
-
-            {/* Tech Strip */}
-            <div>
-              <div className="text-[10px] font-mono uppercase tracking-widest text-[#8b93a1] mb-2.5">
-                {t.coreCapabilities}
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {['SQL (CTEs/Window)', 'Python / PySpark', 'Power BI & DAX', 'Azure Synapse', 'RICE Framework', 'XGBoost & SHAP'].map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-[#e6edf3] hover:border-[#a66a12]/40 transition-colors"
-                  >
-                    {skill}
+                <div className="flex flex-col items-end gap-1">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    8.18 CGPA
                   </span>
-                ))}
+                  <span className="text-[9px] font-mono text-[#5c6472] dark:text-[#8b93a1]">
+                    Graduating 2026
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Role Cluster */}
+            <div className="space-y-4">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[#8b93a1]">
+                Professional Capabilities
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                <div className="flex items-center gap-3 group">
+                  <div className="w-1.5 h-7 bg-blue-500/40 rounded-full group-hover:bg-blue-500 transition-colors" />
+                  <div>
+                    <div className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold tracking-wider">ANALYZE</div>
+                    <div className="text-xs font-semibold text-[#101318] dark:text-[#e6edf3]">Data & Business Analytics</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 group">
+                  <div className="w-1.5 h-7 bg-purple-500/40 rounded-full group-hover:bg-purple-500 transition-colors" />
+                  <div>
+                    <div className="text-[10px] font-mono text-purple-600 dark:text-purple-400 font-bold tracking-wider">DECIDE</div>
+                    <div className="text-xs font-semibold text-[#101318] dark:text-[#e6edf3]">Product & Decision Analytics</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 group">
+                  <div className="w-1.5 h-7 bg-emerald-500/40 rounded-full group-hover:bg-emerald-500 transition-colors" />
+                  <div>
+                    <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold tracking-wider">ENGINEER</div>
+                    <div className="text-xs font-semibold text-[#101318] dark:text-[#e6edf3]">Data Engineering</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 group">
+                  <div className="w-1.5 h-7 bg-orange-500/40 rounded-full group-hover:bg-orange-500 transition-colors" />
+                  <div>
+                    <div className="text-[10px] font-mono text-orange-600 dark:text-orange-400 font-bold tracking-wider">BUILD</div>
+                    <div className="text-xs font-semibold text-[#101318] dark:text-[#e6edf3]">AI & ML Systems</div>
+                  </div>
+                </div>
               </div>
             </div>
           </InteractiveCard>
