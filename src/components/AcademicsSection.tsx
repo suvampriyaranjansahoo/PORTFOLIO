@@ -59,137 +59,137 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
           </p>
         </div>
 
-        {/* SECTION 2: Academic Snapshot Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          {/* Card 1 */}
-          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#3b82f6]/30 hover:shadow-[0_4px_20px_-10px_rgba(59,130,246,0.15)] transition-all group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-blue-500/10 transition-colors" />
-            <div className="flex items-center gap-2.5 mb-4 relative z-10">
-              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
-                <GraduationCap className="w-4 h-4" />
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
-                B.Tech Computer Science
-              </div>
-            </div>
-            <div className="relative z-10">
-              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">
-                8.18 <span className="text-xs font-normal text-[#5c6472]">/ 10 CGPA</span>
-              </div>
-              <div className="text-[11px] text-[#5c6472] leading-relaxed">
-                ITER, Siksha 'O' Anusandhan University<br/>2022–2026
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#10b981]/30 hover:shadow-[0_4px_20px_-10px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-emerald-500/10 transition-colors" />
-            <div className="flex items-center gap-2.5 mb-4 relative z-10">
-              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-                <Award className="w-4 h-4" />
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
-                Higher Secondary · 12th
-              </div>
-            </div>
-            <div className="relative z-10">
-              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
-                93.85% <span className="text-xs font-normal text-[#5c6472]">Aggregate</span>
-              </div>
-              <div className="text-[11px] text-[#5c6472] leading-relaxed">
-                Saraswati Vidya Mandir, Berhampur<br/>2021
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#a855f7]/30 hover:shadow-[0_4px_20px_-10px_rgba(168,85,247,0.15)] transition-all group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-purple-500/10 transition-colors" />
-            <div className="flex items-center gap-2.5 mb-4 relative z-10">
-              <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
-                <BookOpen className="w-4 h-4" />
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
-                Secondary School · 10th
-              </div>
-            </div>
-            <div className="relative z-10">
-              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">
-                90.67% <span className="text-xs font-normal text-[#5c6472]">Aggregate</span>
-              </div>
-              <div className="text-[11px] text-[#5c6472] leading-relaxed">
-                SVM, Nayagarh<br/>2019
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* SECTION 3: Featured Undergraduate Degree */}
-        <div className="relative p-px rounded-3xl bg-gradient-to-br from-[#3b82f6]/40 via-[#262c36] to-[#151920] mb-12 shadow-2xl group">
-          {/* Ambient Edge Glow */}
-          <div className="absolute inset-0 bg-[#3b82f6]/10 blur-xl rounded-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-700 pointer-events-none" />
-          
-          <div className="relative p-6 sm:p-10 rounded-[calc(1.5rem-1px)] bg-[#101318] bg-gradient-to-br from-[#151920]/80 to-[#0a0d14]/80 backdrop-blur-xl flex flex-col gap-8">
-            <div className="flex flex-col lg:flex-row justify-between gap-8">
-              {/* Main Info */}
-              <div className="space-y-4 max-w-2xl">
+        {/* SECTION 2: Academic Credentials */}
+        <div className="flex flex-col lg:flex-row gap-6 mb-12">
+          {/* Card 1: B.Tech Degree (Primary) */}
+          <div className="relative p-6 sm:p-8 rounded-3xl bg-[#101318] bg-gradient-to-br from-[#151920]/90 to-[#0a0d14]/90 backdrop-blur-xl border border-[#3b82f6]/30 shadow-[0_0_30px_-15px_rgba(59,130,246,0.2)] hover:border-[#3b82f6]/50 transition-colors group overflow-hidden flex flex-col lg:w-2/3">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl rounded-full translate-x-1/3 -translate-y-1/3 group-hover:bg-blue-500/10 transition-colors pointer-events-none" />
+            
+            <div className="relative z-10 flex flex-col h-full">
+              {/* Header: Label and Badge */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <div className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#8b93a1] font-semibold flex items-center gap-2">
+                    <span className="text-blue-400">01 —</span> BACHELOR'S DEGREE
+                  </div>
+                </div>
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono font-semibold tracking-widest uppercase text-blue-400">
                   <Award className="w-3.5 h-3.5" />
-                  First Class with Distinction Track
+                  First Class with Distinction
                 </div>
-                <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-white">
-                  Bachelor of Technology — Computer Science & Engineering
-                </h3>
-                <div className="flex flex-wrap items-center gap-3 text-sm text-[#8b93a1] font-mono">
-                  <span className="text-[#e6edf3]">Siksha 'O' Anusandhan University (ITER)</span>
-                  <span className="hidden sm:inline text-[#262c36]">•</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Bhubaneswar, Odisha</span>
-                  <span className="hidden sm:inline text-[#262c36]">•</span>
-                  <span className="text-[#3b82f6]">Expected Graduation · July 2026</span>
+              </div>
+
+              {/* Title and CGPA */}
+              <div className="flex flex-col md:flex-row justify-between gap-6 mb-6">
+                <div className="space-y-2 max-w-lg">
+                  <h3 className="font-display font-bold text-2xl sm:text-3xl text-white">
+                    B.Tech in Computer Science & Engineering
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm text-[#8b93a1] font-mono">
+                    <span className="text-[#e6edf3]">Siksha 'O' Anusandhan University (ITER)</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#5c6472] font-mono mt-1">
+                    <span>2022–2026</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Bhubaneswar, Odisha</span>
+                  </div>
                 </div>
+                <div className="shrink-0 md:text-right">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#5c6472] mb-1">
+                    CGPA
+                  </div>
+                  <div className="font-display text-4xl sm:text-5xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                    8.18 <span className="text-xl sm:text-2xl text-[#5c6472] font-normal">/ 10</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Highlights */}
+              <div className="pt-6 border-t border-[#262c36]/60 flex-grow">
+                <h4 className="text-[11px] font-mono font-semibold uppercase tracking-widest text-[#8b93a1] mb-4">
+                  Academic Highlights & Applied Focus
+                </h4>
+                <ul className="space-y-3 text-sm text-[#9ea7b4]">
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5 opacity-80" />
+                    <span>Built a strong foundation in algorithms, database systems, statistics, software engineering, and computer networks.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5 opacity-80" />
+                    <span>Applied academic concepts through hands-on projects in data analytics, machine learning, cloud technologies, and intelligent systems.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5 opacity-80" />
+                    <span>Developed practical technical experience using Python, SQL, Power BI, Azure, Databricks, and machine learning frameworks.</span>
+                  </li>
+                </ul>
               </div>
               
-              {/* GPA Display */}
-              <div className="shrink-0 lg:text-right">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-[#5c6472] mb-1">
-                  Cumulative GPA
+              {/* Footer */}
+              <div className="mt-6 pt-4 border-t border-[#262c36]/40 flex items-center gap-2 text-xs font-mono text-[#5c6472]">
+                <FileCheck2 className="w-3.5 h-3.5" />
+                Academic transcripts and supporting documents available upon request.
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary Cards (12th & 10th) */}
+          <div className="lg:w-1/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+            {/* Card 2: 12th */}
+            <div className="relative p-6 sm:p-7 rounded-3xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] hover:border-[#10b981]/40 shadow-sm hover:shadow-[0_4px_20px_-10px_rgba(16,185,129,0.15)] transition-all group overflow-hidden flex flex-col h-full">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-emerald-500/10 transition-colors pointer-events-none" />
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#8b93a1] font-semibold flex items-center gap-2 mb-4">
+                  <span className="text-emerald-400">02 —</span> HIGHER SECONDARY
                 </div>
-                <div className="font-display text-4xl sm:text-5xl font-bold text-white">
-                  8.18 <span className="text-xl sm:text-2xl text-[#5c6472] font-normal">/ 10</span>
+                <div className="mb-4">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#5c6472] mb-1">
+                    Aggregate
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors">
+                    93.85%
+                  </div>
+                </div>
+                <div className="mt-auto space-y-1.5">
+                  <h3 className="text-sm font-semibold text-[#e6edf3]">12th · PCM</h3>
+                  <div className="text-xs text-[#8b93a1] leading-relaxed">
+                    Saraswati Vidya Mandir, Berhampur
+                  </div>
+                  <div className="text-xs font-mono text-[#5c6472]">
+                    2021
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Academic Highlights */}
-            <div className="pt-6 border-t border-[#262c36]/60">
-              <h4 className="text-[11px] font-mono font-semibold uppercase tracking-widest text-[#8b93a1] mb-4">
-                Academic Highlights & Applied Focus
-              </h4>
-              <ul className="space-y-3 text-sm text-[#9ea7b4]">
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Built a strong foundation in algorithms, database systems, statistics, software engineering, and computer networks.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Applied academic concepts through hands-on projects in data analytics, machine learning, cloud technologies, and intelligent systems.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Developed practical technical experience using Python, SQL, Power BI, Azure, Databricks, and machine learning frameworks.</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Verification Footer */}
-            <div className="mt-2 pt-4 border-t border-[#262c36]/40 flex items-center gap-2 text-xs font-mono text-[#5c6472]">
-              <FileCheck2 className="w-3.5 h-3.5" />
-              Academic transcripts and supporting documents available upon request.
+            {/* Card 3: 10th */}
+            <div className="relative p-6 sm:p-7 rounded-3xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] hover:border-[#a855f7]/40 shadow-sm hover:shadow-[0_4px_20px_-10px_rgba(168,85,247,0.15)] transition-all group overflow-hidden flex flex-col h-full">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-purple-500/10 transition-colors pointer-events-none" />
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#8b93a1] font-semibold flex items-center gap-2 mb-4">
+                  <span className="text-purple-400">03 —</span> SECONDARY SCHOOL
+                </div>
+                <div className="mb-4">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#5c6472] mb-1">
+                    Aggregate
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-display font-bold text-white group-hover:text-purple-400 transition-colors">
+                    90.67%
+                  </div>
+                </div>
+                <div className="mt-auto space-y-1.5">
+                  <h3 className="text-sm font-semibold text-[#e6edf3]">10th</h3>
+                  <div className="text-xs text-[#8b93a1] leading-relaxed">
+                    SSVM, Nayagarh
+                  </div>
+                  <div className="text-xs font-mono text-[#5c6472]">
+                    2019
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
         {/* SECTION 4: Core Academic Competencies */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
           {/* Card A */}
