@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useSignatureSpotlight } from '../utils/useSignatureSpotlight';
 
 /**
  * GlobalBackground Component
@@ -12,12 +13,27 @@ import React from 'react';
  * Entirely decoupled from content to guarantee zero text, layout, or interaction changes.
  */
 export const GlobalBackground: React.FC = React.memo(() => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useSignatureSpotlight(rootRef);
+
   return (
     <div
+      ref={rootRef}
       id="global-page-background"
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none select-none overflow-hidden z-0"
+      style={{
+        // @ts-ignore - custom properties consumed by .signature-spotlight below
+        '--spotlight-x': '50%',
+        '--spotlight-y': '30%',
+        '--spotlight-opacity': '0',
+      }}
     >
+      {/* ─── SIGNATURE INTERACTION: cursor-aware spotlight ───
+          Pure CSS radial gradient positioned via custom properties written
+          by useSignatureSpotlight. Raises grid/node visibility near the
+          cursor without any per-frame React re-render. */}
+      <div className="signature-spotlight absolute inset-0 transition-opacity duration-500" />
       {/* ─── 1. BASE ATMOSPHERIC GRADIENTS (LIGHT & DARK) ─── */}
       <div className="absolute inset-0 transition-opacity duration-700" style={{ background: 'var(--page-bg)' }} />
 
