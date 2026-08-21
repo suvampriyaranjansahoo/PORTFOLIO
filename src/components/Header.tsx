@@ -172,9 +172,9 @@ export const Header: React.FC<HeaderProps> = ({
             {langMenuOpen && (
               <div 
                 id="language-dropdown-menu"
-                className="absolute right-0 top-full mt-2 w-[160px] bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] rounded-xl shadow-2xl p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 top-full mt-2 w-[160px] card-level-1 p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="text-[10px] font-mono uppercase text-[#8b93a1] px-2 py-1 border-b border-[#dfe3e9] dark:border-[#30363d] mb-1">
+                <div className="text-[10px] font-mono uppercase text-[#8b93a1] px-2 py-1 border-b border-[#dfe3e9] dark:border-white/[0.08] mb-1">
                   Language / Sprache
                 </div>
                 {languages.map((l) => (
@@ -226,9 +226,9 @@ export const Header: React.FC<HeaderProps> = ({
             {resumeMenuOpen && (
               <div 
                 id="resume-dropdown-menu"
-                className="absolute right-0 top-full mt-2 w-[320px] sm:w-[350px] bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] rounded-xl shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 top-full mt-2 w-[320px] sm:w-[350px] card-level-1 p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#dfe3e9] dark:border-[#30363d] mb-1.5">
+                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#dfe3e9] dark:border-white/[0.08] mb-1.5">
                   <span className="font-mono text-[10px] uppercase tracking-wider text-[#8b93a1]">
                     Tailored Resumes (5 Roles)
                   </span>

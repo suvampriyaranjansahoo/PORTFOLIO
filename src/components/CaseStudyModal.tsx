@@ -68,14 +68,14 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        className="relative w-full max-w-4xl max-h-[90vh] card-level-1 overflow-hidden flex flex-col !rounded-2xl"
         role="dialog"
         aria-modal="true"
         aria-labelledby="case-study-title"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-6 border-b border-[#dfe3e9] dark:border-[#262c36] flex items-start justify-between gap-4 bg-[#f6f7f9] dark:bg-[#0e1116]">
+        <div className="p-6 border-b border-[#dfe3e9] dark:border-white/[0.08] flex items-start justify-between gap-4 bg-[#f8fafc] dark:bg-[#111622]/90">
           <div>
             <div className="font-mono text-xs text-[#a66a12] tracking-wider uppercase mb-1">
               {study.meta}
@@ -117,9 +117,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
         </div>
 
         {/* Quick Stats Strip */}
-        <div className="grid grid-cols-3 gap-px bg-[#dfe3e9] dark:bg-[#262c36] border-b border-[#dfe3e9] dark:border-[#262c36]">
+        <div className="grid grid-cols-3 gap-px bg-[#dfe3e9] dark:bg-white/[0.08] border-b border-[#dfe3e9] dark:border-white/[0.08]">
           {study.stats.map((stat, idx) => (
-            <div key={idx} className="bg-white dark:bg-[#151920] p-3 sm:p-4 text-center">
+            <div key={idx} className="bg-white/95 dark:bg-[#141924]/90 p-3 sm:p-4 text-center">
               <div className="font-mono font-bold text-base sm:text-lg text-[#101318] dark:text-white">
                 {stat.value}
               </div>
@@ -132,13 +132,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
 
         {/* STAR MODE VIEW */}
         {viewStarMode ? (
-          <div className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f6f7f9] dark:bg-[#0e1116] space-y-4">
+          <div className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f8fafc] dark:bg-[#0e121a] space-y-4">
             <div className="font-mono text-xs text-[#a66a12] uppercase tracking-wider flex items-center gap-1.5">
               <Award className="w-4 h-4" /> Recruiter STAR Method Interview Summary
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+              <div className="card-level-2 p-4 space-y-1.5">
                 <div className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">
                   [S] SITUATION
                 </div>
@@ -147,7 +147,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+              <div className="card-level-2 p-4 space-y-1.5">
                 <div className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
                   [T] TASK
                 </div>
@@ -156,7 +156,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+              <div className="card-level-2 p-4 space-y-1.5">
                 <div className="font-mono text-xs font-bold text-amber-600 dark:text-amber-400">
                   [A] ACTION
                 </div>
@@ -165,7 +165,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+              <div className="card-level-2 p-4 space-y-1.5">
                 <div className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">
                   [R] RESULT & BUSINESS IMPACT
                 </div>

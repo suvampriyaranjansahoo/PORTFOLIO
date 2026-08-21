@@ -384,7 +384,7 @@ export const TrafficD3Chart: React.FC = () => {
   return (
     <div className="space-y-6" id="d3-traffic-demo-container">
       {/* Top Banner & Control Strip */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] shadow-xs">
+      <div className="card-level-2 flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
             <span className="p-1.5 rounded-lg bg-[#a66a12]/10 text-[#a66a12]">
@@ -508,7 +508,7 @@ export const TrafficD3Chart: React.FC = () => {
 
       {/* KPI Highlight Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d]">
+        <div className="p-3 card-level-3">
           <div className="flex items-center justify-between text-[#8b93a1]">
             <span className="text-[11px] font-mono uppercase">Total Visitors</span>
             <Users className="w-3.5 h-3.5 text-[#a66a12]" />
@@ -521,7 +521,7 @@ export const TrafficD3Chart: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d]">
+        <div className="p-3 card-level-3">
           <div className="flex items-center justify-between text-[#8b93a1]">
             <span className="text-[11px] font-mono uppercase">ATS Resumes Grabbed</span>
             <FileDown className="w-3.5 h-3.5 text-emerald-500" />
@@ -534,7 +534,7 @@ export const TrafficD3Chart: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d]">
+        <div className="p-3 card-level-3">
           <div className="flex items-center justify-between text-[#8b93a1]">
             <span className="text-[11px] font-mono uppercase">Recruiter Conversion</span>
             <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
@@ -547,7 +547,7 @@ export const TrafficD3Chart: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d]">
+        <div className="p-3 card-level-3">
           <div className="flex items-center justify-between text-[#8b93a1]">
             <span className="text-[11px] font-mono uppercase">Case Study Depth</span>
             <BarChart3 className="w-3.5 h-3.5 text-purple-500" />
@@ -564,7 +564,7 @@ export const TrafficD3Chart: React.FC = () => {
       {/* D3 Canvas Card */}
       <div 
         ref={containerRef}
-        className="relative p-5 rounded-2xl bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] shadow-sm overflow-hidden"
+        className="relative p-5 card-level-1 overflow-hidden"
       >
         {/* Legend */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-2">

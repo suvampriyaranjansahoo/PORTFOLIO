@@ -144,7 +144,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Active Pillar Card */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs space-y-4 animate-in fade-in duration-200">
+              <div className="card-level-2 p-5 sm:p-6 space-y-4 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <span className={`p-2 rounded-lg ${currentPillar.bgColor} ${currentPillar.color}`}>
@@ -168,7 +168,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   {currentPillar.keySkills.map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
+                      className="card-level-3 px-2.5 py-1 text-xs font-mono text-[#101318] dark:text-white"
                     >
                       {skill}
                     </span>
@@ -190,7 +190,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="card-level-3 p-3.5 space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                     <span>Audit Before Modeling</span>
@@ -200,7 +200,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="card-level-3 p-3.5 space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
                     <span>Focus on Decision ROI</span>
@@ -210,7 +210,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="card-level-3 p-3.5 space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <Cpu className="w-3.5 h-3.5 text-blue-500" />
                     <span>Pragmatic Stack</span>
@@ -228,7 +228,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           <div className="lg:col-span-5 space-y-4">
             
             {/* Quick Profile Summary Bento */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm space-y-5">
+            <div className="card-level-1 p-6 space-y-5">
               
               <div className="flex items-center justify-between pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
                 <div className="flex items-center gap-3">
@@ -290,12 +290,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   Daily Technology Stack:
                 </div>
                 <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">SQL (PostgreSQL/Synapse)</span>
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">Python (Pandas, Scikit-learn)</span>
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">Power BI & DAX</span>
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">Microsoft Azure</span>
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">Advanced Excel & Power Query</span>
-                  <span className="px-2 py-0.5 rounded bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white">RICE Prioritization</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">SQL (PostgreSQL/Synapse)</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">Python (Pandas, Scikit-learn)</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">Power BI & DAX</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">Microsoft Azure</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">Advanced Excel & Power Query</span>
+                  <span className="card-level-3 px-2 py-0.5 text-[#101318] dark:text-white">RICE Prioritization</span>
                 </div>
               </div>
 
@@ -315,7 +315,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="pt-2 flex flex-col sm:flex-row gap-2">
                 <a
                   href="#work"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-xs font-mono font-semibold hover:opacity-90 transition-opacity"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-xs font-mono font-semibold hover:opacity-90 transition-opacity shadow-xs"
                 >
                   <span>Explore Selected Work</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -335,7 +335,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Schooling Merit Callout */}
-            <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs">
+            <div className="card-level-2 p-4 flex items-center justify-between text-xs">
               <div>
                 <span className="font-mono text-[11px] text-[#8b93a1] uppercase">Pre-Engineering Distinction</span>
                 <div className="font-semibold text-[#101318] dark:text-white mt-0.5">

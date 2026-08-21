@@ -76,10 +76,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className={`rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
+              className={`flex flex-col justify-between ${
                 project.featured
-                  ? 'md:col-span-2 bg-[#111419] text-white border-[#262c36] shadow-xl p-6 sm:p-8'
-                  : 'bg-white dark:bg-[#151920] border-[#dfe3e9] dark:border-[#262c36] p-6 sm:p-7 shadow-xs hover:border-[#a66a12] dark:hover:border-[#a66a12]'
+                  ? 'md:col-span-2 card-level-1 p-6 sm:p-8 !bg-[#111419] dark:!bg-[#131823]/95 text-white border-[#262c36] dark:border-white/[0.1] shadow-xl hover:border-amber-500/40'
+                  : 'card-level-2 p-6 sm:p-7 hover:border-[#a66a12] dark:hover:border-[#a66a12]'
               }`}
             >
               <div>
@@ -133,7 +133,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       className={`p-2.5 rounded-xl border ${
                         project.featured
                           ? 'bg-[#181d24] border-[#2c3240]'
-                          : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d]'
+                          : 'card-level-3'
                       }`}
                     >
                       <div className={`font-mono font-bold text-sm sm:text-base ${
@@ -158,7 +158,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       className={`px-2 py-0.5 rounded text-[11px] font-mono border ${
                         project.featured
                           ? 'bg-[#212630] border-[#303846] text-[#c6cad1]'
-                          : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1]'
+                          : 'card-level-3 text-[#5c6472] dark:text-[#8b93a1]'
                       }`}
                     >
                       {tag}

@@ -222,14 +222,14 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
 
         {/* TAB 1: RICE */}
         {activeTab === 'rice' && (
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+          <div className="card-level-1 p-6 sm:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 space-y-5">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-mono text-xs text-[#a66a12] font-semibold flex items-center gap-1.5">
                     <Sliders className="w-3.5 h-3.5" /> PRIORITYPE ENGINE
                   </span>
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#262c36] text-[#5c6472] dark:text-[#8b93a1]">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded card-level-3 text-[#5c6472] dark:text-[#8b93a1]">
                     6,000 Reviews Dataset
                   </span>
                 </div>
@@ -242,7 +242,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                 </p>
 
                 {/* Multipliers */}
-                <div className="space-y-3.5 p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+                <div className="space-y-3.5 p-4 card-level-2">
                   <div>
                     <div className="flex justify-between items-center text-xs font-mono mb-1.5">
                       <span className="text-[#5c6472] dark:text-[#8b93a1]">Impact Multiplier</span>
@@ -323,7 +323,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                         className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between focus:ring-2 focus:ring-[#a66a12] outline-none ${
                           isSelected
                             ? 'bg-[#101318] text-white border-[#101318] dark:bg-white dark:text-[#101318] dark:border-white shadow-sm'
-                            : 'bg-white dark:bg-[#151920] border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] text-[#101318] dark:text-white'
+                            : 'card-level-2 hover:border-[#a66a12] text-[#101318] dark:text-white'
                         }`}
                       >
                         <div className="flex items-center gap-3 min-w-0">
@@ -356,14 +356,14 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
 
         {/* TAB 2: FINANCIAL RISK */}
         {activeTab === 'risk' && (
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+          <div className="card-level-1 p-6 sm:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 space-y-4">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-mono text-xs text-[#a66a12] font-semibold flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5" /> RISK & DISTRESS BENCHMARK
                   </span>
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#262c36] text-[#5c6472] dark:text-[#8b93a1]">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded card-level-3 text-[#5c6472] dark:text-[#8b93a1]">
                     78,682 Records · XGBoost 0.857
                   </span>
                 </div>
@@ -376,7 +376,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                 </p>
 
                 {/* Ratio Sliders */}
-                <div className="space-y-3 p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+                <div className="space-y-3 p-4 card-level-2">
                   <div>
                     <div className="flex justify-between text-xs font-mono mb-1">
                       <span className="text-[#5c6472] dark:text-[#8b93a1]">Profitability (ROA %):</span>
@@ -453,7 +453,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
 
               {/* Right: Output & SHAP */}
               <div className="lg:col-span-7 space-y-4">
-                <div className="p-5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+                <div className="p-5 card-level-2">
                   <div className="flex items-center justify-between mb-3">
                     <div>
                       <div className="text-[10px] font-mono uppercase text-[#8b93a1]">Model Risk Assessment</div>
@@ -464,7 +464,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                     </div>
                   </div>
 
-                  <div className="flex items-baseline justify-between pt-2 border-t border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="flex items-baseline justify-between pt-2 border-t border-[#dfe3e9] dark:border-white/[0.08]">
                     <span className="text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">Probability of Default:</span>
                     <span className="font-mono font-bold text-3xl text-[#101318] dark:text-white">
                       {riskCalculation.probability}%
@@ -480,7 +480,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                   {riskCalculation.shapContributions.map((shap, idx) => {
                     const isRiskDriver = shap.value > 0.2;
                     return (
-                      <div key={idx} className="flex items-center justify-between text-xs font-mono p-2.5 rounded-lg bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+                      <div key={idx} className="flex items-center justify-between text-xs font-mono p-2.5 card-level-3">
                         <span className="text-[#5c6472] dark:text-[#9ea7b4]">{shap.name}</span>
                         <div className="flex items-center gap-3">
                           <span className="text-[#8b93a1]">{shap.raw}</span>

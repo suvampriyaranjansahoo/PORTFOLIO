@@ -26,7 +26,7 @@ export const SkillsCertificationsSection: React.FC<SkillsCertificationsSectionPr
           {SKILL_CATEGORIES.map((cat, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-between"
+              className="p-5 card-level-2 flex flex-col justify-between"
             >
               <div>
                 <div className="font-mono text-xs font-semibold text-[#a66a12] tracking-wider mb-3">
@@ -56,7 +56,7 @@ export const SkillsCertificationsSection: React.FC<SkillsCertificationsSectionPr
             {CERTIFICATIONS.map((cert, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between gap-3 shadow-xs hover:border-[#a66a12] transition-colors"
+                className="p-4 card-level-3 flex items-center justify-between gap-3 hover:border-[#a66a12] transition-colors"
               >
                 <div className="min-w-0">
                   <div className="text-xs font-semibold text-[#101318] dark:text-white truncate">

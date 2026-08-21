@@ -38,14 +38,14 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        className="relative w-full max-w-4xl max-h-[92vh] card-level-1 overflow-hidden flex flex-col !rounded-2xl"
         role="dialog"
         aria-modal="true"
         aria-labelledby="resume-preview-title"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header & Role Switcher */}
-        <div className="p-5 border-b border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 border-b border-[#dfe3e9] dark:border-white/[0.08] bg-[#f8fafc] dark:bg-[#111622]/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="text-[10px] font-mono uppercase tracking-wider text-[#8b93a1]">
               Resume Preview & ATS Verification

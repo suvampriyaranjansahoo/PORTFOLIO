@@ -194,11 +194,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
+        className="w-full max-w-xl card-level-1 overflow-hidden animate-in zoom-in-95 duration-150 !rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Input */}
-        <div className="flex items-center gap-3 p-4 border-b border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116]">
+        <div className="flex items-center gap-3 p-4 border-b border-[#dfe3e9] dark:border-white/[0.08] bg-[#f8fafc] dark:bg-[#111622]/90">
           <Search className="w-5 h-5 text-[#8b93a1]" />
           <input
             ref={inputRef}

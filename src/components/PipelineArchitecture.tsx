@@ -92,9 +92,9 @@ export const PipelineArchitecture: React.FC = () => {
   const [selectedNode, setSelectedNode] = useState<PipelineNode>(MEDIFLOW_NODES[0]);
 
   return (
-    <div className="bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-sm overflow-hidden">
+    <div className="card-level-1 overflow-hidden">
       {/* Header */}
-      <div className="p-5 border-b border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 border-b border-[#dfe3e9] dark:border-white/[0.08] bg-[#f8fafc] dark:bg-[#111622]/90 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
             <Network className="w-5 h-5" />

@@ -51,7 +51,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
         {/* Top Summary Metrics Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
+          <div className="card-level-2 p-4 flex items-center gap-3.5">
             <div className="p-2.5 rounded-lg bg-amber-500/10 text-[#a66a12] shrink-0">
               <GraduationCap className="w-5 h-5" />
             </div>
@@ -64,7 +64,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
+          <div className="card-level-2 p-4 flex items-center gap-3.5">
             <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
               <Award className="w-5 h-5" />
             </div>
@@ -77,7 +77,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
+          <div className="card-level-2 p-4 flex items-center gap-3.5">
             <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
               <BookOpen className="w-5 h-5" />
             </div>
@@ -111,7 +111,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
                   className={`w-full text-left p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
                       ? 'bg-white dark:bg-[#1c222d] border-[#a66a12] shadow-sm ring-1 ring-[#a66a12]/30'
-                      : 'bg-[#f6f7f9] dark:bg-[#151920] border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12]/60'
+                      : 'card-level-3 hover:border-[#a66a12]/60'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
@@ -145,7 +145,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
           {/* Detailed Milestone Panel (Right) */}
           <div className="lg:col-span-8">
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm flex flex-col justify-between space-y-6">
+            <div className="h-full card-level-1 p-6 sm:p-7 flex flex-col justify-between space-y-6">
               <div>
                 {/* Header Strip */}
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
@@ -175,7 +175,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
                     </div>
                   </div>
 
-                  <div className="sm:text-right shrink-0 p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="sm:text-right shrink-0 p-3 card-level-3">
                     <div className="text-[10px] font-mono uppercase text-[#8b93a1]">
                       {selectedMilestone.scoreType}
                     </div>
@@ -211,7 +211,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
                     {selectedMilestone.coursework.map((course, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
+                        className="card-level-3 px-2.5 py-1 text-xs font-mono text-[#101318] dark:text-white"
                       >
                         {course}
                       </span>
@@ -245,7 +245,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
               return (
                 <div
                   key={idx}
-                  className="p-5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs"
+                  className="card-level-2 p-5"
                 >
                   <div className="flex items-center gap-2.5 mb-3">
                     <span className="p-2 rounded-lg bg-[#a66a12]/10 text-[#a66a12]">

@@ -59,7 +59,7 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
             <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
               {t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
             </p>
-            <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
+            <div className="card-level-2 p-4 space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
               <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                 <span>
@@ -83,7 +83,7 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
               {steps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] transition-colors"
+                  className="card-level-2 p-4 hover:border-[#a66a12] transition-colors"
                 >
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="font-mono text-xs font-bold text-[#a66a12]">

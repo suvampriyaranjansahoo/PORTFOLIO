@@ -20,7 +20,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
           {t?.heading || "Enterprise Track Record"}
         </h2>
 
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+        <div className="card-level-1 p-6 sm:p-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#dfe3e9] dark:border-[#262c36]">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -35,14 +35,14 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </p>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] font-mono text-xs text-[#101318] dark:text-white self-start md:self-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg card-level-3 font-mono text-xs text-[#101318] dark:text-white self-start md:self-auto">
               <Clock className="w-3.5 h-3.5 text-[#a66a12]" />
               <span>Sep 2025 – Oct 2025</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-6">
-            <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-2 p-4">
               <div className="font-mono font-bold text-xl text-emerald-600 dark:text-emerald-400">
                 +35%
               </div>
@@ -54,7 +54,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-2 p-4">
               <div className="font-mono font-bold text-xl text-amber-600 dark:text-amber-400">
                 -40%
               </div>
@@ -66,7 +66,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-2 p-4">
               <div className="font-mono font-bold text-xl text-indigo-600 dark:text-indigo-400">
                 -5%
               </div>

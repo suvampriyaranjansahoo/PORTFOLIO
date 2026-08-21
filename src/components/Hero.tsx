@@ -129,7 +129,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
         </div>
 
         {/* Right side info card */}
-        <div className="lg:col-span-4 p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm space-y-5">
+        <div className="lg:col-span-4 card-level-1 p-6 sm:p-7 space-y-5">
           <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 border border-[#a66a12]/30 flex items-center justify-center font-mono font-bold text-sm text-[#a66a12]">
@@ -163,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               {['SQL (CTEs/Window)', 'Python / PySpark', 'Power BI & DAX', 'Azure Synapse', 'RICE Framework', 'XGBoost & SHAP'].map((skill) => (
                 <span
                   key={skill}
-                  className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-[#e6edf3]"
+                  className="card-level-3 px-2.5 py-1 text-xs font-mono text-[#101318] dark:text-[#e6edf3]"
                 >
                   {skill}
                 </span>

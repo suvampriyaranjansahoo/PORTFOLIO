@@ -20,7 +20,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     <section id="contact" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6 space-y-12">
         {/* Currently Exploring Banner */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+        <div className="card-level-2 p-6 sm:p-8">
           <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
             {t?.exploringLabel || "08 · CURRENTLY EXPLORING"}
           </div>
@@ -33,7 +33,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
 
         {/* Contact Card */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#111419] text-white border border-[#262c36] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="card-level-1 p-8 sm:p-12 !bg-[#111419] dark:!bg-[#131823]/95 text-white border-[#262c36] dark:border-white/[0.1] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <div className="font-mono text-xs text-[#d8a34f] tracking-widest uppercase">
               {t?.contactLabel || "09 · CONTACT"}

@@ -35,13 +35,13 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        className="relative w-full max-w-2xl max-h-[90vh] card-level-1 overflow-hidden flex flex-col !rounded-2xl"
         role="dialog"
         aria-modal="true"
         aria-labelledby="recruiter-modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-[#dfe3e9] dark:border-[#262c36] flex items-start justify-between gap-4 bg-[#f6f7f9] dark:bg-[#0e1116]">
+        <div className="p-6 border-b border-[#dfe3e9] dark:border-white/[0.08] flex items-start justify-between gap-4 bg-[#f8fafc] dark:bg-[#111622]/90">
           <div>
             <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-500/20 mb-2">
               <Sparkles className="w-3 h-3 text-[#a66a12]" /> 60-SECOND RECRUITER EXECUTIVE SUMMARY
@@ -68,26 +68,26 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-5">
           {/* Key Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-            <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-3 p-3">
               <div className="font-mono font-bold text-lg text-[#101318] dark:text-white">50K+</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">Records Validated</div>
             </div>
-            <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-3 p-3">
               <div className="font-mono font-bold text-lg text-emerald-600 dark:text-emerald-400">-40%</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">Reporting Turnaround</div>
             </div>
-            <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-3 p-3">
               <div className="font-mono font-bold text-lg text-indigo-600 dark:text-indigo-400">-5%</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">Customer Churn</div>
             </div>
-            <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+            <div className="card-level-3 p-3">
               <div className="font-mono font-bold text-lg text-[#a66a12]">8.18</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">CGPA (ITER CSE)</div>
             </div>
           </div>
 
           {/* Quick Fit Summary */}
-          <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-2 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
+          <div className="card-level-2 p-4 space-y-2 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
             <div className="font-mono font-bold text-xs text-[#101318] dark:text-white uppercase tracking-wider">
               Why Hire Suvam?
             </div>
@@ -111,7 +111,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
                     onSelectResume(role);
                     onClose();
                   }}
-                  className="p-2.5 rounded-lg text-left bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] transition-colors flex items-center justify-between group cursor-pointer"
+                  className="p-2.5 rounded-lg text-left card-level-3 hover:border-[#a66a12] transition-colors flex items-center justify-between group cursor-pointer"
                 >
                   <div className="flex items-center gap-2 truncate">
                     <span>{role.icon}</span>
@@ -127,7 +127,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 px-6 border-t border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116] flex items-center justify-between gap-3">
+        <div className="p-4 px-6 border-t border-[#dfe3e9] dark:border-white/[0.08] bg-[#f8fafc] dark:bg-[#111622]/90 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 text-xs font-mono">
             <a
               href={PERSONAL_INFO.links.email}
