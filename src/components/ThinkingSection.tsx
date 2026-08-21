@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, CheckCircle2, ChevronRight, HelpCircle, Lightbulb, LineChart, Target, Wrench } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ChevronRight, HelpCircle, Lightbulb, LineChart, Target, Wrench, Sparkles } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
 
 interface ThinkingSectionProps {
@@ -47,61 +47,56 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
   return (
     <section className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
-        <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
-          {t?.label || "05 · HOW I THINK"}
+        <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>{t?.label || "05 · HOW I THINK"}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          <div className="lg:col-span-4 space-y-4">
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
+          <div className="lg:col-span-4 space-y-5">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight">
               {t?.heading || "From question to measurable action."}
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
               {t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
             </p>
-            <div className="holo-border-active p-[1.5px] rounded-2xl shadow-lg">
-              <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card space-y-2 text-xs font-mono text-slate-600 dark:text-slate-300">
-                <div className="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                  <span>
-                    {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
-                  </span>
-                </div>
-                <p className="text-[11px] leading-relaxed">
-                  {language === 'de'
-                    ? "Ob Kundenabwanderung bei VOIS oder Insolvenzrisiken – jede Analyse schließt mit einer klaren Geschäftsempfehlung ab."
-                    : language === 'fr'
-                    ? "Qu'il s'agisse de churn client chez VOIS ou de bilans financiers, chaque analyse débouche sur une recommandation concrète."
-                    : language === 'hi'
-                    ? "चाहे VOIS में ग्राहक चर्न हो या वित्तीय जोखिम, प्रत्येक विश्लेषण एक ठोस व्यावसायिक समाधान पर समाप्त होता है।"
-                    : "Whether diagnosing retail customer churn at VOIS or analyzing corporate bankruptcy filings, every analysis ends with an unambiguous business recommendation."}
-                </p>
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#9ea7b4]">
+              <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span>
+                  {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
+                </span>
               </div>
+              <p className="text-[11px] leading-relaxed">
+                {language === 'de'
+                  ? "Ob Kundenabwanderung bei VOIS oder Insolvenzrisiken – jede Analyse schließt mit einer klaren Geschäftsempfehlung ab."
+                  : language === 'fr'
+                  ? "Qu'il s'agisse de churn client chez VOIS ou de bilans financiers, chaque analyse débouche sur une recommandation concrète."
+                  : language === 'hi'
+                  ? "चाहे VOIS में ग्राहक चर्न हो या वित्तीय जोखिम, प्रत्येक विश्लेषण एक ठोस व्यावसायिक समाधान पर समाप्त होता है।"
+                  : "Whether diagnosing retail customer churn at VOIS or analyzing corporate bankruptcy filings, every analysis ends with an unambiguous business recommendation."}
+              </p>
             </div>
           </div>
 
           <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               {steps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-0.5 shadow-md"
+                  className="p-4 sm:p-4.5 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] transition-all shadow-xs group"
                 >
-                  <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card h-full flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                          0{idx + 1}
-                        </span>
-                        <span className="font-mono text-xs font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                          {step.title}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {step.desc}
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="font-mono text-xs font-bold text-[#a66a12]">
+                      0{idx + 1}
+                    </span>
+                    <span className="font-mono text-xs font-bold text-[#101318] dark:text-white tracking-tight group-hover:text-[#a66a12] transition-colors">
+                      {step.title}
+                    </span>
                   </div>
+                  <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+                    {step.desc}
+                  </p>
                 </div>
               ))}
             </div>

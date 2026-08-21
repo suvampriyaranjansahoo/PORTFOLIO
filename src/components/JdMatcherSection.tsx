@@ -21,6 +21,8 @@ interface RolePreset {
   targetRole: ResumeRole;
   requiredSkills: string[];
   recommendedCaseStudy: string;
+  caseStudyName: string;
+  fitPercentage: number;
   summaryPitch: string;
 }
 
@@ -29,40 +31,50 @@ const PRESET_JDS: RolePreset[] = [
     title: 'Product Analyst / Growth Analyst',
     roleId: 'product_analyst',
     targetRole: RESUME_ROLES[2],
+    fitPercentage: 94,
     requiredSkills: ['RICE Framework', 'A/B Testing & Funnel Analysis', 'SQL CTEs', 'Power BI & DAX', 'Customer Cohort Analysis', 'NLP Feedback Mining'],
-    recommendedCaseStudy: 'prioritype',
+    recommendedCaseStudy: 'priority',
+    caseStudyName: 'PriorityPe (RICE Engine)',
     summaryPitch: 'Proven track record of turning messy user telemetry and 8,000+ unstructured feedback records into quantifiable RICE scores, reducing checkout complaints by 40% and cutting turnaround time at VOIS.'
   },
   {
     title: 'Business Analyst (Enterprise / Financial)',
     roleId: 'business_analyst',
     targetRole: RESUME_ROLES[0],
+    fitPercentage: 96,
     requiredSkills: ['Business Requirements (BRD)', 'SQL Data Validation', 'Power BI Dashboards', 'Stakeholder Management', 'Churn Analysis (50k+ records)', 'Risk Analytics'],
-    recommendedCaseStudy: 'customer_segmentation',
+    recommendedCaseStudy: 'customer',
+    caseStudyName: 'Customer Segmentation & Churn',
     summaryPitch: 'Validated 50,000+ enterprise records at Vodafone Intelligent Solutions (VOIS), automated reporting workflows cutting turnaround by 40%, and surfaced actionable churn reduction levers.'
   },
   {
     title: 'Data Analyst / BI Developer',
     roleId: 'data_analyst',
     targetRole: RESUME_ROLES[1],
+    fitPercentage: 96,
     requiredSkills: ['Advanced SQL & Window Functions', 'Python & Pandas', 'Power BI / DAX / Power Query', 'EDA & Feature Engineering', 'Star Schema & ETL', 'Data Quality Audits'],
-    recommendedCaseStudy: 'financial_distress',
+    recommendedCaseStudy: 'financial',
+    caseStudyName: 'Financial Risk & Distress (78K filings)',
     summaryPitch: 'End-to-end analytical capability across 78,000+ financial records, data cleaning pipelines, star-schema data models, and automated executive dashboards.'
   },
   {
     title: 'Data Engineer / Streaming Analytics',
     roleId: 'data_engineer',
     targetRole: RESUME_ROLES[3],
+    fitPercentage: 97,
     requiredSkills: ['Azure Stream Analytics', 'IoT Hub & Event Ingestion', 'PySpark & Databricks', 'Cosmos DB & Synapse', 'Star-Schema & Delta Lake', 'Real-Time Telemetry'],
-    recommendedCaseStudy: 'mediflow_rt',
+    recommendedCaseStudy: 'mediflow',
+    caseStudyName: 'MediFlowRT Azure Streaming',
     summaryPitch: 'Built MediFlowRT real-time streaming pipeline processing high-frequency patient vitals on Azure with sub-second alert triggers and Cosmos DB analytical stores.'
   },
   {
     title: 'AI / Machine Learning Engineer',
     roleId: 'ai_engineer',
     targetRole: RESUME_ROLES[4],
+    fitPercentage: 98,
     requiredSkills: ['XGBoost / LightGBM', 'SHAP Feature Attribution', 'Oracle Agentic AI Certified', 'NLP & Topic Modeling (TF-IDF/BERT)', 'Model Evaluation (0.88 ROC-AUC)', 'FastAPI / Production Serving'],
-    recommendedCaseStudy: 'financial_distress',
+    recommendedCaseStudy: 'cardio',
+    caseStudyName: 'CardioInsight-AI (XGBoost + SHAP)',
     summaryPitch: 'Trained and tuned XGBoost models on 78K filings with 0.88 ROC-AUC, paired with SHAP explainability matrices and Agentic AI workflows.'
   }
 ];
@@ -85,7 +97,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
   // Calculate matching stats
   const matchScore = useMemo(() => {
     if (!isCustomMode) {
-      return 94 + (selectedPresetIndex % 5);
+      return activePreset.fitPercentage;
     }
     const lower = customText.toLowerCase();
     let hits = 0;
@@ -94,7 +106,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
       if (lower.includes(k)) hits++;
     });
     return Math.min(Math.max(Math.round((hits / 8) * 100), 75), 98);
-  }, [selectedPresetIndex, isCustomMode, customText]);
+  }, [activePreset, isCustomMode, customText]);
 
   return (
     <div className="bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-sm overflow-hidden">
@@ -147,9 +159,9 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                   {preset.title}
                 </span>
                 <span className={`text-[10px] font-mono mt-2 ${
-                  !isCustomMode && selectedPresetIndex === idx ? 'text-amber-300 dark:text-amber-700' : 'text-[#a66a12]'
+                  !isCustomMode && selectedPresetIndex === idx ? 'text-amber-300 dark:text-amber-700 font-bold' : 'text-[#a66a12] font-semibold'
                 }`}>
-                  {94 + (idx % 5)}% Fit →
+                  {preset.fitPercentage}% Fit →
                 </span>
               </button>
             ))}
@@ -199,7 +211,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                 className="p-3 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] transition-colors cursor-pointer group"
               >
                 <div className="flex items-center justify-between text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] transition-colors">
-                  <span className="capitalize">Inspect {activePreset.recommendedCaseStudy.replace('_', ' ')} Case Study</span>
+                  <span>Inspect {activePreset.caseStudyName}</span>
                   <ChevronRight className="w-4 h-4 text-gray-400 group-hover:translate-x-0.5 transition-transform" />
                 </div>
                 <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] mt-1">
@@ -211,7 +223,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
             {/* Direct PDF Download */}
             <button
               onClick={() => onSelectResume(activePreset.targetRole)}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
             >
               <Download className="w-4 h-4" />
               <span>Download {activePreset.targetRole.title} ATS Resume (PDF)</span>
