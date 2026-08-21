@@ -32,48 +32,66 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   language = 'en',
   onOpenRecruiter
 }) => {
-  const [activePillar, setActivePillar] = useState<'business' | 'product' | 'engineering'>('business');
+  const [activePillar, setActivePillar] = useState<'business' | 'product' | 'engineering' | 'ai'>('business');
+
   const t = TRANSLATIONS[language]?.about || TRANSLATIONS['en'].about;
 
   const pillars = [
     {
       id: 'business' as const,
       label: language === 'de' ? 'Business Analytics' : language === 'fr' ? 'Business Analytics' : language === 'hi' ? 'बिजनेस एनालिटिक्स' : 'Business Analytics',
+      positioning: 'ANALYZE',
       badge: 'Decisions & ROI',
       icon: LineChart,
-      color: 'text-amber-600 dark:text-amber-400',
-      bgColor: 'bg-amber-500/10',
-      borderColor: 'border-amber-500/30',
+      color: 'text-blue-600 dark:text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
       headline: 'Uncovering the "Why" Behind the Numbers',
       summary: 'Bridging technical data stores with executive decision-making. I turn disparate operational data into automated KPI dashboards, cohort retention models, and revenue risk assessments that stakeholders can trust.',
       keySkills: ['KPI Definition & Discovery', 'DAX & Power Query Automation', 'Cohort Retention & Churn Analysis', 'Executive & Board Reporting'],
-      proofMetric: '50K+ business records audited & 40% reporting cycle cut at VOIS'
+      proofMetric: 'Validated 50K+ records, driving a 35% accuracy improvement at VOIS'
     },
     {
       id: 'product' as const,
       label: language === 'de' ? 'Produkt-Analytik' : language === 'fr' ? 'Product Analytics' : language === 'hi' ? 'प्रोडक्ट एनालिटिक्स' : 'Product Analytics',
+      positioning: 'DECIDE',
       badge: 'Prioritization & UX',
       icon: Target,
-      color: 'text-emerald-600 dark:text-emerald-400',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30',
+      color: 'text-purple-600 dark:text-purple-400',
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/30',
       headline: 'Data-Backed Roadmaps & Prioritization',
       summary: 'Using qualitative feedback and quantitative behavioral data to guide what to build next. Experienced in applying the RICE framework, customer sentiment clustering (NLP), and funnel drop-off analysis to eliminate roadmap guesswork.',
       keySkills: ['RICE & ICE Scoring Frameworks', 'User Review NLP Topic Modeling', 'Funnel & Conversion Tracking', 'Feature Impact Evaluation'],
-      proofMetric: '6,000+ UPI app reviews mined into 8 structured feature themes (PriorityPe)'
+      proofMetric: 'Mined 6,000+ UPI app reviews to reduce checkout complaints by 40%'
     },
     {
       id: 'engineering' as const,
       label: language === 'de' ? 'Data Engineering' : language === 'fr' ? 'Data Engineering' : language === 'hi' ? 'डेटा इंजीनियरिंग' : 'Data Engineering',
+      positioning: 'ENGINEER',
       badge: 'Scale & Integrity',
       icon: Database,
-      color: 'text-blue-600 dark:text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
+      color: 'text-emerald-600 dark:text-emerald-400',
+      bgColor: 'bg-emerald-500/10',
+      borderColor: 'border-emerald-500/30',
       headline: 'Reliable Pipelines & Dimensional Models',
       summary: 'Building the foundational plumbing that powers analytics. Strong foundation in relational SQL, Bronze/Silver/Gold layered architectures, star-schema data modeling, and real-time PySpark streaming on Microsoft Azure.',
       keySkills: ['Complex SQL (CTEs, Window Functions)', 'Star-Schema & Dimensional Modeling', 'Azure Databricks & PySpark ETL', 'Data Quality & Reconciliation'],
-      proofMetric: '78K+ financial records analyzed & sub-second streaming pipelines engineered'
+      proofMetric: 'Engineered sub-second pipelines and slashed reporting turnaround by 40%'
+    },
+    {
+      id: 'ai' as const,
+      label: language === 'de' ? 'KI & ML Systeme' : language === 'fr' ? 'Systèmes IA & ML' : language === 'hi' ? 'AI & ML सिस्टम' : 'AI & ML Systems',
+      positioning: 'BUILD',
+      badge: 'Prediction & Automation',
+      icon: Cpu,
+      color: 'text-orange-600 dark:text-orange-400',
+      bgColor: 'bg-orange-500/10',
+      borderColor: 'border-orange-500/30',
+      headline: 'Predictive Modeling & Intelligent Systems',
+      summary: 'Developing machine learning models that anticipate business needs. From classifying financial distress to NLP sentiment pipelines, I bridge the gap between predictive algorithms and actionable business integrations.',
+      keySkills: ['XGBoost & Random Forest', 'Predictive Risk Modeling', 'NLP & Sentiment Analysis', 'Scikit-learn & Statistical Methods'],
+      proofMetric: 'Analyzed 78K+ financial records to identify leading indicators of risk'
     }
   ];
 
@@ -90,10 +108,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             <span>{t?.label || "01 · WHO I AM & PROFESSIONAL PROFILE"}</span>
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight leading-tight mb-4">
-            {t?.heading || "Data that answers business questions."}
+            DATA <span className="text-[#a66a12] font-light">→</span> INSIGHT <span className="text-[#a66a12] font-light">→</span> DECISION <span className="text-[#a66a12] font-light">→</span> IMPACT
           </h2>
           <p className="text-base sm:text-lg text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-            {t?.p1 || "I am a 2026 Computer Science Engineering graduate who operates at the intersection of data analysis, product intuition, and robust data engineering."}
+            I am a 2026 Computer Science Engineering graduate who operates at the intersection of data analysis, product intuition, and robust data engineering.
           </p>
         </div>
 
@@ -119,7 +137,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Tab Pills */}
-              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4">
+              <div className="grid grid-cols-4 gap-1 sm:gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4">
                 {pillars.map((pillar) => {
                   const Icon = pillar.icon;
                   const isActive = activePillar === pillar.id;
@@ -127,15 +145,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                     <button
                       key={pillar.id}
                       onClick={() => setActivePillar(pillar.id)}
-                      className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
+                      className={`flex items-center justify-center gap-1 sm:gap-1.5 py-2.5 px-1 sm:px-2 rounded-lg text-[9px] sm:text-[11px] font-mono font-medium transition-all cursor-pointer ${
                         isActive
                           ? 'bg-white dark:bg-[#1c222d] text-[#101318] dark:text-white shadow-xs border border-[#dfe3e9] dark:border-[#30363d]'
                           : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
                       }`}
                     >
                       <Icon className={`w-3.5 h-3.5 ${isActive ? pillar.color : ''}`} />
-                      <span className="hidden sm:inline">{pillar.label}</span>
-                      <span className="sm:hidden">{pillar.label.split(' ')[0]}</span>
+                      <span>{pillar.positioning}</span>
                     </button>
                   );
                 })}
@@ -148,9 +165,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                     <span className={`p-2 rounded-lg ${currentPillar.bgColor} ${currentPillar.color}`}>
                       <currentPillar.icon className="w-4 h-4" />
                     </span>
-                    <h3 className="font-semibold text-base text-[#101318] dark:text-white">
-                      {currentPillar.headline}
-                    </h3>
+                    <div>
+                      <div className={`text-[10px] font-mono font-bold tracking-widest uppercase ${currentPillar.color}`}>
+                        {currentPillar.label}
+                      </div>
+                      <h3 className="font-semibold text-base text-[#101318] dark:text-white leading-tight mt-0.5">
+                        {currentPillar.headline}
+                      </h3>
+                    </div>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase ${currentPillar.bgColor} ${currentPillar.color} border ${currentPillar.borderColor}`}>
                     {currentPillar.badge}

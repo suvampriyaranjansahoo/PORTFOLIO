@@ -139,9 +139,9 @@ export const PROOF_POINTS = [
 
 export const KEY_METRICS = [
   { value: 50, suffix: "K+", label: "business records validated", note: "at VOIS internship" },
-  { value: 78, suffix: "K+", label: "financial records analyzed", note: "18 risk indicators" },
-  { value: 40, suffix: "%", label: "reporting turnaround improvement", note: "automated with DAX & Power Query" },
-  { value: 0.857, suffix: "", decimal: 3, label: "XGBoost ROC-AUC", note: "bankruptcy prediction benchmark" }
+  { value: 35, suffix: "%", label: "reporting accuracy improvement", note: "via automated KPI pipelines" },
+  { value: 40, suffix: "%", label: "turnaround time reduction", note: "using DAX & Power Query" },
+  { value: 5, suffix: "%", label: "churn reduction", note: "cross-functional impact" }
 ];
 
 export const RESUME_ROLES: ResumeRole[] = [

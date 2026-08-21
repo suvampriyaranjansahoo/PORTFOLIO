@@ -56,9 +56,9 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
   }, [hasAnimated]);
 
   const proofItems = [
-    { label: t?.focusLabel || "FOCUS", value: t?.focusValue || "Data → Product → Business" },
-    { label: t?.stackLabel || "CORE STACK", value: t?.stackValue || "SQL · Python · Power BI · Azure" },
-    { label: t?.styleLabel || "WORK STYLE", value: t?.styleValue || "Question → Insight → Action" }
+    { label: "FOCUS", value: "Data → Product → Business" },
+    { label: "CORE STACK", value: "SQL · Python · Power BI · Azure" },
+    { label: "WORKING APPROACH", value: "Analyze → Decide → Engineer → Build" }
   ];
 
   return (
