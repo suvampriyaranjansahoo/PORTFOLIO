@@ -193,7 +193,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         ref={cardInnerRef}
         data-z-index={diagnosticReport?.computedZIndex || '10'}
         data-blur-status={diagnosticReport?.computedBackdropFilter !== 'none' ? 'OK' : 'OFF'}
-        className={`relative z-10 w-full h-full rounded-[calc(1.5rem-1.5px)] glass-morphism-card overflow-hidden flex flex-col justify-between ${debugClass} ${cleanClassName}`}
+        className={`relative z-10 w-full h-full rounded-[calc(1.5rem-1.5px)] glass-morphism-card flex flex-col justify-between ${debugClass} ${cleanClassName}`}
         style={{ 
           transform: 'translateZ(14px)',
           transformStyle: 'preserve-3d',
@@ -205,6 +205,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         <div 
           className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-15"
           style={{
+            borderRadius: 'inherit',
             background: isHovered 
               ? `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08) 35%, rgba(56, 189, 248, 0.04) 65%, transparent 80%)`
               : 'none'
@@ -215,6 +216,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         <div 
           className="pointer-events-none absolute inset-0 opacity-40 group-hover:opacity-90 transition-opacity duration-300 z-20"
           style={{
+            borderRadius: 'inherit',
             background: isHovered 
               ? `linear-gradient(${120 + normalized.x * 25}deg, rgba(255, 255, 255, 0.12) 0%, rgba(139, 92, 246, 0.05) 30%, transparent 65%)` 
               : 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 50%)'
@@ -222,7 +224,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         />
 
         {/* Secondary Glass Substrate Grid */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-0 rounded-[inherit]" />
 
         {/* Spatial Preview Interface (if provided) with Parallax Depth Separation */}
         {renderSpatialPreview && (

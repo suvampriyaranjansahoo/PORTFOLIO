@@ -143,7 +143,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       : 'text-slate-900/[0.03] dark:text-white/[0.03]'
                   }`}
                 >
-                  {String(idx + 1).padStart(2, '0')}
+                  {project.index}
                 </div>
 
                 <div className="flex flex-col justify-between h-full relative z-10">
@@ -189,6 +189,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </h3>
                     <div className="text-xs font-mono mb-3.5 text-indigo-600 dark:text-indigo-400/90 font-medium">
                       {project.tagline}
+                    </div>
+
+                    {/* Problem Question */}
+                    <div className="mb-4 text-sm font-medium text-slate-800 dark:text-slate-200 border-l-2 border-indigo-500 pl-3 italic">
+                      "{project.question}"
                     </div>
 
                     {/* Core Architectural Flow Badge */}
