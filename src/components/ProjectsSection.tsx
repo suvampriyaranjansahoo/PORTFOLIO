@@ -75,13 +75,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               <InteractiveCard
                 key={project.id}
                 featured={project.featured}
-                glowColor={project.featured ? "rgba(245, 158, 11, 0.2)" : "rgba(166, 106, 18, 0.12)"}
+                glowColor={project.featured ? "rgba(99, 102, 241, 0.3)" : "rgba(139, 92, 246, 0.2)"}
                 containerClassName={project.featured ? 'md:col-span-2' : ''}
                 className={project.featured ? 'p-6 sm:p-8 space-y-4' : 'p-6 sm:p-7 space-y-4'}
               >
                 {/* Top Glowing Status Ribbon for Flagship & Live Projects */}
                 {project.featured && (
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-300 to-amber-600 shadow-[0_0_12px_rgba(245,158,11,0.6)]" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 via-purple-400 via-sky-400 to-amber-400 shadow-[0_0_14px_rgba(139,92,246,0.6)]" />
                 )}
 
                 {/* Ghost watermark index number */}
@@ -101,29 +101,23 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                       <div className="flex flex-wrap items-center gap-2">
                         {project.featured ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                            <Sparkles className="w-3 h-3" />
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo-500/20 text-indigo-300 dark:text-indigo-200 border border-indigo-500/30 shadow-[0_0_12px_rgba(99,102,241,0.2)]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping" />
+                            <Sparkles className="w-3 h-3 text-indigo-400" />
                             FLAGSHIP SYSTEM
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#5c6472] dark:text-[#8b93a1]">
-                            <ShieldCheck className="w-3 h-3 text-[#a66a12]" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-slate-500/10 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-slate-300">
+                            <ShieldCheck className="w-3 h-3 text-indigo-500 dark:text-indigo-400" />
                             VERIFIED
                           </span>
                         )}
-                        <span className={`text-[10px] font-mono font-semibold uppercase tracking-wider ${
-                          project.featured ? 'text-[#a0a8b5]' : 'text-[#8b93a1]'
-                        }`}>
+                        <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                           {project.meta}
                         </span>
                         {readingTime && (
                           <span 
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono transition-colors ${
-                              project.featured
-                                ? 'bg-amber-400/10 text-amber-200 border border-amber-400/20'
-                                : 'bg-amber-500/10 dark:bg-amber-400/10 text-[#a66a12] dark:text-amber-300 border border-amber-500/20'
-                            }`}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20"
                             title={`Estimated reading time: ${readingTime.detailText}`}
                           >
                             <Clock className="w-2.5 h-2.5" />
@@ -132,32 +126,22 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         )}
                       </div>
 
-                      <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-bold ${
-                        project.featured 
-                          ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30' 
-                          : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#a66a12] border border-[#dfe3e9] dark:border-[#30363d]'
-                      }`}>
-                        <Activity className="w-3 h-3 text-[#a66a12] dark:text-amber-400 animate-pulse" />
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/50 shadow-xs">
+                        <Activity className="w-3 h-3 text-indigo-500 dark:text-indigo-400 animate-pulse" />
                         <span>{project.metrics[0]?.value} {project.metrics[0]?.label}</span>
                       </div>
                     </div>
 
                     {/* Project Title */}
-                    <h3 className={`font-display font-bold text-xl sm:text-2xl mb-1.5 tracking-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${
-                      project.featured ? 'text-white' : 'text-[#101318] dark:text-white'
-                    }`}>
+                    <h3 className="font-display font-bold text-xl sm:text-2xl mb-1.5 tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       {project.title}
                     </h3>
-                    <div className={`text-xs font-mono mb-4 ${
-                      project.featured ? 'text-amber-200/90' : 'text-[#a66a12]'
-                    }`}>
+                    <div className="text-xs font-mono mb-4 text-indigo-600 dark:text-indigo-400/90 font-medium">
                       {project.tagline}
                     </div>
 
                     {/* Description */}
-                    <p className={`text-sm leading-relaxed mb-5 ${
-                      project.featured ? 'text-[#c6cad1]' : 'text-[#5c6472] dark:text-[#9ea7b4]'
-                    }`}>
+                    <p className="text-sm leading-relaxed mb-5 text-slate-600 dark:text-slate-300">
                       {project.description}
                     </p>
 
@@ -166,20 +150,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       {project.metrics.map((m, mIdx) => (
                         <div
                           key={mIdx}
-                          className={`p-2.5 rounded-xl border transition-all duration-300 ${
-                            project.featured
-                              ? 'bg-[#181d24] border-[#2c3240] group-hover:border-amber-500/40 group-hover:bg-[#1b212a]'
-                              : 'bg-[#f6f7f9]/80 dark:bg-[#1a1f28]/80 border-[#dfe3e9] dark:border-[#30363d] group-hover:border-[#a66a12]/30'
-                          }`}
+                          className="p-2.5 rounded-xl border transition-all duration-300 bg-slate-50/70 dark:bg-slate-900/50 border-slate-200/80 dark:border-slate-800/80 group-hover:border-indigo-500/30 group-hover:bg-slate-100/80 dark:group-hover:bg-slate-900/80 shadow-xs"
                         >
-                          <div className={`font-mono font-bold text-sm sm:text-base ${
-                            project.featured ? 'text-amber-300' : 'text-[#a66a12]'
-                          }`}>
+                          <div className="font-mono font-bold text-sm sm:text-base text-indigo-600 dark:text-indigo-300">
                             {m.value}
                           </div>
-                          <div className={`text-[10px] font-mono uppercase mt-0.5 line-clamp-1 ${
-                            project.featured ? 'text-[#8b93a1]' : 'text-[#5c6472] dark:text-[#8b93a1]'
-                          }`}>
+                          <div className="text-[10px] font-mono uppercase mt-0.5 line-clamp-1 text-slate-500 dark:text-slate-400">
                             {m.label}
                           </div>
                         </div>
@@ -191,11 +167,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className={`px-2 py-0.5 rounded text-[11px] font-mono border transition-all duration-200 ${
-                            project.featured
-                              ? 'bg-[#212630] border-[#303846] text-[#c6cad1] hover:border-amber-400/50 hover:text-white'
-                              : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1] hover:border-[#a66a12]/50 hover:text-[#101318] dark:hover:text-white'
-                          }`}
+                          className="glass-tech-pill"
                         >
                           {tag}
                         </span>
@@ -204,33 +176,25 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   </div>
 
                   {/* Actions Bar */}
-                  <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
-                    project.featured ? 'border-[#2c3240]' : 'border-[#dfe3e9] dark:border-[#262c36]'
-                  }`}>
+                  <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-3">
                     {project.caseStudyId ? (
                       <button
                         id={`case-study-btn-${project.id}`}
                         onClick={() => onOpenCaseStudy(project.caseStudyId!)}
-                        className={`inline-flex items-center gap-2 text-xs font-mono font-semibold hover:underline cursor-pointer group/btn ${
-                          project.featured ? 'text-amber-300' : 'text-[#a66a12]'
-                        }`}
+                        className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 cursor-pointer group/btn"
                         title={readingTime ? `Read deep-dive (${readingTime.detailText})` : 'Read case study'}
                       >
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>{t?.caseStudyBtn || "View Case Study"}</span>
                         {readingTime && (
-                          <span className={`px-1.5 py-0.2 rounded text-[10px] font-mono border transition-opacity ${
-                            project.featured
-                              ? 'bg-amber-400/15 border-amber-400/30 text-amber-200'
-                              : 'bg-[#a66a12]/10 border-[#a66a12]/20 text-[#a66a12]'
-                          }`}>
+                          <span className="px-1.5 py-0.2 rounded text-[10px] font-mono border bg-indigo-50 dark:bg-indigo-950/60 border-indigo-200 dark:border-indigo-800/50 text-indigo-700 dark:text-indigo-300">
                             {readingTime.displayText}
                           </span>
                         )}
                         <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                       </button>
                     ) : (
-                      <span className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
+                      <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
                         <Check className="w-3 h-3 text-emerald-500" />
                         <span>Production Ready</span>
                       </span>
@@ -240,11 +204,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-1.5 text-xs font-mono transition-colors group/repo ${
-                        project.featured 
-                          ? 'text-[#c6cad1] hover:text-white' 
-                          : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
-                      }`}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors group/repo"
                     >
                       <span>{t?.repoBtn || "Repository"}</span>
                       <ExternalLink className="w-3.5 h-3.5 group-hover/repo:translate-x-0.5 group-hover/repo:-translate-y-0.5 transition-transform" />

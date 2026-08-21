@@ -51,47 +51,47 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
         {/* Top Summary Metrics Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
-          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
-            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
-              <div className="p-2.5 rounded-lg bg-amber-500/10 text-[#a66a12] shrink-0">
+          <div className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-0.5 shadow-lg">
+            <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 shrink-0">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">B.Tech Computer Science</div>
-                <div className="text-lg font-display font-bold text-[#101318] dark:text-white">
-                  8.18 <span className="text-xs font-normal text-[#8b93a1]">/ 10 CGPA</span>
+                <div className="text-[11px] font-mono uppercase text-slate-500 dark:text-slate-400">B.Tech Computer Science</div>
+                <div className="text-lg font-display font-bold text-slate-900 dark:text-white">
+                  8.18 <span className="text-xs font-normal text-slate-500 dark:text-slate-400">/ 10 CGPA</span>
                 </div>
-                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">ITER, SOA University (2022–2026)</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">ITER, SOA University (2022–2026)</div>
               </div>
             </div>
           </div>
 
-          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
-            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
-              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+          <div className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-0.5 shadow-lg">
+            <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
                 <Award className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Higher Secondary (12th PCM)</div>
+                <div className="text-[11px] font-mono uppercase text-slate-500 dark:text-slate-400">Higher Secondary (12th PCM)</div>
                 <div className="text-lg font-display font-bold text-emerald-600 dark:text-emerald-400">
-                  93.85% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+                  93.85% <span className="text-xs font-normal text-slate-500 dark:text-slate-400">Aggregate</span>
                 </div>
-                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">Saraswati Vidya Mandir, Berhampur (2021)</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">Saraswati Vidya Mandir, Berhampur (2021)</div>
               </div>
             </div>
           </div>
 
-          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
-            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
-              <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+          <div className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-0.5 shadow-lg">
+            <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 shrink-0">
                 <BookOpen className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Secondary School (10th)</div>
-                <div className="text-lg font-display font-bold text-blue-600 dark:text-blue-400">
-                  90.67% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+                <div className="text-[11px] font-mono uppercase text-slate-500 dark:text-slate-400">Secondary School (10th)</div>
+                <div className="text-lg font-display font-bold text-sky-600 dark:text-sky-400">
+                  90.67% <span className="text-xs font-normal text-slate-500 dark:text-slate-400">Aggregate</span>
                 </div>
-                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">SSVM, Nayagarh (2019)</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">SSVM, Nayagarh (2019)</div>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
           {/* Milestone List Selector (Left) */}
           <div className="lg:col-span-4 space-y-3">
-            <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider px-1 mb-1">
+            <div className="text-xs font-mono uppercase text-slate-500 dark:text-slate-400 tracking-wider px-1 mb-1">
               {t?.selectLabel || "Select Qualification:"}
             </div>
 
@@ -110,36 +110,36 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
               return (
                 <div 
                   key={m.id}
-                  className={`holo-border-active p-[1.5px] rounded-xl transition-all duration-300 ${
-                    isSelected ? 'ring-2 ring-amber-500/60 shadow-md' : 'opacity-85 hover:opacity-100'
+                  className={`holo-border-active p-[1.5px] rounded-2xl transition-all duration-300 ${
+                    isSelected ? 'ring-2 ring-indigo-500/70 shadow-lg' : 'opacity-85 hover:opacity-100'
                   }`}
                 >
                   <button
                     onClick={() => setSelectedMilestoneId(m.id)}
-                    className="w-full text-left p-4 rounded-[10.5px] glass-morphism-card cursor-pointer flex flex-col justify-between"
+                    className="w-full text-left p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card cursor-pointer flex flex-col justify-between"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-[#a66a12]/10 text-[#a66a12]">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                         {m.badge}
                       </span>
-                      <span className="text-xs font-mono text-[#8b93a1]">{m.year}</span>
+                      <span className="text-xs font-mono text-slate-500 dark:text-slate-400">{m.year}</span>
                     </div>
 
-                    <div className="font-semibold text-sm text-[#101318] dark:text-white leading-snug">
+                    <div className="font-semibold text-sm text-slate-900 dark:text-white leading-snug">
                       {m.degree}
                     </div>
 
-                    <div className="text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1 truncate">
+                    <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate">
                       {m.institution}
                     </div>
 
-                    <div className="mt-3 pt-2.5 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-[#101318] dark:text-white">
+                    <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-slate-900 dark:text-white">
                         {m.score}
                       </span>
-                      <span className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
+                      <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
                         <span>{language === 'de' ? 'Details ansehen' : language === 'fr' ? 'Voir détails' : language === 'hi' ? 'विवरण देखें' : 'View details'}</span>
-                        <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-[#a66a12]' : ''}`} />
+                        <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-indigo-500' : ''}`} />
                       </span>
                     </div>
                   </button>
@@ -150,42 +150,42 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
           {/* Detailed Milestone Panel (Right) */}
           <div className="lg:col-span-8">
-            <div className="holo-border-active p-[1.5px] rounded-2xl h-full">
-              <div className="h-full p-6 sm:p-7 rounded-[14.5px] glass-morphism-card flex flex-col justify-between space-y-6">
+            <div className="holo-border-active p-[1.5px] rounded-[1.25rem] h-full shadow-xl">
+              <div className="h-full p-6 sm:p-7 rounded-[calc(1.25rem-1.5px)] glass-morphism-card flex flex-col justify-between space-y-6">
                 <div>
                   {/* Header Strip */}
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-slate-200 dark:border-slate-800/80">
                     <div>
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                           {selectedMilestone.honors || 'Distinction'}
                         </span>
-                        <span className="text-xs font-mono text-[#8b93a1]">
+                        <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
                           {selectedMilestone.period}
                         </span>
                       </div>
 
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white">
                         {selectedMilestone.degree}
                       </h3>
 
-                      <div className="flex flex-wrap items-center gap-3 text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1.5">
-                        <span className="font-medium text-[#101318] dark:text-white">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300 mt-1.5">
+                        <span className="font-medium text-slate-900 dark:text-white">
                           {selectedMilestone.institution}
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5 text-[#a66a12]" />
+                          <MapPin className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
                           {selectedMilestone.location}
                         </span>
                       </div>
                     </div>
 
-                    <div className="sm:text-right shrink-0 p-3 rounded-xl bg-[#f6f7f9]/80 dark:bg-[#0e1116]/80 border border-[#dfe3e9] dark:border-[#262c36]">
-                      <div className="text-[10px] font-mono uppercase text-[#8b93a1]">
+                    <div className="sm:text-right shrink-0 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80">
+                      <div className="text-[10px] font-mono uppercase text-slate-500 dark:text-slate-400">
                         {selectedMilestone.scoreType}
                       </div>
-                      <div className="text-2xl font-display font-bold text-[#a66a12]">
+                      <div className="text-2xl font-display font-bold text-indigo-600 dark:text-indigo-400">
                         {selectedMilestone.score}
                       </div>
                     </div>
@@ -193,11 +193,11 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
                   {/* Key Scholastic Highlights */}
                   <div className="my-5">
-                    <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-3 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
+                    <h4 className="text-xs font-mono uppercase font-semibold text-slate-900 dark:text-white tracking-wider mb-3 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
                       <span>{language === 'de' ? "Akademische Schwerpunkte & Praxis" : language === 'fr' ? "Points Forts & Focus Pratique" : language === 'hi' ? "शैक्षणिक विशेषताएं एवं व्यावहारिक अनुप्रयोग" : "Academic Highlights & Applied Focus"}</span>
                     </h4>
-                    <ul className="space-y-2.5 text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4]">
+                    <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
                       {selectedMilestone.highlights.map((highlight, idx) => (
                         <li key={idx} className="flex items-start gap-2.5">
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -209,15 +209,15 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
                   {/* Relevant Coursework & Disciplines */}
                   <div>
-                    <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-2.5 flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5 text-[#a66a12]" />
+                    <h4 className="text-xs font-mono uppercase font-semibold text-slate-900 dark:text-white tracking-wider mb-2.5 flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
                       <span>{language === 'de' ? "Relevante Studienfächer & Disziplinen" : language === 'fr' ? "Matières Clés & Disciplines" : language === 'hi' ? "संबंधित पाठ्यक्रम और मुख्य विषय" : "Relevant Coursework & Core Disciplines"}</span>
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedMilestone.coursework.map((course, idx) => (
                         <span
                           key={idx}
-                          className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
+                          className="glass-tech-pill text-xs"
                         >
                           {course}
                         </span>
@@ -227,12 +227,12 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
                 </div>
 
                 {/* Bottom Verification Note */}
-                <div className="pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs text-[#8b93a1]">
+                <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1.5">
-                    <FileCheck2 className="w-4 h-4 text-[#a66a12]" />
+                    <FileCheck2 className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                     <span>{t?.transcriptsNote || "Transcripts & marksheets available upon recruiter request"}</span>
                   </span>
-                  <span className="font-mono text-[11px] text-[#a66a12]">{t?.verifiedCandidate || "Verified Candidate"}</span>
+                  <span className="font-mono text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold">{t?.verifiedCandidate || "Verified Candidate"}</span>
                 </div>
               </div>
             </div>
@@ -241,8 +241,8 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
         {/* Academic Domains Breakdown (3 Pillars) */}
         <div>
-          <div className="font-mono text-xs text-[#8b93a1] tracking-widest uppercase mb-4 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#a66a12]" />
+          <div className="font-mono text-xs text-slate-500 dark:text-slate-400 tracking-widest uppercase mb-4 flex items-center gap-2">
+            <Layers className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
             <span>{t?.pillarsLabel || "Academic Pillars Applied to Industry"}</span>
           </div>
 
@@ -252,26 +252,25 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
               return (
                 <div
                   key={idx}
-                  className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-1"
+                  className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-1 shadow-lg"
                 >
-                  <div className="p-5 rounded-[10.5px] glass-morphism-card h-full">
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <span className="p-2 rounded-lg bg-[#a66a12]/10 text-[#a66a12]">
+                  <div className="p-5 rounded-[calc(1rem-1.5px)] glass-morphism-card h-full">
+                    <div className="flex items-center gap-2.5 mb-3.5">
+                      <span className="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
                         <Icon className="w-4 h-4" />
                       </span>
-                      <h4 className="font-semibold text-sm text-[#101318] dark:text-white group-hover:text-amber-500 transition-colors">
+                      <h4 className="font-semibold text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                         {domain.title}
                       </h4>
                     </div>
 
-                    <ul className="space-y-1.5 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
+                    <div className="flex flex-wrap gap-1.5">
                       {domain.skills.map((skill, sIdx) => (
-                        <li key={sIdx} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12]" />
-                          <span>{skill}</span>
-                        </li>
+                        <span key={sIdx} className="glass-tech-pill text-[11px]">
+                          {skill}
+                        </span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               );

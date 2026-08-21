@@ -53,15 +53,15 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-4 space-y-4">
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
               {t?.heading || "From question to measurable action."}
             </h2>
-            <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               {t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
             </p>
-            <div className="holo-border-active p-[1.5px] rounded-xl">
-              <div className="p-4 rounded-[10.5px] glass-morphism-card space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
-                <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
+            <div className="holo-border-active p-[1.5px] rounded-2xl shadow-lg">
+              <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card space-y-2 text-xs font-mono text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                   <span>
                     {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
@@ -85,19 +85,19 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
               {steps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5"
+                  className="holo-border-active p-[1.5px] rounded-2xl group transition-all duration-300 hover:-translate-y-0.5 shadow-md"
                 >
-                  <div className="p-4 rounded-[10.5px] glass-morphism-card h-full flex flex-col justify-between">
+                  <div className="p-4 rounded-[calc(1rem-1.5px)] glass-morphism-card h-full flex flex-col justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-1.5">
-                        <span className="font-mono text-xs font-bold text-[#a66a12]">
+                        <span className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">
                           0{idx + 1}
                         </span>
-                        <span className="font-mono text-xs font-bold text-[#101318] dark:text-white tracking-tight group-hover:text-amber-500 transition-colors">
+                        <span className="font-mono text-xs font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                           {step.title}
                         </span>
                       </div>
-                      <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                         {step.desc}
                       </p>
                     </div>

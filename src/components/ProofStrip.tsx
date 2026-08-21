@@ -65,15 +65,16 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
         {proofItems.map((item, idx) => (
           <div 
             key={idx} 
-            className="relative overflow-hidden bg-white/85 dark:bg-[#151920]/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-center transition-all duration-300 hover:border-[#a66a12]/50 hover:shadow-md group"
+            className="holo-border-active p-[1.5px] rounded-2xl group shadow-md"
           >
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="font-mono text-[10px] tracking-widest text-[#8b93a1] uppercase mb-1">
-              {item.label}
-            </span>
-            <strong className="font-display text-sm sm:text-base font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] dark:group-hover:text-amber-300 transition-colors">
-              {item.value}
-            </strong>
+            <div className="p-4 sm:p-5 rounded-[calc(1rem-1.5px)] glass-morphism-card flex flex-col justify-center h-full">
+              <span className="font-mono text-[10px] tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-1">
+                {item.label}
+              </span>
+              <strong className="font-display text-sm sm:text-base font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                {item.value}
+              </strong>
+            </div>
           </div>
         ))}
       </div>
@@ -100,31 +101,30 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
           return (
             <div 
               key={idx} 
-              className="relative overflow-hidden bg-white/85 dark:bg-[#151920]/85 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs group hover:border-[#a66a12]/60 dark:hover:border-[#a66a12]/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="holo-border-active p-[1.5px] rounded-2xl group shadow-lg"
             >
-              {/* Top micro metallic highlight */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="font-mono font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white tracking-tight flex items-baseline gap-0.5 group-hover:text-[#a66a12] dark:group-hover:text-amber-300 transition-colors">
-                    <span>{displayValue}</span>
-                    <span className="text-[#a66a12] text-xl sm:text-2xl">{metric.suffix}</span>
+              <div className="p-5 sm:p-6 rounded-[calc(1rem-1.5px)] glass-morphism-card flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="font-mono font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight flex items-baseline gap-0.5 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      <span>{displayValue}</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 text-xl sm:text-2xl">{metric.suffix}</span>
+                    </div>
+                    <SparklinePreview 
+                      data={sparklineDatasets[idx % sparklineDatasets.length]} 
+                      color="#6366f1" 
+                      width={52} 
+                      height={20}
+                      className="opacity-70 group-hover:opacity-100 transition-opacity"
+                    />
                   </div>
-                  <SparklinePreview 
-                    data={sparklineDatasets[idx % sparklineDatasets.length]} 
-                    color="#d8a34f" 
-                    width={52} 
-                    height={20}
-                    className="opacity-60 group-hover:opacity-100 transition-opacity"
-                  />
+                  <div className="font-mono text-[11px] text-slate-600 dark:text-slate-300 uppercase tracking-wider mt-1.5 line-clamp-1 font-semibold">
+                    {metric.label}
+                  </div>
                 </div>
-                <div className="font-mono text-[11px] text-[#5c6472] dark:text-[#8b93a1] uppercase tracking-wider mt-1.5 line-clamp-1 font-semibold">
-                  {metric.label}
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                  {metric.note}
                 </div>
-              </div>
-              <div className="text-[11px] text-[#8b93a1] dark:text-[#5c6472] mt-2 pt-2 border-t border-[#dfe3e9]/60 dark:border-[#262c36]/60">
-                {metric.note}
               </div>
             </div>
           );
