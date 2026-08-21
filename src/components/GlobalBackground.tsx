@@ -22,11 +22,6 @@ export const GlobalBackground: React.FC = React.memo(() => {
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none select-none overflow-hidden z-0"
     >
-      {/* ─── SIGNATURE INTERACTION: live data network ───
-          Canvas layer: drifting nodes connect when close, with pulses
-          traveling along connections. Activity rises with scroll velocity
-          and decays back to a low ambient baseline. See useDataNetwork. */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       {/* ─── 1. BASE ATMOSPHERIC GRADIENTS (LIGHT & DARK) ─── */}
       <div className="absolute inset-0 transition-opacity duration-700" style={{ background: 'var(--page-bg)' }} />
 
@@ -230,11 +225,21 @@ export const GlobalBackground: React.FC = React.memo(() => {
         </g>
       </svg>
 
+      {/* ─── SIGNATURE INTERACTION: live data network ───
+          Canvas layer: drifting nodes connect when close, with pulses
+          traveling along connections. Activity rises with scroll velocity
+          and decays back to a low ambient baseline. See useDataNetwork.
+          Placed above the solid/gradient/grid layers (which would
+          otherwise paint over it) but below the vignette so it still
+          fades out toward the page edges. */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }} />
+
       {/* ─── 4. ULTRA-SUBTLE VIGNETTE FOR CLEAN DEPTH ─── */}
       <div
         className="absolute inset-0 opacity-40 dark:opacity-70 pointer-events-none"
         style={{
           background: 'radial-gradient(circle 80% 80% at 50% 50%, transparent 60%, rgba(10, 14, 22, 0.4) 100%)',
+          zIndex: 2,
         }}
       />
     </div>
