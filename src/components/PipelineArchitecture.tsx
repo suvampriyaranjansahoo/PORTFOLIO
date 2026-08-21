@@ -136,10 +136,10 @@ export const PipelineArchitecture: React.FC = () => {
                   }
                 }}
                 onClick={() => setSelectedNode(node)}
-                className={`p-4 rounded-xl border transition-all cursor-pointer relative group focus:ring-2 focus:ring-[#a66a12] outline-none ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer relative group focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
                   isSelected
                     ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] border-transparent shadow-md'
-                    : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#101318] dark:text-white hover:border-[#a66a12]'
+                    : 'bg-white dark:bg-[#161b24]/90 border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] hover:border-[#a66a12] dark:hover:border-white/30'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">

@@ -230,8 +230,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 <div
                   key={item.id}
                   onClick={item.action}
+                  tabIndex={0}
+                  role="button"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      item.action();
+                    }
+                  }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`p-2.5 px-3 rounded-xl flex items-center justify-between transition-colors cursor-pointer ${
+                  className={`p-2.5 px-3 rounded-xl flex items-center justify-between transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
                     isSelected
                       ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318]'
                       : 'hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c] text-[#101318] dark:text-white'

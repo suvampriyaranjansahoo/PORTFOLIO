@@ -113,7 +113,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                 const el = document.getElementById('work');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group p-6 card-level-2 hover:border-[#a66a12] dark:hover:border-[#a66a12] focus:border-[#a66a12] dark:focus:border-[#a66a12] cursor-pointer flex flex-col justify-between focus:outline-none"
+              className="group p-6 card-level-2 hover:border-[#a66a12] dark:hover:border-white/30 focus-visible:ring-2 focus-visible:ring-[#d98b18] cursor-pointer flex flex-col justify-between focus:outline-none"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

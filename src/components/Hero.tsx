@@ -32,12 +32,12 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
 
       {/* Top Eyebrow & Status Chip */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-widest uppercase bg-[#dfe3e9]/60 dark:bg-[#1a202c] text-[#4a5260] dark:text-[#a0a8b5] border border-[#dfe3e9] dark:border-[#2d3748] shadow-2xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] animate-pulse"></span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-widest uppercase bg-white/80 dark:bg-[#161b24]/90 text-[#475569] dark:text-[#94a3b8] border border-[#cbd5e1] dark:border-white/10 shadow-2xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] dark:bg-[#fbbf24] animate-pulse"></span>
           {t.eyebrow}
         </span>
 
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-mono">
+        <div className="status-indicator-active">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>{t.available}</span>
         </div>
@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
         {/* Left main intro */}
         <div className="lg:col-span-8 space-y-6">
           <div className="space-y-2">
-            <p className="font-mono text-xs sm:text-sm text-[#a66a12] font-semibold tracking-wider uppercase">
+            <p className="font-mono text-xs sm:text-sm text-[#a66a12] dark:text-[#fbbf24] font-semibold tracking-wider uppercase">
               {t.roleHeadline}
             </p>
 
@@ -65,7 +65,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
             <a
               href="#work"
               id="hero-view-work-btn"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-sm font-semibold hover:bg-[#202633] dark:hover:bg-gray-100 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              className="btn-primary px-5 py-3 text-sm focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0b0e14] focus-visible:outline-none"
             >
               <span>{t.viewWork}</span>
               <ArrowDown className="w-4 h-4" />
@@ -74,18 +74,18 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
             <a
               href="#contact"
               id="hero-contact-btn"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-[#161b22] border border-[#bfc5cf] dark:border-[#30363d] text-[#101318] dark:text-white text-sm font-semibold hover:border-[#a66a12] hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c] transition-all shadow-2xs hover:-translate-y-0.5"
+              className="btn-secondary px-5 py-3 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0b0e14] focus-visible:outline-none"
             >
-              <Mail className="w-4 h-4 text-[#a66a12]" />
+              <Mail className="w-4 h-4 text-[#a66a12] dark:text-[#fbbf24]" />
               <span>{t.contactMe}</span>
             </a>
 
             <button
               onClick={onOpenRecruiter}
               id="hero-recruiter-brief-btn"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/30 text-sm font-mono font-medium transition-all cursor-pointer hover:-translate-y-0.5 shadow-2xs"
+              className="btn-accent-subtle px-4 py-3 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0b0e14] focus-visible:outline-none"
             >
-              <Sparkles className="w-4 h-4 text-[#a66a12]" />
+              <Sparkles className="w-4 h-4 text-[#a66a12] dark:text-[#fbbf24]" />
               <span>{t.recruiterBrief}</span>
             </button>
           </div>
@@ -96,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               href={PERSONAL_INFO.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none rounded"
             >
               <span>GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
@@ -108,7 +108,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               href={PERSONAL_INFO.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 hover:text-[#101318] dark:hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none rounded"
             >
               <span>LinkedIn</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
@@ -119,10 +119,10 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
             <button
               id="hero-command-palette-btn"
               onClick={onOpenCommand}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#dfe3e9] dark:border-[#30363d] bg-white/70 dark:bg-[#161b22]/70 hover:bg-white dark:hover:bg-[#1f242c] text-[#101318] dark:text-[#f2f4f7] transition-all cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#cbd5e1] dark:border-white/15 bg-white dark:bg-[#161b24]/90 hover:bg-[#f8fafc] dark:hover:bg-[#1f2636] text-[#101318] dark:text-[#f2f4f7] transition-all cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0b0e14] focus-visible:outline-none"
               title="Open quick command palette"
             >
-              <Command className="w-3 h-3 text-[#a66a12]" />
+              <Command className="w-3 h-3 text-[#a66a12] dark:text-[#fbbf24]" />
               <span>⌘K / Ctrl+K</span>
             </button>
           </div>
@@ -132,7 +132,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
         <div className="lg:col-span-4 card-level-1 p-6 sm:p-7 space-y-5">
           <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 border border-[#a66a12]/30 flex items-center justify-center font-mono font-bold text-sm text-[#a66a12]">
+              <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 dark:bg-[#fbbf24]/10 border border-[#a66a12]/30 dark:border-[#fbbf24]/30 flex items-center justify-center font-mono font-bold text-sm text-[#a66a12] dark:text-[#fbbf24]">
                 SPS
               </div>
               <div>
@@ -145,7 +145,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               </div>
             </div>
 
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">
               8.18 CGPA
             </span>
           </div>
@@ -163,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               {['SQL (CTEs/Window)', 'Python / PySpark', 'Power BI & DAX', 'Azure Synapse', 'RICE Framework', 'XGBoost & SHAP'].map((skill) => (
                 <span
                   key={skill}
-                  className="card-level-3 px-2.5 py-1 text-xs font-mono text-[#101318] dark:text-[#e6edf3]"
+                  className="tech-pill"
                 >
                   {skill}
                 </span>

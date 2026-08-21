@@ -60,7 +60,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               id="resume-modal-download-btn"
               tabIndex={0}
               onClick={() => onDownload(selectedRole)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
+              className="btn-primary !px-3.5 !py-2 text-xs font-mono focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#111622] focus-visible:outline-none"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download PDF</span>
@@ -70,7 +70,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               id="close-resume-preview-btn"
               tabIndex={0}
               onClick={onClose}
-              className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -88,10 +88,8 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               aria-selected={selectedRole.id === role.id}
               tabIndex={0}
               onClick={() => setSelectedRole(role)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
-                selectedRole.id === role.id
-                  ? 'bg-[#101318] dark:bg-white text-white dark:text-[#101318] font-semibold'
-                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+              className={`filter-chip whitespace-nowrap flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                selectedRole.id === role.id ? 'filter-chip-active' : ''
               }`}
             >
               <span>{role.icon}</span>

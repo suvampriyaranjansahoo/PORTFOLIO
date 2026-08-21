@@ -58,7 +58,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
             id="close-recruiter-modal-btn"
             tabIndex={0}
             onClick={onClose}
-            className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -81,7 +81,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
               <div className="text-[10px] font-mono text-[#8b93a1]">Customer Churn</div>
             </div>
             <div className="card-level-3 p-3">
-              <div className="font-mono font-bold text-lg text-[#a66a12]">8.18</div>
+              <div className="font-mono font-bold text-lg text-[#a66a12] dark:text-[#fbbf24]">8.18</div>
               <div className="text-[10px] font-mono text-[#8b93a1]">CGPA (ITER CSE)</div>
             </div>
           </div>
@@ -111,15 +111,15 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
                     onSelectResume(role);
                     onClose();
                   }}
-                  className="p-2.5 rounded-lg text-left card-level-3 hover:border-[#a66a12] transition-colors flex items-center justify-between group cursor-pointer"
+                  className="p-2.5 rounded-xl text-left card-level-3 hover:border-[#a66a12] dark:hover:border-white/30 transition-colors flex items-center justify-between group cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
                 >
                   <div className="flex items-center gap-2 truncate">
                     <span>{role.icon}</span>
-                    <span className="text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] truncate">
+                    <span className="text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] dark:group-hover:text-[#fbbf24] truncate">
                       {role.title}
                     </span>
                   </div>
-                  <Download className="w-3.5 h-3.5 text-[#8b93a1] group-hover:text-[#a66a12]" />
+                  <Download className="w-3.5 h-3.5 text-[#8b93a1] group-hover:text-[#a66a12] dark:group-hover:text-[#fbbf24]" />
                 </button>
               ))}
             </div>
@@ -131,7 +131,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
           <div className="flex items-center gap-3 text-xs font-mono">
             <a
               href={PERSONAL_INFO.links.email}
-              className="inline-flex items-center gap-1 text-[#a66a12] hover:underline"
+              className="inline-flex items-center gap-1 text-[#a66a12] dark:text-[#fbbf24] hover:underline focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none rounded"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Email</span>
@@ -140,7 +140,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
               href={PERSONAL_INFO.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-[#5c6472] dark:text-[#8b93a1] hover:underline"
+              className="inline-flex items-center gap-1 text-[#5c6472] dark:text-[#8b93a1] hover:underline focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none rounded"
             >
               <span>LinkedIn</span>
               <ArrowUpRight className="w-3 h-3" />
@@ -149,7 +149,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
 
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer"
+            className="btn-primary !px-4 !py-2 text-xs font-mono focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#111622] focus-visible:outline-none"
           >
             Close Summary
           </button>

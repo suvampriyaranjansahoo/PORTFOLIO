@@ -98,7 +98,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
   }, [roa, currentRatio, debtToEquity, cashFlowRatio, workingCapitalRatio]);
 
   return (
-    <section id="demos" className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+    <section id="demos" className="py-16 sm:py-20 bg-white/60 dark:bg-[#111622]/60 backdrop-blur-md border-y border-[#dfe3e9] dark:border-white/[0.08] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
@@ -126,13 +126,11 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'traffic'}
             tabIndex={0}
             onClick={() => setActiveTab('traffic')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'traffic'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'traffic' ? 'tab-btn-active' : ''
             }`}
           >
-            <TrendingUp className="w-3.5 h-3.5 text-[#a66a12]" />
+            <TrendingUp className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
             <span>Portfolio Traffic & D3.js</span>
           </button>
 
@@ -142,13 +140,11 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'rice'}
             tabIndex={0}
             onClick={() => setActiveTab('rice')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'rice'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'rice' ? 'tab-btn-active' : ''
             }`}
           >
-            <Sliders className="w-3.5 h-3.5 text-[#a66a12]" />
+            <Sliders className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
             <span>Product RICE Prioritization</span>
           </button>
 
@@ -158,10 +154,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'risk'}
             tabIndex={0}
             onClick={() => setActiveTab('risk')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'risk'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'risk' ? 'tab-btn-active' : ''
             }`}
           >
             <Activity className="w-3.5 h-3.5 text-rose-500" />
@@ -174,10 +168,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'sql'}
             tabIndex={0}
             onClick={() => setActiveTab('sql')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'sql'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'sql' ? 'tab-btn-active' : ''
             }`}
           >
             <Terminal className="w-3.5 h-3.5 text-indigo-500" />
@@ -190,10 +182,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'pipeline'}
             tabIndex={0}
             onClick={() => setActiveTab('pipeline')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'pipeline'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'pipeline' ? 'tab-btn-active' : ''
             }`}
           >
             <Network className="w-3.5 h-3.5 text-blue-500" />
@@ -206,10 +196,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
             aria-selected={activeTab === 'cohort'}
             tabIndex={0}
             onClick={() => setActiveTab('cohort')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'cohort'
-                ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-sm'
-                : 'bg-[#f6f7f9] dark:bg-[#1a1f28] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#30363d]'
+            className={`tab-btn focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              activeTab === 'cohort' ? 'tab-btn-active' : ''
             }`}
           >
             <Users className="w-3.5 h-3.5 text-emerald-500" />

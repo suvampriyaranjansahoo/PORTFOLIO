@@ -199,10 +199,8 @@ export const SqlPlayground: React.FC = () => {
               aria-pressed={selectedPreset.id === preset.id}
               tabIndex={0}
               onClick={() => handleSelectPreset(preset)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
-                selectedPreset.id === preset.id
-                  ? 'bg-[#101318] dark:bg-white text-white dark:text-[#101318] font-semibold shadow-xs'
-                  : 'bg-white dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+              className={`filter-chip whitespace-nowrap focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                selectedPreset.id === preset.id ? 'filter-chip-active' : ''
               }`}
             >
               {preset.name.split(' (')[0]}
@@ -220,15 +218,15 @@ export const SqlPlayground: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-mono rounded bg-[#f6f7f9] dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-mono rounded-lg bg-white dark:bg-[#161b24]/90 border border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] hover:border-[#a66a12] dark:hover:border-white/30 transition-colors cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
             >
-              {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+              {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3 text-[#a66a12] dark:text-[#fbbf24]" />}
               <span>{copied ? 'Copied' : 'Copy SQL'}</span>
             </button>
             <button
               onClick={handleRunQuery}
               disabled={isRunning}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-xs disabled:opacity-50"
+              className="btn-primary !px-4 !py-1.5 text-xs font-mono disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#131823] focus-visible:outline-none"
             >
               {isRunning ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5 fill-current" />}
               <span>{isRunning ? 'Executing...' : 'Run Query'}</span>

@@ -94,10 +94,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
               aria-pressed={viewStarMode}
               tabIndex={0}
               onClick={() => setViewStarMode(!viewStarMode)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 border ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
                 viewStarMode
-                  ? 'bg-[#a66a12] text-white border-[#a66a12]'
-                  : 'bg-white dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+                  ? 'btn-primary'
+                  : 'btn-secondary'
               }`}
             >
               <Target className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             <button
               id="close-case-study-btn"
               onClick={onClose}
-              className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
               aria-label="Close modal"
               tabIndex={0}
             >
@@ -188,10 +188,8 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
                   aria-controls={`case-study-panel-${key}`}
                   tabIndex={0}
                   onClick={() => setActiveTab(key)}
-                  className={`px-3 py-2 text-xs font-mono rounded-t-lg transition-colors whitespace-nowrap cursor-pointer ${
-                    activeTab === key
-                      ? 'bg-[#f6f7f9] dark:bg-[#0e1116] border-t-2 border-[#a66a12] text-[#101318] dark:text-white font-semibold'
-                      : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+                  className={`tab-btn !px-3 !py-2 text-xs font-mono rounded-t-lg transition-colors whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                    activeTab === key ? 'tab-btn-active' : ''
                   }`}
                 >
                   0{idx + 1} {study.tabs[key].title}
@@ -230,7 +228,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
                   <div className="mt-4 pt-4 border-t border-[#dfe3e9] dark:border-[#262c36]">
                     <div className="flex items-center justify-between text-[11px] font-mono text-[#8b93a1] mb-2">
                       <span className="flex items-center gap-1.5">
-                        <Code2 className="w-3.5 h-3.5 text-[#a66a12]" /> Code Implementation
+                        <Code2 className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" /> Code Implementation
                       </span>
                       <span>{currentTab.codeSnippet.language}</span>
                     </div>
@@ -254,7 +252,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             {!viewStarMode && tabKeys.indexOf(activeTab) < tabKeys.length - 1 ? (
               <button
                 onClick={() => setActiveTab(tabKeys[tabKeys.indexOf(activeTab) + 1])}
-                className="px-4 py-2 rounded-lg bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-1.5"
+                className="btn-secondary !px-4 !py-2 text-xs font-mono flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
               >
                 <span>Next Section</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -262,7 +260,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             ) : (
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer"
+                className="btn-primary !px-4 !py-2 text-xs font-mono focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
               >
                 Done
               </button>

@@ -140,17 +140,17 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                   setSelectedPresetIndex(idx);
                   setIsCustomMode(false);
                 }}
-                className={`p-3 rounded-xl text-left transition-all cursor-pointer flex flex-col justify-between border ${
+                className={`p-3 rounded-xl text-left transition-all cursor-pointer flex flex-col justify-between border focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
                   !isCustomMode && selectedPresetIndex === idx
                     ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] border-transparent shadow-xs'
-                    : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#101318] dark:text-white hover:border-[#a66a12]'
+                    : 'bg-white dark:bg-[#161b24]/90 border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] hover:border-[#a66a12] dark:hover:border-white/30'
                 }`}
               >
                 <span className="text-xs font-semibold line-clamp-2 leading-tight">
                   {preset.title}
                 </span>
                 <span className={`text-[10px] font-mono mt-2 ${
-                  !isCustomMode && selectedPresetIndex === idx ? 'text-amber-300 dark:text-amber-700' : 'text-[#a66a12]'
+                  !isCustomMode && selectedPresetIndex === idx ? 'text-amber-300 dark:text-amber-700 font-bold' : 'text-[#a66a12] dark:text-[#fbbf24]'
                 }`}>
                   {94 + (idx % 5)}% Fit →
                 </span>
@@ -208,7 +208,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                   }
                 }}
                 onClick={() => onOpenCaseStudy(activePreset.recommendedCaseStudy)}
-                className="p-3 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] focus:border-[#a66a12] outline-none transition-colors cursor-pointer group"
+                className="p-3 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] focus-visible:ring-2 focus-visible:ring-[#d98b18] outline-none transition-colors cursor-pointer group"
               >
                 <div className="flex items-center justify-between text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] transition-colors">
                   <span className="capitalize">Inspect {activePreset.recommendedCaseStudy.replace('_', ' ')} Case Study</span>
@@ -223,7 +223,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
             {/* Direct PDF Download */}
             <button
               onClick={() => onSelectResume(activePreset.targetRole)}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+              className="w-full btn-primary flex items-center justify-center gap-2 !py-3 !px-4 text-xs font-mono focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#111622] focus-visible:outline-none"
             >
               <Download className="w-4 h-4" />
               <span>Download {activePreset.targetRole.title} ATS Resume (PDF)</span>

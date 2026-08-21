@@ -49,7 +49,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div 
             role="tablist"
             aria-label="Project Categories"
-            className="flex flex-wrap gap-1.5 p-1 bg-[#dfe3e9]/60 dark:bg-[#1a1f28] rounded-xl border border-[#dfe3e9] dark:border-[#262c36]"
+            className="flex flex-wrap gap-1.5 p-1 bg-black/[0.04] dark:bg-[#161b24]/90 rounded-xl border border-[#cbd5e1] dark:border-white/10"
           >
             {categories.map((cat) => (
               <button
@@ -59,10 +59,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 aria-selected={selectedCategory === cat.id}
                 tabIndex={0}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? 'bg-[#101318] dark:bg-white text-white dark:text-[#101318] font-semibold shadow-xs'
-                    : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+                className={`filter-chip focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                  selectedCategory === cat.id ? 'filter-chip-active' : ''
                 }`}
               >
                 {cat.label}
@@ -175,8 +173,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   <button
                     id={`case-study-btn-${project.id}`}
                     onClick={() => onOpenCaseStudy(project.caseStudyId!)}
-                    className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline cursor-pointer ${
-                      project.featured ? 'text-amber-300' : 'text-[#a66a12]'
+                    className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline cursor-pointer rounded px-1 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                      project.featured ? 'text-amber-300 dark:text-[#fbbf24]' : 'text-[#a66a12] dark:text-[#fbbf24]'
                     }`}
                   >
                     <BookOpen className="w-3.5 h-3.5" />
@@ -190,7 +188,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1 text-xs font-mono transition-colors ${
+                  className={`inline-flex items-center gap-1 text-xs font-mono transition-colors rounded px-1.5 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
                     project.featured 
                       ? 'text-[#c6cad1] hover:text-white' 
                       : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'

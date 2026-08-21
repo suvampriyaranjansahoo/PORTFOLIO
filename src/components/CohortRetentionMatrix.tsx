@@ -72,15 +72,14 @@ export const CohortRetentionMatrix: React.FC = () => {
         </div>
 
         {/* Segment toggle buttons */}
-        <div className="flex items-center gap-1.5" role="group" aria-label="Customer Segment Selector">
+        <div className="flex items-center gap-1.5 p-1 bg-black/[0.04] dark:bg-[#161b24]/90 rounded-xl border border-[#cbd5e1] dark:border-white/10" role="group" aria-label="Customer Segment Selector">
           <button
             id="cohort-segment-all-users"
             aria-pressed={selectedSegmentKey === 'all_users'}
+            tabIndex={0}
             onClick={() => setSelectedSegmentKey('all_users')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-              selectedSegmentKey === 'all_users'
-                ? 'bg-[#101318] dark:bg-white text-white dark:text-[#101318] font-semibold shadow-xs'
-                : 'bg-white dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1]'
+            className={`filter-chip whitespace-nowrap focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              selectedSegmentKey === 'all_users' ? 'filter-chip-active' : ''
             }`}
           >
             VOIS Base (50K)
@@ -88,11 +87,10 @@ export const CohortRetentionMatrix: React.FC = () => {
           <button
             id="cohort-segment-upi-power"
             aria-pressed={selectedSegmentKey === 'upi_power'}
+            tabIndex={0}
             onClick={() => setSelectedSegmentKey('upi_power')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-              selectedSegmentKey === 'upi_power'
-                ? 'bg-[#101318] dark:bg-white text-white dark:text-[#101318] font-semibold shadow-xs'
-                : 'bg-white dark:bg-[#1a1f28] border border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1]'
+            className={`filter-chip whitespace-nowrap focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+              selectedSegmentKey === 'upi_power' ? 'filter-chip-active' : ''
             }`}
           >
             PriorityPe Users

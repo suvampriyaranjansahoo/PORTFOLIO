@@ -117,7 +117,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Tab Pills */}
-              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4" role="tablist" aria-label="Analytical domain pillars">
+              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-black/[0.04] dark:bg-[#161b24]/90 border border-[#cbd5e1] dark:border-white/10 mb-4" role="tablist" aria-label="Analytical domain pillars">
                 {pillars.map((pillar) => {
                   const Icon = pillar.icon;
                   const isActive = activePillar === pillar.id;
@@ -129,10 +129,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                       aria-selected={isActive}
                       tabIndex={0}
                       onClick={() => setActivePillar(pillar.id)}
-                      className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-white dark:bg-[#1c222d] text-[#101318] dark:text-white shadow-xs border border-[#dfe3e9] dark:border-[#30363d]'
-                          : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
+                      className={`tab-btn flex items-center justify-center gap-1.5 !py-2.5 !px-2 text-xs font-mono font-medium rounded-lg transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                        isActive ? 'tab-btn-active' : ''
                       }`}
                     >
                       <Icon className={`w-3.5 h-3.5 ${isActive ? pillar.color : ''}`} />
@@ -315,7 +313,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="pt-2 flex flex-col sm:flex-row gap-2">
                 <a
                   href="#work"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#101318] dark:bg-white text-white dark:text-[#101318] text-xs font-mono font-semibold hover:opacity-90 transition-opacity shadow-xs"
+                  className="flex-1 btn-primary justify-center text-xs font-mono font-semibold focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#131823] focus-visible:outline-none"
                 >
                   <span>Explore Selected Work</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -324,9 +322,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 {onOpenRecruiter && (
                   <button
                     onClick={onOpenRecruiter}
-                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-[#dfe3e9] dark:border-[#30363d] bg-[#f6f7f9] dark:bg-[#0e1116] text-xs font-mono font-medium text-[#101318] dark:text-white hover:border-[#a66a12] transition-colors cursor-pointer"
+                    className="btn-secondary !px-3 !py-2.5 text-xs font-mono font-medium justify-center focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
                     <span>60s Brief</span>
                   </button>
                 )}

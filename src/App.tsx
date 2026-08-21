@@ -18,6 +18,7 @@ import { RecruiterModal } from './components/RecruiterModal';
 import { ResumePreviewModal } from './components/ResumePreviewModal';
 import { CommandPalette } from './components/CommandPalette';
 import { Toast } from './components/Toast';
+import { GlobalBackground } from './components/GlobalBackground';
 import { ProjectCategory, ResumeRole } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
 import { PERSONAL_INFO } from './data/portfolioData';
@@ -102,7 +103,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+      {/* Global Analytical Atmosphere Background System */}
+      <GlobalBackground />
+
       <div id="top" />
 
       {/* Primary Sticky Header */}
@@ -117,7 +121,7 @@ export default function App() {
         onShowToast={showToast}
       />
 
-      <main className="w-full max-w-[100vw] overflow-x-hidden">
+      <main className="relative z-10 w-full max-w-[100vw] overflow-x-hidden">
         {/* Hero Section */}
         <Hero
           language={language}

@@ -96,7 +96,7 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
               <div className="font-mono text-[11px] text-[#5c6472] dark:text-[#8b93a1] uppercase tracking-wider mt-1.5 line-clamp-1">
                 {metric.label}
               </div>
-              <div className="text-[11px] text-[#8b93a1] dark:text-[#5c6472] mt-0.5">
+              <div className="text-[11px] text-[#8b93a1] dark:text-[#9ea7b4] mt-0.5">
                 {metric.note}
               </div>
             </div>
