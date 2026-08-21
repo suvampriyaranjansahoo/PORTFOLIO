@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   GraduationCap, 
   Award, 
   BookOpen, 
   MapPin, 
-  Calendar, 
   CheckCircle2, 
   Sparkles, 
   Database, 
   Calculator, 
   Code2, 
-  Layers,
-  ChevronRight,
-  TrendingUp,
-  FileCheck2
+  FileCheck2,
+  ArrowRight,
+  ArrowDown,
+  Network
 } from 'lucide-react';
-import { ACADEMIC_MILESTONES, ACADEMIC_DOMAINS, PERSONAL_INFO } from '../data/portfolioData';
-import { AcademicMilestone } from '../types';
 import { Language, TRANSLATIONS } from '../data/translations';
 
 interface AcademicsSectionProps {
@@ -24,248 +21,302 @@ interface AcademicsSectionProps {
 }
 
 export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = 'en' }) => {
-  const [selectedMilestoneId, setSelectedMilestoneId] = useState<string>('btech');
-  const t = TRANSLATIONS[language]?.academics;
-
-  const selectedMilestone: AcademicMilestone = 
-    ACADEMIC_MILESTONES.find(m => m.id === selectedMilestoneId) || ACADEMIC_MILESTONES[0];
-
   return (
-    <section id="academics" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-          <div>
-            <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2 flex items-center gap-1.5">
-              <GraduationCap className="w-4 h-4" />
-              <span>{t?.label || "08 · SCHOLASTIC FOUNDATION & QUANTITATIVE RIGOR"}</span>
-            </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight">
-              {t?.heading || "Academic Credentials & Disciplines"}
-            </h2>
+    <section id="academics" className="relative py-20 overflow-hidden bg-[#0a0d14] border-t border-[#262c36]">
+      {/* SECTION 1: Decorative Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle Ambient Glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(30,58,138,0.15)_0%,_transparent_70%)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-[radial-gradient(ellipse_at_bottom,_rgba(88,28,135,0.08)_0%,_transparent_60%)]" />
+        
+        {/* Network / Dotted Paths Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.04]" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '32px 32px' 
+          }}
+        />
+        
+        {/* Subtle Geometric Wireframes / Nodes */}
+        <div className="absolute top-1/4 left-10 w-64 h-64 border border-[#262c36] rounded-full opacity-20 -translate-x-1/2" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 border border-[#262c36] rounded-full opacity-10 translate-x-1/3" />
+      </div>
+
+      <div className="relative max-w-[1160px] mx-auto px-4 sm:px-6 z-10">
+        
+        {/* SECTION 1: Intro */}
+        <div className="mb-12">
+          <div className="font-mono text-xs text-[#3b82f6] tracking-widest uppercase mb-3 flex items-center gap-1.5 font-semibold">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>01 · ACADEMIC JOURNEY</span>
           </div>
-          <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] max-w-md">
-            {t?.subheading || "A consistent record of quantitative distinction — combining Computer Science systems, calculus, and relational theory."}
+          <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
+            Building a strong technical foundation.
+          </h2>
+          <p className="text-[#8b93a1] max-w-2xl text-sm leading-relaxed">
+            A structured academic journey combining computer science fundamentals, quantitative thinking, data systems, and practical problem-solving.
           </p>
         </div>
 
-        {/* Top Summary Metrics Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
-          <div className="p-4 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5 h-full">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-[#a66a12] shrink-0">
-              <GraduationCap className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">B.Tech Computer Science</div>
-              <div className="text-lg font-display font-bold text-[#101318] dark:text-white">
-                8.18 <span className="text-xs font-normal text-[#8b93a1]">/ 10 CGPA</span>
+        {/* SECTION 2: Academic Snapshot Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+          {/* Card 1 */}
+          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#3b82f6]/30 hover:shadow-[0_4px_20px_-10px_rgba(59,130,246,0.15)] transition-all group relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-blue-500/10 transition-colors" />
+            <div className="flex items-center gap-2.5 mb-4 relative z-10">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
+                <GraduationCap className="w-4 h-4" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1]">ITER, SOA University (2022–2026)</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
+                B.Tech Computer Science
+              </div>
+            </div>
+            <div className="relative z-10">
+              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">
+                8.18 <span className="text-xs font-normal text-[#5c6472]">/ 10 CGPA</span>
+              </div>
+              <div className="text-[11px] text-[#5c6472] leading-relaxed">
+                ITER, Siksha 'O' Anusandhan University<br/>2022–2026
+              </div>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5 h-full">
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
-              <Award className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Higher Secondary (12th PCM)</div>
-              <div className="text-lg font-display font-bold text-emerald-600 dark:text-emerald-400">
-                93.85% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+          {/* Card 2 */}
+          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#10b981]/30 hover:shadow-[0_4px_20px_-10px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-emerald-500/10 transition-colors" />
+            <div className="flex items-center gap-2.5 mb-4 relative z-10">
+              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                <Award className="w-4 h-4" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1]">Saraswati Vidya Mandir, Berhampur (2021)</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
+                Higher Secondary · 12th
+              </div>
+            </div>
+            <div className="relative z-10">
+              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
+                93.85% <span className="text-xs font-normal text-[#5c6472]">Aggregate</span>
+              </div>
+              <div className="text-[11px] text-[#5c6472] leading-relaxed">
+                Saraswati Vidya Mandir, Berhampur<br/>2021
+              </div>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5 h-full">
-            <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 shrink-0">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Secondary School (10th)</div>
-              <div className="text-lg font-display font-bold text-sky-600 dark:text-sky-400">
-                90.67% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+          {/* Card 3 */}
+          <div className="p-5 rounded-2xl bg-[#151920]/80 backdrop-blur-md border border-[#262c36] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 hover:border-[#a855f7]/30 hover:shadow-[0_4px_20px_-10px_rgba(168,85,247,0.15)] transition-all group relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-purple-500/10 transition-colors" />
+            <div className="flex items-center gap-2.5 mb-4 relative z-10">
+              <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
+                <BookOpen className="w-4 h-4" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1]">SSVM, Nayagarh (2019)</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Interactive Milestone Inspector & Detail Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-          {/* Milestone List Selector (Left) */}
-          <div className="lg:col-span-4 space-y-3">
-            <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider px-1 mb-1">
-              {t?.selectLabel || "Select Qualification:"}
-            </div>
-
-            {ACADEMIC_MILESTONES.map((m) => {
-              const isSelected = m.id === selectedMilestoneId;
-              return (
-                <button
-                  key={m.id}
-                  onClick={() => setSelectedMilestoneId(m.id)}
-                  className={`w-full text-left p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between border shadow-xs ${
-                    isSelected
-                      ? 'bg-white dark:bg-[#151920] border-[#a66a12] dark:border-[#a66a12] ring-1 ring-[#a66a12]'
-                      : 'bg-white/70 dark:bg-[#151920]/70 border-[#dfe3e9] dark:border-[#262c36] hover:border-[#8b93a1]'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-amber-500/10 text-[#a66a12] border border-amber-500/20">
-                      {m.badge}
-                    </span>
-                    <span className="text-xs font-mono text-[#8b93a1]">{m.year}</span>
-                  </div>
-
-                  <div className="font-semibold text-sm text-[#101318] dark:text-white leading-snug">
-                    {m.degree}
-                  </div>
-
-                  <div className="text-xs text-[#5c6472] dark:text-[#8b93a1] mt-1 truncate">
-                    {m.institution}
-                  </div>
-
-                  <div className="mt-3 pt-2.5 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between w-full">
-                    <span className="text-xs font-mono font-bold text-[#101318] dark:text-white">
-                      {m.score}
-                    </span>
-                    <span className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
-                      <span>{language === 'de' ? 'Details ansehen' : language === 'fr' ? 'Voir détails' : language === 'hi' ? 'विवरण देखें' : 'View details'}</span>
-                      <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-[#a66a12]' : ''}`} />
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Detailed Milestone Panel (Right) */}
-          <div className="lg:col-span-8">
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-between space-y-6">
-              <div>
-                {/* Header Strip */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                        {selectedMilestone.honors || 'Distinction'}
-                      </span>
-                      <span className="text-xs font-mono text-[#8b93a1]">
-                        {selectedMilestone.period}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white">
-                      {selectedMilestone.degree}
-                    </h3>
-
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1.5">
-                      <span className="font-medium text-[#101318] dark:text-white">
-                        {selectedMilestone.institution}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#a66a12]" />
-                        {selectedMilestone.location}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="sm:text-right shrink-0 p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                    <div className="text-[10px] font-mono uppercase text-[#8b93a1]">
-                      {selectedMilestone.scoreType}
-                    </div>
-                    <div className="text-2xl font-display font-bold text-[#a66a12]">
-                      {selectedMilestone.score}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Scholastic Highlights */}
-                <div className="my-5">
-                  <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-3 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
-                    <span>{language === 'de' ? "Akademische Schwerpunkte & Praxis" : language === 'fr' ? "Points Forts & Focus Pratique" : language === 'hi' ? "शैक्षणिक विशेषताएं एवं व्यावहारिक अनुप्रयोग" : "Academic Highlights & Applied Focus"}</span>
-                  </h4>
-                  <ul className="space-y-2.5 text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4]">
-                    {selectedMilestone.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Relevant Coursework & Disciplines */}
-                <div>
-                  <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-2.5 flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-[#a66a12]" />
-                    <span>{language === 'de' ? "Relevante Studienfächer & Disziplinen" : language === 'fr' ? "Matières Clés & Disciplines" : language === 'hi' ? "संबंधित पाठ्यक्रम और मुख्य विषय" : "Relevant Coursework & Core Disciplines"}</span>
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedMilestone.coursework.map((course, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
-                      >
-                        {course}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b93a1] font-semibold">
+                Secondary School · 10th
               </div>
-
-              {/* Bottom Verification Note */}
-              <div className="pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs text-[#8b93a1]">
-                <span className="flex items-center gap-1.5">
-                  <FileCheck2 className="w-4 h-4 text-[#a66a12]" />
-                  <span>{t?.transcriptsNote || "Transcripts & marksheets available upon recruiter request"}</span>
-                </span>
-                <span className="font-mono text-[11px] text-[#a66a12] font-semibold">{t?.verifiedCandidate || "Verified Candidate"}</span>
+            </div>
+            <div className="relative z-10">
+              <div className="text-2xl font-display font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">
+                90.67% <span className="text-xs font-normal text-[#5c6472]">Aggregate</span>
+              </div>
+              <div className="text-[11px] text-[#5c6472] leading-relaxed">
+                SVM, Nayagarh<br/>2019
               </div>
             </div>
           </div>
         </div>
 
-        {/* Academic Domains Breakdown (3 Pillars) */}
-        <div>
-          <div className="font-mono text-xs text-[#8b93a1] tracking-widest uppercase mb-4 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#a66a12]" />
-            <span>{t?.pillarsLabel || "Academic Pillars Applied to Industry"}</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {ACADEMIC_DOMAINS.map((domain, idx) => {
-              const Icon = idx === 0 ? Database : idx === 1 ? Calculator : Code2;
-              return (
-                <div
-                  key={idx}
-                  className="p-5 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs hover:border-[#a66a12] transition-colors"
-                >
-                  <div className="flex items-center gap-2.5 mb-3.5">
-                    <span className="p-2 rounded-xl bg-amber-500/10 text-[#a66a12]">
-                      <Icon className="w-4 h-4" />
-                    </span>
-                    <h4 className="font-semibold text-sm text-[#101318] dark:text-white">
-                      {domain.title}
-                    </h4>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {domain.skills.map((skill, sIdx) => (
-                      <span key={sIdx} className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#5c6472] dark:text-[#9ea7b4]">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+        {/* SECTION 3: Featured Undergraduate Degree */}
+        <div className="relative p-px rounded-3xl bg-gradient-to-br from-[#3b82f6]/40 via-[#262c36] to-[#151920] mb-12 shadow-2xl group">
+          {/* Ambient Edge Glow */}
+          <div className="absolute inset-0 bg-[#3b82f6]/10 blur-xl rounded-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-700 pointer-events-none" />
+          
+          <div className="relative p-6 sm:p-10 rounded-[calc(1.5rem-1px)] bg-[#101318] bg-gradient-to-br from-[#151920]/80 to-[#0a0d14]/80 backdrop-blur-xl flex flex-col gap-8">
+            <div className="flex flex-col lg:flex-row justify-between gap-8">
+              {/* Main Info */}
+              <div className="space-y-4 max-w-2xl">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono font-semibold tracking-widest uppercase text-blue-400">
+                  <Award className="w-3.5 h-3.5" />
+                  First Class with Distinction Track
                 </div>
-              );
-            })}
+                <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-white">
+                  Bachelor of Technology — Computer Science & Engineering
+                </h3>
+                <div className="flex flex-wrap items-center gap-3 text-sm text-[#8b93a1] font-mono">
+                  <span className="text-[#e6edf3]">Siksha 'O' Anusandhan University (ITER)</span>
+                  <span className="hidden sm:inline text-[#262c36]">•</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Bhubaneswar, Odisha</span>
+                  <span className="hidden sm:inline text-[#262c36]">•</span>
+                  <span className="text-[#3b82f6]">Expected Graduation · July 2026</span>
+                </div>
+              </div>
+              
+              {/* GPA Display */}
+              <div className="shrink-0 lg:text-right">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-[#5c6472] mb-1">
+                  Cumulative GPA
+                </div>
+                <div className="font-display text-4xl sm:text-5xl font-bold text-white">
+                  8.18 <span className="text-xl sm:text-2xl text-[#5c6472] font-normal">/ 10</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Academic Highlights */}
+            <div className="pt-6 border-t border-[#262c36]/60">
+              <h4 className="text-[11px] font-mono font-semibold uppercase tracking-widest text-[#8b93a1] mb-4">
+                Academic Highlights & Applied Focus
+              </h4>
+              <ul className="space-y-3 text-sm text-[#9ea7b4]">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span>Built a strong foundation in algorithms, database systems, statistics, software engineering, and computer networks.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span>Applied academic concepts through hands-on projects in data analytics, machine learning, cloud technologies, and intelligent systems.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span>Developed practical technical experience using Python, SQL, Power BI, Azure, Databricks, and machine learning frameworks.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Verification Footer */}
+            <div className="mt-2 pt-4 border-t border-[#262c36]/40 flex items-center gap-2 text-xs font-mono text-[#5c6472]">
+              <FileCheck2 className="w-3.5 h-3.5" />
+              Academic transcripts and supporting documents available upon request.
+            </div>
           </div>
         </div>
+
+        {/* SECTION 4: Core Academic Competencies */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+          {/* Card A */}
+          <div className="p-6 rounded-2xl bg-[#151920]/60 backdrop-blur-md border border-[#262c36] hover:border-[#3b82f6]/40 transition-colors group">
+            <Database className="w-5 h-5 text-blue-400 mb-4" />
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-widest text-white mb-4">
+              Data & Systems Foundation
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {['DBMS & SQL Optimization', 'Data Structures & Algorithms', 'Statistical Modelling', 'Distributed Systems'].map(skill => (
+                <div key={skill} className="px-3 py-1.5 rounded-full text-xs font-mono bg-[#0a0d14]/80 border border-[#262c36] text-[#8b93a1] group-hover:border-[#3b82f6]/30 group-hover:text-[#e6edf3] transition-colors">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card B */}
+          <div className="p-6 rounded-2xl bg-[#151920]/60 backdrop-blur-md border border-[#262c36] hover:border-[#a855f7]/40 transition-colors group">
+            <Calculator className="w-5 h-5 text-purple-400 mb-4" />
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-widest text-white mb-4">
+              Mathematics & Quantitative Rigor
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {['Probability & Statistics', 'Differential Calculus', 'Linear Algebra', 'Applied Economics'].map(skill => (
+                <div key={skill} className="px-3 py-1.5 rounded-full text-xs font-mono bg-[#0a0d14]/80 border border-[#262c36] text-[#8b93a1] group-hover:border-[#a855f7]/30 group-hover:text-[#e6edf3] transition-colors">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card C */}
+          <div className="p-6 rounded-2xl bg-[#151920]/60 backdrop-blur-md border border-[#262c36] hover:border-[#10b981]/40 transition-colors group">
+            <Code2 className="w-5 h-5 text-emerald-400 mb-4" />
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-widest text-white mb-4">
+              Software Engineering & Architecture
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {['Object-Oriented Design', 'Operating Systems', 'Computer Networks', 'Cloud Computing', 'API & Distributed Architecture'].map(skill => (
+                <div key={skill} className="px-3 py-1.5 rounded-full text-xs font-mono bg-[#0a0d14]/80 border border-[#262c36] text-[#8b93a1] group-hover:border-[#10b981]/30 group-hover:text-[#e6edf3] transition-colors">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 5: Skills Derived From Academic Experience */}
+        <div className="mb-20 px-4 sm:px-8 py-10 rounded-3xl border border-[#262c36]/40 bg-gradient-to-b from-[#151920]/40 to-transparent">
+          <div className="text-center mb-10">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white mb-3">From Fundamentals to Application</h3>
+            <p className="text-sm text-[#8b93a1] max-w-xl mx-auto">
+              Translating computer science fundamentals into practical data, analytics, engineering, and AI solutions.
+            </p>
+          </div>
+          
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-3 relative max-w-5xl mx-auto">
+            {/* Background connection line (desktop only) */}
+            <div className="hidden lg:block absolute top-1/2 left-4 right-4 h-px bg-gradient-to-r from-[#262c36] via-[#3b82f6]/30 to-[#262c36] -translate-y-1/2 z-0" />
+
+            <FlowCard title="Computer Science Fundamentals" tech="Python · Java · C++ · SQL" activeColor="text-blue-400" borderHover="hover:border-blue-500/40" />
+            <Arrow direction="right" />
+            <Arrow direction="down" />
+            
+            <FlowCard title="Data & Analytics" tech="Pandas · Power BI · Excel · Statistics" activeColor="text-purple-400" borderHover="hover:border-purple-500/40" />
+            <Arrow direction="right" />
+            <Arrow direction="down" />
+
+            <FlowCard title="Cloud & Engineering" tech="Azure · Databricks · PySpark · ETL" activeColor="text-emerald-400" borderHover="hover:border-emerald-500/40" />
+            <Arrow direction="right" />
+            <Arrow direction="down" />
+
+            <FlowCard title="AI & Machine Learning" tech="Scikit-learn · TensorFlow · NLP · CV" activeColor="text-orange-400" borderHover="hover:border-orange-500/40" />
+          </div>
+        </div>
+
+        {/* SECTION 6: Currently Exploring Closing Card */}
+        <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-[#262c36] via-[#3b82f6]/30 to-[#262c36] overflow-hidden group">
+          <div className="absolute top-0 right-0 p-5">
+            {/* Pulsing Node */}
+            <div className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+            </div>
+          </div>
+          <div className="p-8 sm:p-10 rounded-[calc(1rem-1px)] bg-[#101318] flex flex-col gap-4 relative z-10">
+            <div className="font-mono text-[10px] font-semibold tracking-widest uppercase text-blue-400 flex items-center gap-2">
+              <Network className="w-3.5 h-3.5" />
+              CURRENTLY EXPLORING
+            </div>
+            
+            <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-3xl text-white">
+              Business Analyst <span className="text-[#262c36] mx-1 sm:mx-2 font-light">/</span> Data Analyst <span className="text-[#262c36] mx-1 sm:mx-2 font-light">/</span> Product Analyst <br className="hidden sm:block" /> <span className="hidden sm:inline-block mt-2">Data Engineer <span className="text-[#262c36] mx-1 sm:mx-2 font-light">/</span> AI/ML Engineer</span>
+            </h3>
+            
+            <p className="text-sm text-[#8b93a1] max-w-3xl leading-relaxed mt-2">
+              Open to full-time and graduate opportunities where data analysis, business problem-solving, product thinking, and technical execution come together to create measurable impact.
+            </p>
+
+            <div className="mt-4 pt-5 border-t border-[#262c36]/60 flex flex-wrap items-center gap-4 text-xs font-mono text-[#5c6472]">
+              <span className="flex items-center gap-1.5 text-blue-400"><Sparkles className="w-3.5 h-3.5" /> Available for opportunities</span>
+              <span className="hidden sm:inline text-[#262c36]">•</span>
+              <span>Open to relocation</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
+
+const FlowCard = ({ title, tech, activeColor, borderHover }: { title: string, tech: string, activeColor: string, borderHover: string }) => (
+  <div className={`w-full lg:w-64 p-5 rounded-xl bg-[#101318] border border-[#262c36] shadow-sm relative z-10 ${borderHover} transition-colors duration-300 group`}>
+    <div className={`text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#8b93a1] mb-2 group-hover:${activeColor} transition-colors duration-300`}>{title}</div>
+    <div className="text-[11px] font-mono text-[#5c6472]">{tech}</div>
+  </div>
+);
+
+const Arrow = ({ direction }: { direction: 'right' | 'down' }) => (
+  <div className="relative z-10 shrink-0 text-[#262c36]">
+    {direction === 'right' ? (
+      <ArrowRight className="hidden lg:block w-4 h-4" />
+    ) : (
+      <ArrowDown className="lg:hidden w-4 h-4 my-1 opacity-50" />
+    )}
+  </div>
+);
+

@@ -20,20 +20,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   return (
     <section id="contact" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6 space-y-12">
-        {/* Currently Exploring Banner */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
-          <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{t?.exploringLabel || "08 · CURRENTLY EXPLORING"}</span>
-          </div>
-          <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white mb-2">
-            {t?.exploringHeading || "Business Analyst · Data Analyst · Product Analyst · Data Engineer · AI/ML Engineer"}
-          </h3>
-          <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed max-w-3xl">
-            {t?.exploringCopy || "Open to full-time roles, graduate opportunities, and analytics positions where business problems, product thinking, and technical execution intersect."}
-          </p>
-        </div>
-
         {/* Contact Card */}
         <div className="p-8 sm:p-12 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4 max-w-xl">
