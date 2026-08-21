@@ -220,6 +220,36 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
+            {/* Technical Competencies Matrix Strip */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-[#151920]/80 border border-[#dfe3e9] dark:border-[#262c36] space-y-3 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider font-semibold">
+                  Analytical Competencies & Tooling:
+                </span>
+                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  Production Tested
+                </span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Querying & SQL</div>
+                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">CTEs, Window, Joins, PostgreSQL</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">BI & Modeling</div>
+                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Power BI, DAX, Star Schema</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Python & ML</div>
+                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Pandas, Scikit, XGBoost, SHAP</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
+                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Cloud & ETL</div>
+                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Azure Event Hub, Databricks</div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* RIGHT COLUMN: Fast Profile Card & Key Credentials Bento (5 cols) */}
@@ -353,7 +383,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Coffee Consumed & Engineering Fuel Counter */}
-            <CoffeeFuelCounter initialHours={1480} />
+            <div id="coffee-telemetry">
+              <CoffeeFuelCounter initialHours={1480} />
+            </div>
 
           </div>
 
