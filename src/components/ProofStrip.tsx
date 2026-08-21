@@ -87,8 +87,11 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
         className="grid grid-cols-2 lg:grid-cols-4 gap-3"
       >
         {KEY_METRICS.map((metric, idx) => {
-          const displayValue = metric.decimal 
-            ? counts[idx].toFixed(metric.decimal) 
+          const decimal = 'decimal' in metric && typeof (metric as { decimal?: number }).decimal === 'number'
+            ? (metric as { decimal?: number }).decimal
+            : undefined;
+          const displayValue = decimal !== undefined 
+            ? counts[idx].toFixed(decimal) 
             : Math.round(counts[idx]).toLocaleString();
 
           // Representative historical benchmark sparkline data
