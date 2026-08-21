@@ -27,6 +27,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     return proj.category === selectedCategory;
   });
 
+  const getCategoryCount = (catId: ProjectCategory) => {
+    if (catId === 'all') return PROJECTS.length;
+    return PROJECTS.filter(p => p.category === catId).length;
+  };
+
   const categories: { id: ProjectCategory; label: string }[] = [
     { id: 'all', label: t?.filters.all || 'All Work' },
     { id: 'product', label: t?.filters.product || 'Product & RICE' },
@@ -35,11 +40,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     { id: 'ai', label: t?.filters.ai || 'AI / ML' }
   ];
 
+  const currentCategoryLabel = categories.find(c => c.id === selectedCategory)?.label || 'Selected Category';
+
   return (
     <section id="work" className="py-16 sm:py-24">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         {/* Section Header with Category Tabs */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="font-mono text-xs text-indigo-600 dark:text-indigo-400 tracking-widest uppercase mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
@@ -55,22 +62,51 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
           {/* Filter Pills */}
           <div className="flex flex-wrap gap-1.5 p-1.5 bg-slate-200/70 dark:bg-slate-900/80 rounded-2xl border border-slate-300/80 dark:border-slate-800 backdrop-blur-md">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                id={`filter-btn-${cat.id}`}
-                onClick={() => onSelectCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-500/25'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-300/40 dark:hover:bg-slate-800/60'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const count = getCategoryCount(cat.id);
+              const isActive = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  id={`filter-btn-${cat.id}`}
+                  onClick={() => onSelectCategory(cat.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isActive
+                      ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-500/25'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-300/40 dark:hover:bg-slate-800/60'
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                    isActive 
+                      ? 'bg-white/20 text-white' 
+                      : 'bg-slate-300/60 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
+
+        {/* Active Filter Notice (when filtered) */}
+        {selectedCategory !== 'all' && (
+          <div className="mb-6 p-3 px-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+            <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              <span>
+                Showing <strong>{filteredProjects.length}</strong> of <strong>{PROJECTS.length}</strong> projects in <strong>{currentCategoryLabel}</strong>
+              </span>
+            </div>
+            <button
+              onClick={() => onSelectCategory('all')}
+              className="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-semibold transition-colors cursor-pointer"
+            >
+              Show All {PROJECTS.length} Projects
+            </button>
+          </div>
+        )}
 
         {/* Spatial Intelligence Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
