@@ -229,6 +229,36 @@ input[type="range"] {
 
 /* ─── DIMENSIONAL CARD & GLASS HIERARCHY ─── */
 
+/* ─── Signature interaction: cursor spotlight ───
+   Position is driven by --spotlight-x / --spotlight-y (set in JS via
+   useSignatureSpotlight). Opacity is driven by --spotlight-opacity so it
+   fades in/out on enter/leave without a layout-affecting property. Entirely
+   inert when the properties are unset (falls back to a static, invisible
+   gradient) — safe even if JS fails to load. */
+.signature-spotlight {
+  opacity: var(--spotlight-opacity, 0);
+  background: radial-gradient(
+    480px circle at var(--spotlight-x, 50%) var(--spotlight-y, 30%),
+    rgba(217, 139, 24, 0.10),
+    rgba(99, 102, 241, 0.07) 45%,
+    transparent 72%
+  );
+  mix-blend-mode: normal;
+}
+
+.dark .signature-spotlight {
+  background: radial-gradient(
+    520px circle at var(--spotlight-x, 50%) var(--spotlight-y, 30%),
+    rgba(99, 102, 241, 0.16),
+    rgba(217, 139, 24, 0.09) 45%,
+    transparent 72%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signature-spotlight { display: none; }
+}
+
 /* Level 1: Flagship & Hero Cards (Deep analytical elevation with precision edge lighting) */
 .card-level-1 {
   background-color: rgba(255, 255, 255, 0.95);
