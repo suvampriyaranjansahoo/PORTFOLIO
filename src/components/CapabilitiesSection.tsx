@@ -77,7 +77,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36]">
+    <section className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
@@ -97,12 +97,23 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
           {capabilities.map((cap) => (
             <div
               key={cap.num}
+              role="button"
+              tabIndex={0}
+              aria-label={`Filter projects by ${cap.title}`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectCategory(cap.category);
+                  const el = document.getElementById('work');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               onClick={() => {
                 onSelectCategory(cap.category);
                 const el = document.getElementById('work');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group p-6 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between"
+              className="group p-6 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] focus:border-[#a66a12] dark:focus:border-[#a66a12] hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between focus:outline-none"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

@@ -33,7 +33,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   ];
 
   return (
-    <section id="work" className="py-16 sm:py-20">
+    <section id="work" className="py-16 sm:py-20 overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
@@ -46,11 +46,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap gap-1.5 p-1 bg-[#dfe3e9]/60 dark:bg-[#1a1f28] rounded-xl border border-[#dfe3e9] dark:border-[#262c36]">
+          <div 
+            role="tablist"
+            aria-label="Project Categories"
+            className="flex flex-wrap gap-1.5 p-1 bg-[#dfe3e9]/60 dark:bg-[#1a1f28] rounded-xl border border-[#dfe3e9] dark:border-[#262c36]"
+          >
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 id={`filter-btn-${cat.id}`}
+                role="tab"
+                aria-selected={selectedCategory === cat.id}
+                tabIndex={0}
                 onClick={() => onSelectCategory(cat.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                   selectedCategory === cat.id

@@ -104,6 +104,9 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
               return (
                 <button
                   key={m.id}
+                  id={`academic-milestone-${m.id}`}
+                  aria-pressed={isSelected}
+                  tabIndex={0}
                   onClick={() => setSelectedMilestoneId(m.id)}
                   className={`w-full text-left p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected

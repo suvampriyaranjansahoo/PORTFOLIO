@@ -191,10 +191,13 @@ export const SqlPlayground: React.FC = () => {
         </div>
 
         {/* Preset Selector */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar" role="group" aria-label="SQL Preset Queries">
           {PRESET_QUERIES.map((preset) => (
             <button
               key={preset.id}
+              id={`sql-preset-${preset.id}`}
+              aria-pressed={selectedPreset.id === preset.id}
+              tabIndex={0}
               onClick={() => handleSelectPreset(preset)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
                 selectedPreset.id === preset.id
@@ -244,10 +247,12 @@ export const SqlPlayground: React.FC = () => {
           </div>
 
           <textarea
+            id="sql-editor-textarea"
+            aria-label="SQL query editor"
             value={userSql}
             onChange={(e) => setUserSql(e.target.value)}
             rows={8}
-            className="w-full p-4 font-mono text-xs text-emerald-300 bg-transparent border-0 outline-none resize-none leading-relaxed selection:bg-emerald-900"
+            className="w-full p-4 font-mono text-xs text-emerald-300 bg-transparent border-0 outline-none resize-none leading-relaxed selection:bg-emerald-900 focus:ring-1 focus:ring-[#a66a12]"
             spellCheck={false}
           />
         </div>

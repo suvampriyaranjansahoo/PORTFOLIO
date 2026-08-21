@@ -78,7 +78,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   const currentPillar = pillars.find(p => p.id === activePillar) || pillars[0];
 
   return (
-    <section id="about" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
+    <section id="about" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         
         {/* Section Header */}
@@ -117,13 +117,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Tab Pills */}
-              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4">
+              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4" role="tablist" aria-label="Analytical domain pillars">
                 {pillars.map((pillar) => {
                   const Icon = pillar.icon;
                   const isActive = activePillar === pillar.id;
                   return (
                     <button
                       key={pillar.id}
+                      id={`about-pillar-${pillar.id}`}
+                      role="tab"
+                      aria-selected={isActive}
+                      tabIndex={0}
                       onClick={() => setActivePillar(pillar.id)}
                       className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                         isActive

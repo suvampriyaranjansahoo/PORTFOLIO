@@ -405,10 +405,13 @@ export const TrafficD3Chart: React.FC = () => {
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Time Range Filter */}
-          <div className="inline-flex p-1 rounded-lg bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#30363d]">
+          <div className="inline-flex p-1 rounded-lg bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#30363d]" role="group" aria-label="Time range selector">
             {(['7d', '30d', '90d'] as TimeRange[]).map((range) => (
               <button
                 key={range}
+                id={`traffic-timerange-${range}`}
+                aria-pressed={timeRange === range}
+                tabIndex={0}
                 onClick={() => handleTimeRangeChange(range)}
                 className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all cursor-pointer ${
                   timeRange === range
@@ -422,33 +425,42 @@ export const TrafficD3Chart: React.FC = () => {
           </div>
 
           {/* Metric View Filter */}
-          <div className="inline-flex p-1 rounded-lg bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#30363d]">
+          <div className="inline-flex p-1 rounded-lg bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#30363d]" role="group" aria-label="Metric filter selector">
             <button
+              id="traffic-metric-all"
+              aria-pressed={activeMetric === 'all'}
+              tabIndex={0}
               onClick={() => setActiveMetric('all')}
               className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all cursor-pointer ${
                 activeMetric === 'all'
                   ? 'bg-[#a66a12] text-white font-bold'
-                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318]'
+                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
               }`}
             >
               All Funnel
             </button>
             <button
+              id="traffic-metric-conversions"
+              aria-pressed={activeMetric === 'conversions'}
+              tabIndex={0}
               onClick={() => setActiveMetric('conversions')}
               className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all cursor-pointer ${
                 activeMetric === 'conversions'
                   ? 'bg-blue-600 text-white font-bold'
-                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318]'
+                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
               }`}
             >
               Conversions
             </button>
             <button
+              id="traffic-metric-downloads"
+              aria-pressed={activeMetric === 'downloads'}
+              tabIndex={0}
               onClick={() => setActiveMetric('downloads')}
               className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all cursor-pointer ${
                 activeMetric === 'downloads'
                   ? 'bg-emerald-600 text-white font-bold'
-                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318]'
+                  : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
               }`}
             >
               Downloads
@@ -457,6 +469,10 @@ export const TrafficD3Chart: React.FC = () => {
 
           {/* Live Simulator Ticker */}
           <button
+            id="traffic-live-simulate-btn"
+            aria-pressed={isLiveSimulating}
+            aria-label="Toggle live traffic simulation stream"
+            tabIndex={0}
             onClick={() => setIsLiveSimulating(!isLiveSimulating)}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
               isLiveSimulating
@@ -478,6 +494,9 @@ export const TrafficD3Chart: React.FC = () => {
           </button>
 
           <button
+            id="traffic-reset-btn"
+            aria-label="Reset to historical benchmark"
+            tabIndex={0}
             onClick={handleResetData}
             title="Reset to historical benchmark"
             className="p-1.5 rounded-lg border border-[#dfe3e9] dark:border-[#30363d] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
@@ -572,7 +591,12 @@ export const TrafficD3Chart: React.FC = () => {
 
         {/* SVG Container */}
         <div className="w-full overflow-x-auto no-scrollbar">
-          <svg ref={svgRef} className="w-full select-none" />
+          <svg 
+            ref={svgRef} 
+            role="img"
+            aria-label="Interactive D3.js chart showing portfolio traffic and conversion trends"
+            className="w-full select-none" 
+          />
         </div>
 
         {/* Hovered Point Info Card Overlay */}

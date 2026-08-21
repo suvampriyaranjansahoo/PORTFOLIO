@@ -72,8 +72,10 @@ export const CohortRetentionMatrix: React.FC = () => {
         </div>
 
         {/* Segment toggle buttons */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5" role="group" aria-label="Customer Segment Selector">
           <button
+            id="cohort-segment-all-users"
+            aria-pressed={selectedSegmentKey === 'all_users'}
             onClick={() => setSelectedSegmentKey('all_users')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               selectedSegmentKey === 'all_users'
@@ -84,6 +86,8 @@ export const CohortRetentionMatrix: React.FC = () => {
             VOIS Base (50K)
           </button>
           <button
+            id="cohort-segment-upi-power"
+            aria-pressed={selectedSegmentKey === 'upi_power'}
             onClick={() => setSelectedSegmentKey('upi_power')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               selectedSegmentKey === 'upi_power'
@@ -134,10 +138,16 @@ export const CohortRetentionMatrix: React.FC = () => {
                     return (
                       <td 
                         key={mIdx}
-                        onMouseEnter={() => setHoveredCell({ cohort: row.cohortMonth, monthIndex: mIdx, value: val, size: row.size })}
                         className="p-1"
                       >
-                        <div className={`py-1.5 px-2 rounded font-semibold transition-transform hover:scale-105 cursor-pointer ${getCellColor(val)}`}>
+                        <div 
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`${row.cohortMonth} Month ${mIdx} Retention: ${val.toFixed(1)}% (${Math.round(row.size * (val / 100)).toLocaleString()} active subscribers)`}
+                          onMouseEnter={() => setHoveredCell({ cohort: row.cohortMonth, monthIndex: mIdx, value: val, size: row.size })}
+                          onFocus={() => setHoveredCell({ cohort: row.cohortMonth, monthIndex: mIdx, value: val, size: row.size })}
+                          className={`py-1.5 px-2 rounded font-semibold transition-transform hover:scale-105 focus:scale-105 focus:ring-2 focus:ring-[#a66a12] outline-none cursor-pointer ${getCellColor(val)}`}
+                        >
                           {val.toFixed(1)}%
                         </div>
                       </td>

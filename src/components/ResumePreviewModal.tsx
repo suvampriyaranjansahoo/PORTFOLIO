@@ -18,16 +18,31 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
 
   const [selectedRole, setSelectedRole] = useState<ResumeRole>(initialRole);
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
         className="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="resume-preview-title"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header & Role Switcher */}
         <div className="p-5 border-b border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -35,13 +50,15 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
             <div className="text-[10px] font-mono uppercase tracking-wider text-[#8b93a1]">
               Resume Preview & ATS Verification
             </div>
-            <div className="font-display font-bold text-xl text-[#101318] dark:text-white">
+            <div id="resume-preview-title" className="font-display font-bold text-xl text-[#101318] dark:text-white">
               {selectedRole.title} Resume
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
+              id="resume-modal-download-btn"
+              tabIndex={0}
               onClick={() => onDownload(selectedRole)}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#a66a12] text-white text-xs font-mono font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
             >
@@ -50,8 +67,11 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
             </button>
 
             <button
+              id="close-resume-preview-btn"
+              tabIndex={0}
               onClick={onClose}
               className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
@@ -59,10 +79,14 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
         </div>
 
         {/* Role Selector Tabs */}
-        <div className="px-6 py-2 border-b border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] flex items-center gap-1 overflow-x-auto no-scrollbar">
+        <div className="px-6 py-2 border-b border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] flex items-center gap-1 overflow-x-auto no-scrollbar" role="tablist" aria-label="Resume Role Variants">
           {RESUME_ROLES.map((role) => (
             <button
               key={role.id}
+              id={`resume-variant-${role.id}`}
+              role="tab"
+              aria-selected={selectedRole.id === role.id}
+              tabIndex={0}
               onClick={() => setSelectedRole(role)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 selectedRole.id === role.id

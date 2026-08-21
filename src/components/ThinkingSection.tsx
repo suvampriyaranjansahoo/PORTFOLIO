@@ -45,7 +45,7 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
   ];
 
   return (
-    <section className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
+    <section className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
           {t?.label || "05 · HOW I THINK"}

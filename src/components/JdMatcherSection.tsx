@@ -129,10 +129,13 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
           <label className="block text-xs font-mono text-[#8b93a1] uppercase mb-2">
             Select Your Target Hiring Role or Open Position:
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" role="group" aria-label="Target hiring role presets">
             {PRESET_JDS.map((preset, idx) => (
               <button
                 key={preset.roleId}
+                id={`jd-role-preset-${preset.roleId}`}
+                aria-pressed={!isCustomMode && selectedPresetIndex === idx}
+                tabIndex={0}
                 onClick={() => {
                   setSelectedPresetIndex(idx);
                   setIsCustomMode(false);
@@ -195,8 +198,17 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
               </div>
 
               <div 
+                role="button"
+                tabIndex={0}
+                aria-label={`Inspect ${activePreset.recommendedCaseStudy.replace('_', ' ')} Case Study`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpenCaseStudy(activePreset.recommendedCaseStudy);
+                  }
+                }}
                 onClick={() => onOpenCaseStudy(activePreset.recommendedCaseStudy)}
-                className="p-3 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] transition-colors cursor-pointer group"
+                className="p-3 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] focus:border-[#a66a12] outline-none transition-colors cursor-pointer group"
               >
                 <div className="flex items-center justify-between text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] transition-colors">
                   <span className="capitalize">Inspect {activePreset.recommendedCaseStudy.replace('_', ' ')} Case Study</span>

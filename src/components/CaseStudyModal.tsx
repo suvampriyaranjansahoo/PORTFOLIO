@@ -52,12 +52,27 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
   const [viewStarMode, setViewStarMode] = useState<boolean>(false);
   const currentTab = study.tabs[activeTab];
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
         className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="case-study-title"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="p-6 border-b border-[#dfe3e9] dark:border-[#262c36] flex items-start justify-between gap-4 bg-[#f6f7f9] dark:bg-[#0e1116]">
@@ -65,7 +80,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             <div className="font-mono text-xs text-[#a66a12] tracking-wider uppercase mb-1">
               {study.meta}
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white">
+            <h2 id="case-study-title" className="font-display font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white">
               {study.title}
             </h2>
             <p className="text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4] mt-1">
@@ -75,6 +90,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
 
           <div className="flex items-center gap-2">
             <button
+              id="case-study-star-toggle-btn"
+              aria-pressed={viewStarMode}
+              tabIndex={0}
               onClick={() => setViewStarMode(!viewStarMode)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 border ${
                 viewStarMode
@@ -91,6 +109,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
               onClick={onClose}
               className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               aria-label="Close modal"
+              tabIndex={0}
             >
               <X className="w-5 h-5" />
             </button>
@@ -159,10 +178,15 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
         ) : (
           <>
             {/* Tab Navigation */}
-            <div className="px-6 pt-3 border-b border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <div className="px-6 pt-3 border-b border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] flex items-center gap-1.5 overflow-x-auto no-scrollbar" role="tablist" aria-label="Case Study Sections">
               {tabKeys.map((key, idx) => (
                 <button
                   key={key}
+                  id={`case-study-tab-${key}`}
+                  role="tab"
+                  aria-selected={activeTab === key}
+                  aria-controls={`case-study-panel-${key}`}
+                  tabIndex={0}
                   onClick={() => setActiveTab(key)}
                   className={`px-3 py-2 text-xs font-mono rounded-t-lg transition-colors whitespace-nowrap cursor-pointer ${
                     activeTab === key
@@ -176,7 +200,12 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f6f7f9] dark:bg-[#0e1116] space-y-6">
+            <div 
+              id={`case-study-panel-${activeTab}`}
+              role="tabpanel"
+              aria-labelledby={`case-study-tab-${activeTab}`}
+              className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f6f7f9] dark:bg-[#0e1116] space-y-6"
+            >
               <div className="bg-white dark:bg-[#151920] p-6 rounded-xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs space-y-4">
                 <h3 className="font-display font-bold text-xl text-[#101318] dark:text-white">
                   {currentTab.title}

@@ -16,21 +16,37 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
   onSelectResume,
   onOpenCaseStudy
 }) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
         className="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="recruiter-modal-title"
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6 border-b border-[#dfe3e9] dark:border-[#262c36] flex items-start justify-between gap-4 bg-[#f6f7f9] dark:bg-[#0e1116]">
           <div>
             <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-500/20 mb-2">
               <Sparkles className="w-3 h-3 text-[#a66a12]" /> 60-SECOND RECRUITER EXECUTIVE SUMMARY
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white">
+            <h2 id="recruiter-modal-title" className="font-display font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white">
               {PERSONAL_INFO.name}
             </h2>
             <p className="text-xs font-mono text-[#a66a12] mt-0.5">
@@ -40,8 +56,10 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
 
           <button
             id="close-recruiter-modal-btn"
+            tabIndex={0}
             onClick={onClose}
             className="p-2 rounded-lg text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>

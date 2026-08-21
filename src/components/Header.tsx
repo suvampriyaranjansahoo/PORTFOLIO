@@ -74,13 +74,23 @@ export const Header: React.FC<HeaderProps> = ({
       }
     };
 
+    const handleKeyEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setResumeMenuOpen(false);
+        setLangMenuOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('keydown', handleKeyEscape);
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
       document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyEscape);
     };
   }, []);
 
@@ -231,7 +241,16 @@ export const Header: React.FC<HeaderProps> = ({
                   {RESUME_ROLES.map((role) => (
                     <div 
                       key={role.id}
-                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f6f7f9] dark:hover:bg-[#21262d] transition-colors cursor-pointer"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Download ${role.title} tailored resume`}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleDownload(role);
+                        }
+                      }}
+                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f6f7f9] dark:hover:bg-[#21262d] focus:bg-[#f6f7f9] dark:focus:bg-[#21262d] focus-visible:ring-2 focus-visible:ring-[#a66a12] outline-none transition-colors cursor-pointer"
                       onClick={() => handleDownload(role)}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -251,7 +270,8 @@ export const Header: React.FC<HeaderProps> = ({
                           id={`preview-resume-btn-${role.id}`}
                           onClick={(e) => handlePreview(role, e)}
                           title="Preview in browser"
-                          className="p-1.5 rounded-md text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10"
+                          aria-label={`Preview ${role.title} resume in browser`}
+                          className="p-1.5 rounded-md text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 focus-visible:ring-1 focus-visible:ring-[#a66a12] cursor-pointer"
                         >
                           <Eye className="w-3.5 h-3.5" />
                         </button>
@@ -259,7 +279,8 @@ export const Header: React.FC<HeaderProps> = ({
                           id={`download-resume-btn-${role.id}`}
                           onClick={(e) => handleDownload(role, e)}
                           title="Download PDF"
-                          className="p-1.5 rounded-md text-[#a66a12] hover:bg-[#a66a12]/10"
+                          aria-label={`Download ${role.title} PDF resume`}
+                          className="p-1.5 rounded-md text-[#a66a12] hover:bg-[#a66a12]/10 focus-visible:ring-1 focus-visible:ring-[#a66a12] cursor-pointer"
                         >
                           <Download className="w-3.5 h-3.5" />
                         </button>

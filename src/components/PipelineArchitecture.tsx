@@ -126,8 +126,17 @@ export const PipelineArchitecture: React.FC = () => {
             return (
               <div
                 key={node.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Select Stage ${node.stageNumber}: ${node.name}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedNode(node);
+                  }
+                }}
                 onClick={() => setSelectedNode(node)}
-                className={`p-4 rounded-xl border transition-all cursor-pointer relative group ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer relative group focus:ring-2 focus:ring-[#a66a12] outline-none ${
                   isSelected
                     ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] border-transparent shadow-md'
                     : 'bg-[#f6f7f9] dark:bg-[#1a1f28] border-[#dfe3e9] dark:border-[#30363d] text-[#101318] dark:text-white hover:border-[#a66a12]'

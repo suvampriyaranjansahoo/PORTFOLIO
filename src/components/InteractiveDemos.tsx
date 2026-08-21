@@ -98,7 +98,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
   }, [roa, currentRatio, debtToEquity, cashFlowRatio, workingCapitalRatio]);
 
   return (
-    <section id="demos" className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36]">
+    <section id="demos" className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
@@ -115,8 +115,16 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
         </div>
 
         {/* Demo Selector Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
+        <div 
+          role="tablist"
+          aria-label="Interactive Demo Sandboxes"
+          className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar"
+        >
           <button
+            id="demo-tab-traffic"
+            role="tab"
+            aria-selected={activeTab === 'traffic'}
+            tabIndex={0}
             onClick={() => setActiveTab('traffic')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'traffic'
@@ -129,6 +137,10 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
           </button>
 
           <button
+            id="demo-tab-rice"
+            role="tab"
+            aria-selected={activeTab === 'rice'}
+            tabIndex={0}
             onClick={() => setActiveTab('rice')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'rice'
@@ -141,6 +153,10 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
           </button>
 
           <button
+            id="demo-tab-risk"
+            role="tab"
+            aria-selected={activeTab === 'risk'}
+            tabIndex={0}
             onClick={() => setActiveTab('risk')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'risk'
@@ -153,6 +169,10 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
           </button>
 
           <button
+            id="demo-tab-sql"
+            role="tab"
+            aria-selected={activeTab === 'sql'}
+            tabIndex={0}
             onClick={() => setActiveTab('sql')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'sql'
@@ -165,6 +185,10 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
           </button>
 
           <button
+            id="demo-tab-pipeline"
+            role="tab"
+            aria-selected={activeTab === 'pipeline'}
+            tabIndex={0}
             onClick={() => setActiveTab('pipeline')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'pipeline'
@@ -177,6 +201,10 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
           </button>
 
           <button
+            id="demo-tab-cohort"
+            role="tab"
+            aria-selected={activeTab === 'cohort'}
+            tabIndex={0}
             onClick={() => setActiveTab('cohort')}
             className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'cohort'
@@ -282,8 +310,17 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                     return (
                       <div
                         key={item.id}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Select ${item.theme} for detailed review`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setSelectedThemeId(item.id);
+                          }
+                        }}
                         onClick={() => setSelectedThemeId(item.id)}
-                        className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                        className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between focus:ring-2 focus:ring-[#a66a12] outline-none ${
                           isSelected
                             ? 'bg-[#101318] text-white border-[#101318] dark:bg-white dark:text-[#101318] dark:border-white shadow-sm'
                             : 'bg-white dark:bg-[#151920] border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] text-[#101318] dark:text-white'
@@ -346,6 +383,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                       <strong className="text-[#101318] dark:text-white">{roa.toFixed(1)}%</strong>
                     </div>
                     <input
+                      id="risk-roa-slider"
+                      aria-label="Profitability ROA percentage"
                       type="range"
                       min="-5.0"
                       max="15.0"
@@ -362,6 +401,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                       <strong className="text-[#101318] dark:text-white">{currentRatio.toFixed(2)}x</strong>
                     </div>
                     <input
+                      id="risk-liquidity-slider"
+                      aria-label="Liquidity current ratio"
                       type="range"
                       min="0.5"
                       max="4.0"
@@ -378,6 +419,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                       <strong className="text-[#101318] dark:text-white">{debtToEquity.toFixed(2)}x</strong>
                     </div>
                     <input
+                      id="risk-leverage-slider"
+                      aria-label="Leverage debt to equity ratio"
                       type="range"
                       min="0.2"
                       max="5.0"
@@ -394,6 +437,8 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                       <strong className="text-[#101318] dark:text-white">{cashFlowRatio.toFixed(2)}</strong>
                     </div>
                     <input
+                      id="risk-cashflow-slider"
+                      aria-label="Operating cash flow to debt ratio"
                       type="range"
                       min="-0.2"
                       max="0.6"
