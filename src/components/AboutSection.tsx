@@ -33,12 +33,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   onOpenRecruiter
 }) => {
   const [activePillar, setActivePillar] = useState<'business' | 'product' | 'engineering'>('business');
-  const t = TRANSLATIONS[language].about;
+  const t = TRANSLATIONS[language]?.about || TRANSLATIONS['en'].about;
 
   const pillars = [
     {
       id: 'business' as const,
-      label: 'Business Analytics',
+      label: language === 'de' ? 'Business Analytics' : language === 'fr' ? 'Business Analytics' : language === 'hi' ? 'बिजनेस एनालिटिक्स' : 'Business Analytics',
       badge: 'Decisions & ROI',
       icon: LineChart,
       color: 'text-amber-600 dark:text-amber-400',
@@ -51,7 +51,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
     },
     {
       id: 'product' as const,
-      label: 'Product Analytics',
+      label: language === 'de' ? 'Produkt-Analytik' : language === 'fr' ? 'Product Analytics' : language === 'hi' ? 'प्रोडक्ट एनालिटिक्स' : 'Product Analytics',
       badge: 'Prioritization & UX',
       icon: Target,
       color: 'text-emerald-600 dark:text-emerald-400',
@@ -64,7 +64,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
     },
     {
       id: 'engineering' as const,
-      label: 'Data Engineering',
+      label: language === 'de' ? 'Data Engineering' : language === 'fr' ? 'Data Engineering' : language === 'hi' ? 'डेटा इंजीनियरिंग' : 'Data Engineering',
       badge: 'Scale & Integrity',
       icon: Database,
       color: 'text-blue-600 dark:text-blue-400',
@@ -80,40 +80,40 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   const currentPillar = pillars.find(p => p.id === activePillar) || pillars[0];
 
   return (
-    <section id="about" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
+    <section id="about" className="py-14 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
+        <div className="max-w-3xl mb-10">
           <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-3 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>01 · WHO I AM & PROFESSIONAL PROFILE</span>
+            <span>{t?.label || "01 · WHO I AM & PROFESSIONAL PROFILE"}</span>
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight leading-tight mb-4">
-            Turning complex data into sound business decisions.
+            {t?.heading || "Data that answers business questions."}
           </h2>
           <p className="text-base sm:text-lg text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-            I am a <strong className="text-[#101318] dark:text-white font-semibold">2026 Computer Science Engineering graduate</strong> who operates at the intersection of data analysis, product intuition, and robust data engineering.
+            {t?.p1 || "I am a 2026 Computer Science Engineering graduate who operates at the intersection of data analysis, product intuition, and robust data engineering."}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
           {/* LEFT COLUMN: Narrative & Interactive Domain Pillars (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             
             {/* Core Narrative */}
-            <div className="space-y-4 text-base text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+            <div className="space-y-4 text-sm sm:text-base text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed bg-white/70 dark:bg-[#151920]/70 p-5 sm:p-6 rounded-2xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
               <p>
-                In an era where organizations are flooded with metrics, my focus is practical: <strong>answering real business questions with clean, audited data</strong>. I combine the quantitative rigor of a Computer Science degree with practical enterprise experience gained during my Data Analyst internship at <strong className="text-[#101318] dark:text-white font-medium">Vodafone Intelligent Solutions (VOIS)</strong>.
+                {t?.p2 || "At Vodafone Intelligent Solutions (VOIS), I validated over 50,000+ business records, automated complex Power BI reporting workflows using DAX and Power Query to slash turnaround by 40%, and built churn-analysis KPIs directly linked to a cross-functional 5% churn reduction."}
               </p>
               <p>
-                Whether diagnosing customer retention dynamics, benchmarking financial bankruptcy risk across 78,000+ balance sheets, or evaluating 6,000+ user reviews through the RICE framework, I focus on <strong>clarity, integrity, and actionable outcomes</strong> rather than vanity metrics.
+                {t?.p3 || "My independent projects range from customer segmentation and financial distress analysis across 78,000+ records to building PriorityPe (an NLP + RICE product prioritization engine) and MediFlowRT (real-time Azure streaming analytics)."}
               </p>
             </div>
 
             {/* Interactive Domain Pillar Selector */}
-            <div className="pt-2">
+            <div className="pt-1">
               <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider mb-3">
                 How I Bridge Analytical Domains:
               </div>
@@ -182,13 +182,13 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Core Operating Principles */}
-            <div className="pt-2">
+            <div className="pt-1">
               <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider mb-3">
                 Core Working Principles:
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                     <span>Audit Before Modeling</span>
@@ -198,7 +198,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
                     <span>Focus on Decision ROI</span>
@@ -208,7 +208,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <Cpu className="w-3.5 h-3.5 text-blue-500" />
                     <span>Pragmatic Stack</span>

@@ -196,11 +196,12 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="recruiter-mode-btn"
             onClick={onOpenRecruiter}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg text-[#101318] dark:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-300 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-mono font-medium rounded-lg text-[#101318] dark:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-300 transition-all cursor-pointer"
             title="Open quick 60-second summary for hiring managers"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
-            <span>{t.recruiterMode}</span>
+            <span className="hidden sm:inline">{t.recruiterMode}</span>
+            <span className="sm:hidden">Brief</span>
           </button>
 
           {/* Resume Dropdown */}
@@ -213,8 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
               aria-haspopup="true"
             >
               <FileText className="w-3.5 h-3.5 text-[#a66a12]" />
-              <span className="hidden xs:inline">{t.resume}</span>
-              <span className="xs:hidden">CV</span>
+              <span className="inline font-semibold">{t.resume}</span>
               <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
