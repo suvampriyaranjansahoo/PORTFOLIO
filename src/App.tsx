@@ -17,6 +17,8 @@ import { CaseStudyModal } from './components/CaseStudyModal';
 import { RecruiterModal } from './components/RecruiterModal';
 import { ResumePreviewModal } from './components/ResumePreviewModal';
 import { CommandPalette } from './components/CommandPalette';
+import { CustomCursor } from './components/CustomCursor';
+import { AmbientBackground } from './components/AmbientBackground';
 import { Toast } from './components/Toast';
 import { ProjectCategory, ResumeRole } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
@@ -117,8 +119,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
       <div id="top" />
+
+      {/* Interactive Ambient Dynamic Mesh & Spotlight Background */}
+      <AmbientBackground />
+
+      {/* Interactive Magnetic Custom Cursor (Desktop / Pointer only) */}
+      <CustomCursor />
 
       {/* Primary Sticky Header */}
       <Header

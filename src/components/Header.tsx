@@ -139,6 +139,10 @@ export const Header: React.FC<HeaderProps> = ({
           <a href="#experience" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.experience}</a>
           <a href="#skills" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.toolbox}</a>
           <a href="#academics" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.academics}</a>
+          <a href="#coffee-telemetry" className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 hover:text-amber-500 font-semibold transition-colors">
+            <span>☕</span>
+            <span>Fuel</span>
+          </a>
           <a href="#contact" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.contact}</a>
         </nav>
 

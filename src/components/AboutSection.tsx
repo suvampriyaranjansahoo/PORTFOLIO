@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { CoffeeFuelCounter } from './CoffeeFuelCounter';
+import { InteractiveCard } from './InteractiveCard';
 
 interface AboutSectionProps {
   language?: Language;
@@ -224,7 +226,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           <div className="lg:col-span-5 space-y-4">
             
             {/* Quick Profile Summary Bento */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm space-y-5">
+            <InteractiveCard
+              featured={true}
+              glowColor="rgba(216, 163, 79, 0.45)"
+              className="p-6 space-y-5"
+            >
               
               <div className="flex items-center justify-between pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
                 <div className="flex items-center gap-3">
@@ -328,7 +334,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 )}
               </div>
 
-            </div>
+            </InteractiveCard>
 
             {/* Schooling Merit Callout */}
             <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs">
@@ -345,6 +351,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 View Details →
               </a>
             </div>
+
+            {/* Coffee Consumed & Engineering Fuel Counter */}
+            <CoffeeFuelCounter initialHours={1480} />
 
           </div>
 

@@ -51,42 +51,48 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
 
         {/* Top Summary Metrics Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
-            <div className="p-2.5 rounded-lg bg-amber-500/10 text-[#a66a12] shrink-0">
-              <GraduationCap className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">B.Tech Computer Science</div>
-              <div className="text-lg font-display font-bold text-[#101318] dark:text-white">
-                8.18 <span className="text-xs font-normal text-[#8b93a1]">/ 10 CGPA</span>
+          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
+            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-lg bg-amber-500/10 text-[#a66a12] shrink-0">
+                <GraduationCap className="w-5 h-5" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">ITER, SOA University (2022–2026)</div>
+              <div>
+                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">B.Tech Computer Science</div>
+                <div className="text-lg font-display font-bold text-[#101318] dark:text-white">
+                  8.18 <span className="text-xs font-normal text-[#8b93a1]">/ 10 CGPA</span>
+                </div>
+                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">ITER, SOA University (2022–2026)</div>
+              </div>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
-            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
-              <Award className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Higher Secondary (12th PCM)</div>
-              <div className="text-lg font-display font-bold text-emerald-600 dark:text-emerald-400">
-                93.85% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
+            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                <Award className="w-5 h-5" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">Saraswati Vidya Mandir, Berhampur (2021)</div>
+              <div>
+                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Higher Secondary (12th PCM)</div>
+                <div className="text-lg font-display font-bold text-emerald-600 dark:text-emerald-400">
+                  93.85% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+                </div>
+                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">Saraswati Vidya Mandir, Berhampur (2021)</div>
+              </div>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex items-center gap-3.5">
-            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Secondary School (10th)</div>
-              <div className="text-lg font-display font-bold text-blue-600 dark:text-blue-400">
-                90.67% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+          <div className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5">
+            <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center gap-3.5 h-full">
+              <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                <BookOpen className="w-5 h-5" />
               </div>
-              <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">SSVM, Nayagarh (2019)</div>
+              <div>
+                <div className="text-[11px] font-mono uppercase text-[#8b93a1]">Secondary School (10th)</div>
+                <div className="text-lg font-display font-bold text-blue-600 dark:text-blue-400">
+                  90.67% <span className="text-xs font-normal text-[#8b93a1]">Aggregate</span>
+                </div>
+                <div className="text-[11px] text-[#5c6472] dark:text-[#9ea7b4]">SSVM, Nayagarh (2019)</div>
+              </div>
             </div>
           </div>
         </div>
@@ -102,128 +108,132 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
             {ACADEMIC_MILESTONES.map((m) => {
               const isSelected = m.id === selectedMilestoneId;
               return (
-                <button
+                <div 
                   key={m.id}
-                  onClick={() => setSelectedMilestoneId(m.id)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
-                    isSelected
-                      ? 'bg-white dark:bg-[#1c222d] border-[#a66a12] shadow-sm ring-1 ring-[#a66a12]/30'
-                      : 'bg-[#f6f7f9] dark:bg-[#151920] border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12]/60'
+                  className={`holo-border-active p-[1.5px] rounded-xl transition-all duration-300 ${
+                    isSelected ? 'ring-2 ring-amber-500/60 shadow-md' : 'opacity-85 hover:opacity-100'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-[#a66a12]/10 text-[#a66a12]">
-                      {m.badge}
-                    </span>
-                    <span className="text-xs font-mono text-[#8b93a1]">{m.year}</span>
-                  </div>
+                  <button
+                    onClick={() => setSelectedMilestoneId(m.id)}
+                    className="w-full text-left p-4 rounded-[10.5px] glass-morphism-card cursor-pointer flex flex-col justify-between"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-[#a66a12]/10 text-[#a66a12]">
+                        {m.badge}
+                      </span>
+                      <span className="text-xs font-mono text-[#8b93a1]">{m.year}</span>
+                    </div>
 
-                  <div className="font-semibold text-sm text-[#101318] dark:text-white leading-snug">
-                    {m.degree}
-                  </div>
+                    <div className="font-semibold text-sm text-[#101318] dark:text-white leading-snug">
+                      {m.degree}
+                    </div>
 
-                  <div className="text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1 truncate">
-                    {m.institution}
-                  </div>
+                    <div className="text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1 truncate">
+                      {m.institution}
+                    </div>
 
-                  <div className="mt-3 pt-2.5 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[#101318] dark:text-white">
-                      {m.score}
-                    </span>
-                    <span className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
-                      <span>{language === 'de' ? 'Details ansehen' : language === 'fr' ? 'Voir détails' : language === 'hi' ? 'विवरण देखें' : 'View details'}</span>
-                      <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-[#a66a12]' : ''}`} />
-                    </span>
-                  </div>
-                </button>
+                    <div className="mt-3 pt-2.5 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-[#101318] dark:text-white">
+                        {m.score}
+                      </span>
+                      <span className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
+                        <span>{language === 'de' ? 'Details ansehen' : language === 'fr' ? 'Voir détails' : language === 'hi' ? 'विवरण देखें' : 'View details'}</span>
+                        <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-[#a66a12]' : ''}`} />
+                      </span>
+                    </div>
+                  </button>
+                </div>
               );
             })}
           </div>
 
           {/* Detailed Milestone Panel (Right) */}
           <div className="lg:col-span-8">
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm flex flex-col justify-between space-y-6">
-              <div>
-                {/* Header Strip */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                        {selectedMilestone.honors || 'Distinction'}
-                      </span>
-                      <span className="text-xs font-mono text-[#8b93a1]">
-                        {selectedMilestone.period}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white">
-                      {selectedMilestone.degree}
-                    </h3>
-
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1.5">
-                      <span className="font-medium text-[#101318] dark:text-white">
-                        {selectedMilestone.institution}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#a66a12]" />
-                        {selectedMilestone.location}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="sm:text-right shrink-0 p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                    <div className="text-[10px] font-mono uppercase text-[#8b93a1]">
-                      {selectedMilestone.scoreType}
-                    </div>
-                    <div className="text-2xl font-display font-bold text-[#a66a12]">
-                      {selectedMilestone.score}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Scholastic Highlights */}
-                <div className="my-5">
-                  <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-3 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
-                    <span>{language === 'de' ? "Akademische Schwerpunkte & Praxis" : language === 'fr' ? "Points Forts & Focus Pratique" : language === 'hi' ? "शैक्षणिक विशेषताएं एवं व्यावहारिक अनुप्रयोग" : "Academic Highlights & Applied Focus"}</span>
-                  </h4>
-                  <ul className="space-y-2.5 text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4]">
-                    {selectedMilestone.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Relevant Coursework & Disciplines */}
+            <div className="holo-border-active p-[1.5px] rounded-2xl h-full">
+              <div className="h-full p-6 sm:p-7 rounded-[14.5px] glass-morphism-card flex flex-col justify-between space-y-6">
                 <div>
-                  <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-2.5 flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-[#a66a12]" />
-                    <span>{language === 'de' ? "Relevante Studienfächer & Disziplinen" : language === 'fr' ? "Matières Clés & Disciplines" : language === 'hi' ? "संबंधित पाठ्यक्रम और मुख्य विषय" : "Relevant Coursework & Core Disciplines"}</span>
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedMilestone.coursework.map((course, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
-                      >
-                        {course}
-                      </span>
-                    ))}
+                  {/* Header Strip */}
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-5 border-b border-[#dfe3e9] dark:border-[#262c36]">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                          {selectedMilestone.honors || 'Distinction'}
+                        </span>
+                        <span className="text-xs font-mono text-[#8b93a1]">
+                          {selectedMilestone.period}
+                        </span>
+                      </div>
+
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white">
+                        {selectedMilestone.degree}
+                      </h3>
+
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-1.5">
+                        <span className="font-medium text-[#101318] dark:text-white">
+                          {selectedMilestone.institution}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#a66a12]" />
+                          {selectedMilestone.location}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="sm:text-right shrink-0 p-3 rounded-xl bg-[#f6f7f9]/80 dark:bg-[#0e1116]/80 border border-[#dfe3e9] dark:border-[#262c36]">
+                      <div className="text-[10px] font-mono uppercase text-[#8b93a1]">
+                        {selectedMilestone.scoreType}
+                      </div>
+                      <div className="text-2xl font-display font-bold text-[#a66a12]">
+                        {selectedMilestone.score}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Scholastic Highlights */}
+                  <div className="my-5">
+                    <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-3 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
+                      <span>{language === 'de' ? "Akademische Schwerpunkte & Praxis" : language === 'fr' ? "Points Forts & Focus Pratique" : language === 'hi' ? "शैक्षणिक विशेषताएं एवं व्यावहारिक अनुप्रयोग" : "Academic Highlights & Applied Focus"}</span>
+                    </h4>
+                    <ul className="space-y-2.5 text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4]">
+                      {selectedMilestone.highlights.map((highlight, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Relevant Coursework & Disciplines */}
+                  <div>
+                    <h4 className="text-xs font-mono uppercase font-semibold text-[#101318] dark:text-white tracking-wider mb-2.5 flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-[#a66a12]" />
+                      <span>{language === 'de' ? "Relevante Studienfächer & Disziplinen" : language === 'fr' ? "Matières Clés & Disciplines" : language === 'hi' ? "संबंधित पाठ्यक्रम और मुख्य विषय" : "Relevant Coursework & Core Disciplines"}</span>
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedMilestone.coursework.map((course, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white"
+                        >
+                          {course}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Verification Note */}
-              <div className="pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs text-[#8b93a1]">
-                <span className="flex items-center gap-1.5">
-                  <FileCheck2 className="w-4 h-4 text-[#a66a12]" />
-                  <span>{t?.transcriptsNote || "Transcripts & marksheets available upon recruiter request"}</span>
-                </span>
-                <span className="font-mono text-[11px] text-[#a66a12]">{t?.verifiedCandidate || "Verified Candidate"}</span>
+                {/* Bottom Verification Note */}
+                <div className="pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs text-[#8b93a1]">
+                  <span className="flex items-center gap-1.5">
+                    <FileCheck2 className="w-4 h-4 text-[#a66a12]" />
+                    <span>{t?.transcriptsNote || "Transcripts & marksheets available upon recruiter request"}</span>
+                  </span>
+                  <span className="font-mono text-[11px] text-[#a66a12]">{t?.verifiedCandidate || "Verified Candidate"}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -242,25 +252,27 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
               return (
                 <div
                   key={idx}
-                  className="p-5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs"
+                  className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-1"
                 >
-                  <div className="flex items-center gap-2.5 mb-3">
-                    <span className="p-2 rounded-lg bg-[#a66a12]/10 text-[#a66a12]">
-                      <Icon className="w-4 h-4" />
-                    </span>
-                    <h4 className="font-semibold text-sm text-[#101318] dark:text-white">
-                      {domain.title}
-                    </h4>
-                  </div>
+                  <div className="p-5 rounded-[10.5px] glass-morphism-card h-full">
+                    <div className="flex items-center gap-2.5 mb-3">
+                      <span className="p-2 rounded-lg bg-[#a66a12]/10 text-[#a66a12]">
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <h4 className="font-semibold text-sm text-[#101318] dark:text-white group-hover:text-amber-500 transition-colors">
+                        {domain.title}
+                      </h4>
+                    </div>
 
-                  <ul className="space-y-1.5 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
-                    {domain.skills.map((skill, sIdx) => (
-                      <li key={sIdx} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12]" />
-                        <span>{skill}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="space-y-1.5 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
+                      {domain.skills.map((skill, sIdx) => (
+                        <li key={sIdx} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12]" />
+                          <span>{skill}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               );
             })}

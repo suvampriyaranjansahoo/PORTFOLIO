@@ -59,22 +59,24 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
             <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
               {t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
             </p>
-            <div className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
-              <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>
-                  {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
-                </span>
+            <div className="holo-border-active p-[1.5px] rounded-xl">
+              <div className="p-4 rounded-[10.5px] glass-morphism-card space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
+                <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <span>
+                    {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
+                  </span>
+                </div>
+                <p className="text-[11px] leading-relaxed">
+                  {language === 'de'
+                    ? "Ob Kundenabwanderung bei VOIS oder Insolvenzrisiken – jede Analyse schließt mit einer klaren Geschäftsempfehlung ab."
+                    : language === 'fr'
+                    ? "Qu'il s'agisse de churn client chez VOIS ou de bilans financiers, chaque analyse débouche sur une recommandation concrète."
+                    : language === 'hi'
+                    ? "चाहे VOIS में ग्राहक चर्न हो या वित्तीय जोखिम, प्रत्येक विश्लेषण एक ठोस व्यावसायिक समाधान पर समाप्त होता है।"
+                    : "Whether diagnosing retail customer churn at VOIS or analyzing corporate bankruptcy filings, every analysis ends with an unambiguous business recommendation."}
+                </p>
               </div>
-              <p className="text-[11px] leading-relaxed">
-                {language === 'de'
-                  ? "Ob Kundenabwanderung bei VOIS oder Insolvenzrisiken – jede Analyse schließt mit einer klaren Geschäftsempfehlung ab."
-                  : language === 'fr'
-                  ? "Qu'il s'agisse de churn client chez VOIS ou de bilans financiers, chaque analyse débouche sur une recommandation concrète."
-                  : language === 'hi'
-                  ? "चाहे VOIS में ग्राहक चर्न हो या वित्तीय जोखिम, प्रत्येक विश्लेषण एक ठोस व्यावसायिक समाधान पर समाप्त होता है।"
-                  : "Whether diagnosing retail customer churn at VOIS or analyzing corporate bankruptcy filings, every analysis ends with an unambiguous business recommendation."}
-              </p>
             </div>
           </div>
 
@@ -83,19 +85,23 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
               {steps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] transition-colors"
+                  className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5"
                 >
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-mono text-xs font-bold text-[#a66a12]">
-                      0{idx + 1}
-                    </span>
-                    <span className="font-mono text-xs font-bold text-[#101318] dark:text-white tracking-tight">
-                      {step.title}
-                    </span>
+                  <div className="p-4 rounded-[10.5px] glass-morphism-card h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="font-mono text-xs font-bold text-[#a66a12]">
+                          0{idx + 1}
+                        </span>
+                        <span className="font-mono text-xs font-bold text-[#101318] dark:text-white tracking-tight group-hover:text-amber-500 transition-colors">
+                          {step.title}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+                        {step.desc}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-                    {step.desc}
-                  </p>
                 </div>
               ))}
             </div>

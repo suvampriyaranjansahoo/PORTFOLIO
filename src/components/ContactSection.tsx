@@ -1,7 +1,8 @@
 import React from 'react';
-import { Mail, Copy, ArrowUpRight, MapPin, Sparkles, Check } from 'lucide-react';
+import { Mail, Copy, ArrowUpRight, MapPin, Sparkles, Check, Coffee } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { AnimatedCoffeeWidget } from './AnimatedCoffeeWidget';
 
 interface ContactSectionProps {
   language?: Language;
@@ -33,10 +34,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
 
         {/* Contact Card */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#111419] text-white border border-[#262c36] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="space-y-4">
+        <div className="relative overflow-hidden p-8 sm:p-12 rounded-3xl bg-[#111419] text-white border border-[#262c36] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8 group card-hover">
+          {/* Ghost watermark index */}
+          <div className="ghost-watermark select-none text-white/[0.03] group-hover:scale-105 transition-transform duration-300">
+            09
+          </div>
+
+          <div className="space-y-4 relative z-10 max-w-xl">
             <div className="font-mono text-xs text-[#d8a34f] tracking-widest uppercase">
-              {t?.contactLabel || "09 · CONTACT"}
+              {t?.contactLabel || "09 · CONTACT & INITIATION"}
             </div>
             <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-tight leading-tight">
               {t?.contactHeading || "Let's build something useful together."}
@@ -47,14 +53,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 relative z-10">
             <a
               href={PERSONAL_INFO.links.email}
               id="contact-email-action"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-[#101318] font-semibold text-sm hover:bg-gray-100 transition-colors shadow-sm"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-white text-[#101318] font-semibold text-sm hover:bg-gray-100 transition-all shadow-sm group/btn"
             >
               <Mail className="w-4 h-4 text-[#a66a12]" />
               <span>{t?.emailMe || "Email me"}</span>
+              <div className="w-5 h-5 rounded-full bg-[#101318]/10 flex items-center justify-center text-xs group-hover/btn:rotate-45 transition-transform duration-300">
+                ↗
+              </div>
             </a>
 
             <button
@@ -70,27 +79,41 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               href={PERSONAL_INFO.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#212630] border border-[#303846] text-[#c6cad1] hover:text-white text-sm font-mono hover:bg-[#2c3340] transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#212630] border border-[#303846] text-[#c6cad1] hover:text-white text-sm font-mono hover:bg-[#2c3340] transition-colors group/link"
             >
               <span>LinkedIn</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
             </a>
 
             <a
               href={PERSONAL_INFO.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#212630] border border-[#303846] text-[#c6cad1] hover:text-white text-sm font-mono hover:bg-[#2c3340] transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#212630] border border-[#303846] text-[#c6cad1] hover:text-white text-sm font-mono hover:bg-[#2c3340] transition-colors group/link"
             >
               <span>GitHub</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
 
+        {/* Scroll-Driven Animated Coffee & Project Hours Productivity Widget */}
+        <AnimatedCoffeeWidget totalHours={1480} />
+
         {/* Footer */}
         <footer className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#8b93a1]">
-          <div>© 2026 {PERSONAL_INFO.name}. All rights reserved.</div>
+          <div className="flex items-center gap-2">
+            <span>© 2026 {PERSONAL_INFO.name}. All rights reserved.</span>
+            <span className="hidden sm:inline text-[#dfe3e9] dark:text-[#262c36]">·</span>
+            <a 
+              href="#about" 
+              className="inline-flex items-center gap-1 text-[#a66a12] dark:text-amber-400 hover:underline"
+              title="View Coffee Fuel Telemetry"
+            >
+              <Coffee className="w-3.5 h-3.5" />
+              <span>Fuel Engine Active</span>
+            </a>
+          </div>
           <div className="text-right">Data → Insight → Decision → Impact</div>
         </footer>
       </div>

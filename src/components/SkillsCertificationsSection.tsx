@@ -26,20 +26,23 @@ export const SkillsCertificationsSection: React.FC<SkillsCertificationsSectionPr
           {SKILL_CATEGORIES.map((cat, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-between"
+              className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-1"
             >
-              <div>
-                <div className="font-mono text-xs font-semibold text-[#a66a12] tracking-wider mb-3">
-                  {cat.category}
+              <div className="p-5 rounded-[10.5px] glass-morphism-card h-full flex flex-col justify-between">
+                <div>
+                  <div className="font-mono text-xs font-semibold text-[#a66a12] tracking-wider mb-3 flex items-center justify-between">
+                    <span>{cat.category}</span>
+                    <span className="text-[10px] text-[#8b93a1] font-mono">0{idx + 1}</span>
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
+                    {cat.skills.map((skill, sIdx) => (
+                      <li key={sIdx} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500/90 flex-shrink-0" />
+                        <span>{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-1.5 text-xs text-[#5c6472] dark:text-[#9ea7b4]">
-                  {cat.skills.map((skill, sIdx) => (
-                    <li key={sIdx} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 flex-shrink-0" />
-                      <span>{skill}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           ))}
@@ -56,19 +59,21 @@ export const SkillsCertificationsSection: React.FC<SkillsCertificationsSectionPr
             {CERTIFICATIONS.map((cert, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between gap-3 shadow-xs hover:border-[#a66a12] transition-colors"
+                className="holo-border-active p-[1.5px] rounded-xl group transition-all duration-300 hover:-translate-y-0.5"
               >
-                <div className="min-w-0">
-                  <div className="text-xs font-semibold text-[#101318] dark:text-white truncate">
-                    {cert.title}
+                <div className="p-4 rounded-[10.5px] glass-morphism-card flex items-center justify-between gap-3 h-full">
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold text-[#101318] dark:text-white truncate group-hover:text-amber-500 transition-colors">
+                      {cert.title}
+                    </div>
+                    <div className="text-[11px] font-mono text-[#8b93a1]">
+                      {cert.issuer} · {cert.year}
+                    </div>
                   </div>
-                  <div className="text-[11px] font-mono text-[#8b93a1]">
-                    {cert.issuer} · {cert.year}
-                  </div>
-                </div>
 
-                <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  <ShieldCheck className="w-4 h-4" />
+                  <div className="p-1.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
                 </div>
               </div>
             ))}

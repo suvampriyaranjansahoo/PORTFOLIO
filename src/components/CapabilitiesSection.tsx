@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart3, Target, Database, Brain, ArrowUpRight } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { InteractiveCard } from './InteractiveCard';
 
 interface CapabilitiesSectionProps {
   language?: Language;
@@ -95,19 +96,25 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {capabilities.map((cap) => (
-            <div
+            <InteractiveCard
               key={cap.num}
               onClick={() => {
                 onSelectCategory(cap.category);
                 const el = document.getElementById('work');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group p-6 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between"
+              glowColor="rgba(216, 163, 79, 0.15)"
+              className="p-6 bg-[#f6f7f9]/90 dark:bg-[#0e1116]/90 backdrop-blur-sm border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] cursor-pointer flex flex-col justify-between shadow-xs hover:shadow-md"
             >
-              <div>
+              {/* Ghost number watermark */}
+              <div className="ghost-watermark select-none text-black/[0.03] dark:text-white/[0.03] group-hover:scale-105 transition-transform duration-300">
+                {cap.num}
+              </div>
+
+              <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-mono text-xs text-[#8b93a1]">{cap.num}</span>
-                  <div className="p-2 rounded-lg bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] group-hover:scale-105 transition-transform">
+                  <div className="p-2 rounded-lg bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] group-hover:scale-110 group-hover:border-amber-500/40 transition-all">
                     {cap.icon}
                   </div>
                 </div>
@@ -122,11 +129,11 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-[11px] font-mono text-[#8b93a1] group-hover:text-[#101318] dark:group-hover:text-white">
+              <div className="mt-6 pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-[11px] font-mono text-[#8b93a1] group-hover:text-[#101318] dark:group-hover:text-white relative z-10">
                 <span className="truncate">{cap.projectsText}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
-            </div>
+            </InteractiveCard>
           ))}
         </div>
       </div>
