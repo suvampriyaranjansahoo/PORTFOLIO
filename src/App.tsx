@@ -103,7 +103,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-500 ease-out" style={{ color: 'var(--text-primary)' }}>
       {/* Global Analytical Atmosphere Background System */}
       <GlobalBackground />
 
