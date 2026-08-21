@@ -242,32 +242,40 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
-            {/* Technical Competencies Matrix Strip */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-[#151920]/80 border border-[#dfe3e9] dark:border-[#262c36] space-y-3 shadow-xs">
+            {/* Technical Competencies & Direct Impact Matrix */}
+            <div className="p-5 rounded-2xl bg-white/80 dark:bg-[#151920]/80 border border-[#dfe3e9] dark:border-[#262c36] space-y-4 shadow-xs">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider font-semibold">
-                  Analytical Competencies & Tooling:
+                  Direct Enterprise & Project Impact Matrix:
                 </span>
                 <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                  Production Tested
+                  Audited Proof
                 </span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Querying & SQL</div>
-                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">CTEs, Window, Joins, PostgreSQL</div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
+                  <div className="font-mono font-bold text-emerald-600 dark:text-emerald-400 text-sm">+35% / -40%</div>
+                  <div className="font-semibold text-[#101318] dark:text-white text-xs">Vodafone (VOIS)</div>
+                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
+                    50K+ records audited in SQL; DAX automated models cutting cycle time by 40%.
+                  </div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">BI & Modeling</div>
-                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Power BI, DAX, Star Schema</div>
+
+                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
+                  <div className="font-mono font-bold text-purple-600 dark:text-purple-400 text-sm">6,000+ Reviews</div>
+                  <div className="font-semibold text-[#101318] dark:text-white text-xs">PriorityPe RICE</div>
+                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
+                    NLP review mining across UPI apps, resolving Bank Switch 04 checkout drop-offs.
+                  </div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Python & ML</div>
-                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Pandas, Scikit, XGBoost, SHAP</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36]">
-                  <div className="font-semibold text-[#101318] dark:text-white text-[11px]">Cloud & ETL</div>
-                  <div className="text-[10px] text-[#5c6472] dark:text-[#8b93a1] mt-0.5">Azure Event Hub, Databricks</div>
+
+                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
+                  <div className="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">0.857 ROC-AUC</div>
+                  <div className="font-semibold text-[#101318] dark:text-white text-xs">Bankruptcy Risk</div>
+                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
+                    78,682 financial filings benchmarked with XGBoost & SHAP explainability.
+                  </div>
                 </div>
               </div>
             </div>
