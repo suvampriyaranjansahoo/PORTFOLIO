@@ -21,7 +21,6 @@ import { PipelineArchitecture } from './PipelineArchitecture';
 import { CohortRetentionMatrix } from './CohortRetentionMatrix';
 import { TrafficD3Chart } from './TrafficD3Chart';
 import { Language, TRANSLATIONS } from '../data/translations';
-import { InteractiveCard } from './InteractiveCard';
 
 type DemoTab = 'traffic' | 'rice' | 'risk' | 'sql' | 'pipeline' | 'cohort';
 
@@ -195,10 +194,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
 
         {/* TAB 1: RICE */}
         {activeTab === 'rice' && (
-          <InteractiveCard
-            glowColor="rgba(216, 163, 79, 0.18)"
-            className="p-6 sm:p-8 bg-[#f6f7f9]/90 dark:bg-[#0e1116]/90 backdrop-blur-md border border-[#dfe3e9] dark:border-[#262c36] shadow-sm hover:border-[#a66a12]/60"
-          >
+          <div className="p-6 sm:p-8 rounded-2xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 space-y-5">
                 <div className="flex items-center justify-between gap-2">
@@ -318,15 +314,12 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                 </div>
               </div>
             </div>
-          </InteractiveCard>
+          </div>
         )}
 
         {/* TAB 2: FINANCIAL RISK */}
         {activeTab === 'risk' && (
-          <InteractiveCard
-            glowColor="rgba(244, 63, 94, 0.16)"
-            className="p-6 sm:p-8 bg-[#f6f7f9]/90 dark:bg-[#0e1116]/90 backdrop-blur-md border border-[#dfe3e9] dark:border-[#262c36] shadow-sm hover:border-rose-500/50"
-          >
+          <div className="p-6 sm:p-8 rounded-2xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-5 space-y-4">
                 <div className="flex items-center justify-between gap-2">
@@ -456,7 +449,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                 </div>
               </div>
             </div>
-          </InteractiveCard>
+          </div>
         )}
 
         {/* TAB 3: SQL RUNNER */}

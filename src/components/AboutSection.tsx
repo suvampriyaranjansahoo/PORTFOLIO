@@ -20,8 +20,6 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
-import { CoffeeFuelCounter } from './CoffeeFuelCounter';
-import { InteractiveCard } from './InteractiveCard';
 
 interface AboutSectionProps {
   language?: Language;
@@ -32,112 +30,94 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   language = 'en',
   onOpenRecruiter
 }) => {
-  const [activePillar, setActivePillar] = useState<'business' | 'product' | 'engineering' | 'ai'>('business');
-
-  const t = TRANSLATIONS[language]?.about || TRANSLATIONS['en'].about;
+  const [activePillar, setActivePillar] = useState<'business' | 'product' | 'engineering'>('business');
+  const t = TRANSLATIONS[language].about;
 
   const pillars = [
     {
       id: 'business' as const,
-      label: language === 'de' ? 'Business Analytics' : language === 'fr' ? 'Business Analytics' : language === 'hi' ? 'बिजनेस एनालिटिक्स' : 'Business Analytics',
-      positioning: 'ANALYZE',
+      label: 'Business Analytics',
       badge: 'Decisions & ROI',
       icon: LineChart,
-      color: 'text-blue-600 dark:text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
+      color: 'text-amber-600 dark:text-amber-400',
+      bgColor: 'bg-amber-500/10',
+      borderColor: 'border-amber-500/30',
       headline: 'Uncovering the "Why" Behind the Numbers',
       summary: 'Bridging technical data stores with executive decision-making. I turn disparate operational data into automated KPI dashboards, cohort retention models, and revenue risk assessments that stakeholders can trust.',
       keySkills: ['KPI Definition & Discovery', 'DAX & Power Query Automation', 'Cohort Retention & Churn Analysis', 'Executive & Board Reporting'],
-      proofMetric: 'Validated 50K+ records, driving a 35% accuracy improvement at VOIS'
+      proofMetric: '50K+ business records audited & 40% reporting cycle cut at VOIS'
     },
     {
       id: 'product' as const,
-      label: language === 'de' ? 'Produkt-Analytik' : language === 'fr' ? 'Product Analytics' : language === 'hi' ? 'प्रोडक्ट एनालिटिक्स' : 'Product Analytics',
-      positioning: 'DECIDE',
+      label: 'Product Analytics',
       badge: 'Prioritization & UX',
       icon: Target,
-      color: 'text-purple-600 dark:text-purple-400',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
-      headline: 'Data-Backed Roadmaps & Prioritization',
-      summary: 'Using qualitative feedback and quantitative behavioral data to guide what to build next. Experienced in applying the RICE framework, customer sentiment clustering (NLP), and funnel drop-off analysis to eliminate roadmap guesswork.',
-      keySkills: ['RICE & ICE Scoring Frameworks', 'User Review NLP Topic Modeling', 'Funnel & Conversion Tracking', 'Feature Impact Evaluation'],
-      proofMetric: 'Mined 6,000+ UPI app reviews to reduce checkout complaints by 40%'
-    },
-    {
-      id: 'engineering' as const,
-      label: language === 'de' ? 'Data Engineering' : language === 'fr' ? 'Data Engineering' : language === 'hi' ? 'डेटा इंजीनियरिंग' : 'Data Engineering',
-      positioning: 'ENGINEER',
-      badge: 'Scale & Integrity',
-      icon: Database,
       color: 'text-emerald-600 dark:text-emerald-400',
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
+      headline: 'Data-Backed Roadmaps & Prioritization',
+      summary: 'Using qualitative feedback and quantitative behavioral data to guide what to build next. Experienced in applying the RICE framework, customer sentiment clustering (NLP), and funnel drop-off analysis to eliminate roadmap guesswork.',
+      keySkills: ['RICE & ICE Scoring Frameworks', 'User Review NLP Topic Modeling', 'Funnel & Conversion Tracking', 'Feature Impact Evaluation'],
+      proofMetric: '6,000+ UPI app reviews mined into 8 structured feature themes (PriorityPe)'
+    },
+    {
+      id: 'engineering' as const,
+      label: 'Data Engineering',
+      badge: 'Scale & Integrity',
+      icon: Database,
+      color: 'text-blue-600 dark:text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
       headline: 'Reliable Pipelines & Dimensional Models',
       summary: 'Building the foundational plumbing that powers analytics. Strong foundation in relational SQL, Bronze/Silver/Gold layered architectures, star-schema data modeling, and real-time PySpark streaming on Microsoft Azure.',
       keySkills: ['Complex SQL (CTEs, Window Functions)', 'Star-Schema & Dimensional Modeling', 'Azure Databricks & PySpark ETL', 'Data Quality & Reconciliation'],
-      proofMetric: 'Engineered sub-second pipelines and slashed reporting turnaround by 40%'
-    },
-    {
-      id: 'ai' as const,
-      label: language === 'de' ? 'KI & ML Systeme' : language === 'fr' ? 'Systèmes IA & ML' : language === 'hi' ? 'AI & ML सिस्टम' : 'AI & ML Systems',
-      positioning: 'BUILD',
-      badge: 'Prediction & Automation',
-      icon: Cpu,
-      color: 'text-orange-600 dark:text-orange-400',
-      bgColor: 'bg-orange-500/10',
-      borderColor: 'border-orange-500/30',
-      headline: 'Predictive Modeling & Intelligent Systems',
-      summary: 'Developing machine learning models that anticipate business needs. From classifying financial distress to NLP sentiment pipelines, I bridge the gap between predictive algorithms and actionable business integrations.',
-      keySkills: ['XGBoost & Random Forest', 'Predictive Risk Modeling', 'NLP & Sentiment Analysis', 'Scikit-learn & Statistical Methods'],
-      proofMetric: 'Analyzed 78K+ financial records to identify leading indicators of risk'
+      proofMetric: '78K+ financial records analyzed & sub-second streaming pipelines engineered'
     }
   ];
 
   const currentPillar = pillars.find(p => p.id === activePillar) || pillars[0];
 
   return (
-    <section id="about" className="py-14 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
+    <section id="about" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-10">
+        <div className="max-w-3xl mb-12">
           <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-3 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>{t?.label || "01 · WHO I AM & PROFESSIONAL PROFILE"}</span>
+            <span>01 · WHO I AM & PROFESSIONAL PROFILE</span>
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight leading-tight mb-4">
-            DATA <span className="text-[#a66a12] font-light">→</span> INSIGHT <span className="text-[#a66a12] font-light">→</span> DECISION <span className="text-[#a66a12] font-light">→</span> IMPACT
+            Turning complex data into sound business decisions.
           </h2>
           <p className="text-base sm:text-lg text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-            I am a 2026 Computer Science Engineering graduate who operates at the intersection of data analysis, product intuition, and robust data engineering.
+            I am a <strong className="text-[#101318] dark:text-white font-semibold">2026 Computer Science Engineering graduate</strong> who operates at the intersection of data analysis, product intuition, and robust data engineering.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* LEFT COLUMN: Narrative & Interactive Domain Pillars (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             
             {/* Core Narrative */}
-            <div className="space-y-4 text-sm sm:text-base text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed bg-white/70 dark:bg-[#151920]/70 p-5 sm:p-6 rounded-2xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+            <div className="space-y-4 text-base text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
               <p>
-                {t?.p2 || "At Vodafone Intelligent Solutions (VOIS), I validated over 50,000+ business records, automated complex Power BI reporting workflows using DAX and Power Query to slash turnaround by 40%, and built churn-analysis KPIs directly linked to a cross-functional 5% churn reduction."}
+                In an era where organizations are flooded with metrics, my focus is practical: <strong>answering real business questions with clean, audited data</strong>. I combine the quantitative rigor of a Computer Science degree with practical enterprise experience gained during my Data Analyst internship at <strong className="text-[#101318] dark:text-white font-medium">Vodafone Intelligent Solutions (VOIS)</strong>.
               </p>
               <p>
-                {t?.p3 || "My independent projects range from customer segmentation and financial distress analysis across 78,000+ records to building PriorityPe (an NLP + RICE product prioritization engine) and MediFlowRT (real-time Azure streaming analytics)."}
+                Whether diagnosing customer retention dynamics, benchmarking financial bankruptcy risk across 78,000+ balance sheets, or evaluating 6,000+ user reviews through the RICE framework, I focus on <strong>clarity, integrity, and actionable outcomes</strong> rather than vanity metrics.
               </p>
             </div>
 
             {/* Interactive Domain Pillar Selector */}
-            <div className="pt-1">
+            <div className="pt-2">
               <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider mb-3">
                 How I Bridge Analytical Domains:
               </div>
 
               {/* Tab Pills */}
-              <div className="grid grid-cols-4 gap-1 sm:gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4">
+              <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] mb-4">
                 {pillars.map((pillar) => {
                   const Icon = pillar.icon;
                   const isActive = activePillar === pillar.id;
@@ -145,14 +125,15 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                     <button
                       key={pillar.id}
                       onClick={() => setActivePillar(pillar.id)}
-                      className={`flex items-center justify-center gap-1 sm:gap-1.5 py-2.5 px-1 sm:px-2 rounded-lg text-[9px] sm:text-[11px] font-mono font-medium transition-all cursor-pointer ${
+                      className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                         isActive
                           ? 'bg-white dark:bg-[#1c222d] text-[#101318] dark:text-white shadow-xs border border-[#dfe3e9] dark:border-[#30363d]'
                           : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
                       }`}
                     >
                       <Icon className={`w-3.5 h-3.5 ${isActive ? pillar.color : ''}`} />
-                      <span>{pillar.positioning}</span>
+                      <span className="hidden sm:inline">{pillar.label}</span>
+                      <span className="sm:hidden">{pillar.label.split(' ')[0]}</span>
                     </button>
                   );
                 })}
@@ -165,14 +146,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                     <span className={`p-2 rounded-lg ${currentPillar.bgColor} ${currentPillar.color}`}>
                       <currentPillar.icon className="w-4 h-4" />
                     </span>
-                    <div>
-                      <div className={`text-[10px] font-mono font-bold tracking-widest uppercase ${currentPillar.color}`}>
-                        {currentPillar.label}
-                      </div>
-                      <h3 className="font-semibold text-base text-[#101318] dark:text-white leading-tight mt-0.5">
-                        {currentPillar.headline}
-                      </h3>
-                    </div>
+                    <h3 className="font-semibold text-base text-[#101318] dark:text-white">
+                      {currentPillar.headline}
+                    </h3>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase ${currentPillar.bgColor} ${currentPillar.color} border ${currentPillar.borderColor}`}>
                     {currentPillar.badge}
@@ -204,13 +180,13 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Core Operating Principles */}
-            <div className="pt-1">
+            <div className="pt-2">
               <div className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider mb-3">
                 Core Working Principles:
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                     <span>Audit Before Modeling</span>
@@ -220,7 +196,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
                     <span>Focus on Decision ROI</span>
@@ -230,7 +206,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5 shadow-2xs">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#101318] dark:text-white">
                     <Cpu className="w-3.5 h-3.5 text-blue-500" />
                     <span>Pragmatic Stack</span>
@@ -242,59 +218,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
-            {/* Technical Competencies & Direct Impact Matrix */}
-            <div className="p-5 rounded-2xl bg-white/80 dark:bg-[#151920]/80 border border-[#dfe3e9] dark:border-[#262c36] space-y-4 shadow-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-[#8b93a1] tracking-wider font-semibold">
-                  Direct Enterprise & Project Impact Matrix:
-                </span>
-                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                  Audited Proof
-                </span>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
-                  <div className="font-mono font-bold text-emerald-600 dark:text-emerald-400 text-sm">+35% / -40%</div>
-                  <div className="font-semibold text-[#101318] dark:text-white text-xs">Vodafone (VOIS)</div>
-                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
-                    50K+ records audited in SQL; DAX automated models cutting cycle time by 40%.
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
-                  <div className="font-mono font-bold text-purple-600 dark:text-purple-400 text-sm">6,000+ Reviews</div>
-                  <div className="font-semibold text-[#101318] dark:text-white text-xs">PriorityPe RICE</div>
-                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
-                    NLP review mining across UPI apps, resolving Bank Switch 04 checkout drop-offs.
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] space-y-1">
-                  <div className="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">0.857 ROC-AUC</div>
-                  <div className="font-semibold text-[#101318] dark:text-white text-xs">Bankruptcy Risk</div>
-                  <div className="text-[11px] text-[#5c6472] dark:text-[#8b93a1] leading-relaxed">
-                    78,682 financial filings benchmarked with XGBoost & SHAP explainability.
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
 
           {/* RIGHT COLUMN: Fast Profile Card & Key Credentials Bento (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             
             {/* Quick Profile Summary Bento */}
-            <InteractiveCard
-              featured={true}
-              glowColor="rgba(216, 163, 79, 0.45)"
-              className="p-6 space-y-5"
-            >
+            <div className="p-6 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-sm space-y-5">
               
               <div className="flex items-center justify-between pb-4 border-b border-[#dfe3e9] dark:border-[#262c36]">
                 <div className="flex items-center gap-3">
-                  <img src={`${PERSONAL_INFO.links.github}.png`} alt={PERSONAL_INFO.name} className="w-12 h-12 rounded-xl object-cover border border-[#dfe3e9] dark:border-[#262c36] shadow-sm" />
+                  <div className="w-10 h-10 rounded-xl bg-[#a66a12]/10 flex items-center justify-center font-display font-bold text-lg text-[#a66a12]">
+                    SP
+                  </div>
                   <div>
                     <div className="font-semibold text-sm text-[#101318] dark:text-white">
                       {PERSONAL_INFO.name}
@@ -367,7 +303,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#8b93a1]">Location:</span>
-                  <span className="text-[#101318] dark:text-white text-right">Gurgaon, Haryana & Bhubaneswar, Odisha, India</span>
+                  <span className="text-[#101318] dark:text-white text-right">Gurgaon / Bhubaneswar / Remote</span>
                 </div>
               </div>
 
@@ -392,7 +328,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 )}
               </div>
 
-            </InteractiveCard>
+            </div>
 
             {/* Schooling Merit Callout */}
             <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-xs">
@@ -408,11 +344,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               >
                 View Details →
               </a>
-            </div>
-
-            {/* Coffee Consumed & Engineering Fuel Counter */}
-            <div id="coffee-telemetry">
-              <CoffeeFuelCounter initialHours={1480} />
             </div>
 
           </div>

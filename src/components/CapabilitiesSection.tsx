@@ -1,7 +1,6 @@
 import React from 'react';
 import { BarChart3, Target, Database, Brain, ArrowUpRight } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
-import { InteractiveCard } from './InteractiveCard';
 
 interface CapabilitiesSectionProps {
   language?: Language;
@@ -96,44 +95,38 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {capabilities.map((cap) => (
-            <InteractiveCard
+            <div
               key={cap.num}
               onClick={() => {
                 onSelectCategory(cap.category);
                 const el = document.getElementById('work');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              glowColor="rgba(99, 102, 241, 0.25)"
-              className="p-6 cursor-pointer flex flex-col justify-between"
+              className="group p-6 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] dark:hover:border-[#a66a12] hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between"
             >
-              {/* Ghost number watermark */}
-              <div className="ghost-watermark select-none text-black/[0.03] dark:text-white/[0.03] group-hover:scale-105 transition-transform duration-300">
-                {cap.num}
-              </div>
-
-              <div className="relative z-10">
+              <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-xs text-slate-400 font-semibold">{cap.num}</span>
-                  <div className="glass-icon-badge group-hover:scale-110 transition-transform">
+                  <span className="font-mono text-xs text-[#8b93a1]">{cap.num}</span>
+                  <div className="p-2 rounded-lg bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] group-hover:scale-105 transition-transform">
                     {cap.icon}
                   </div>
                 </div>
-                <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-1.5">
+                <h3 className="font-display font-bold text-xl text-[#101318] dark:text-white group-hover:text-[#a66a12] transition-colors mb-1.5">
                   {cap.title}
                 </h3>
-                <p className="font-mono text-xs text-indigo-600 dark:text-indigo-400 mb-3 font-medium">
+                <p className="font-mono text-xs text-[#a66a12] mb-3">
                   {cap.tech}
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
                   {cap.desc}
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white relative z-10">
+              <div className="mt-6 pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between text-[11px] font-mono text-[#8b93a1] group-hover:text-[#101318] dark:group-hover:text-white">
                 <span className="truncate">{cap.projectsText}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-indigo-500" />
+                <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
-            </InteractiveCard>
+            </div>
           ))}
         </div>
       </div>

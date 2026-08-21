@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Code2, BookOpen, Sparkles, ExternalLink, ArrowRight, Target, Award, Clock } from 'lucide-react';
+import { X, CheckCircle2, Code2, BookOpen, Sparkles, ExternalLink, ArrowRight, Target, Award } from 'lucide-react';
 import { CASE_STUDIES } from '../data/portfolioData';
-import { getCaseStudyReadingTime, getTabReadingTime, getStarReadingTime } from '../utils/readingTime';
 
 interface CaseStudyModalProps {
   caseStudyId: string | null;
@@ -9,23 +8,11 @@ interface CaseStudyModalProps {
 }
 
 const STAR_SUMMARIES: Record<string, { situation: string; task: string; action: string; result: string }> = {
-  priority: {
-    situation: "Product teams at fintech apps received 8,000+ unstructured customer complaint reviews across app stores with zero automated mechanism to prioritize feature bugs versus cosmetic requests.",
-    task: "Engineer an objective, data-driven prioritization engine utilizing NLP and the RICE mathematical framework (Reach, Impact, Confidence, Effort) to rank backlog items.",
-    action: "Built a Python & HuggingFace pipeline scraping and clustering reviews, extracted key complaint themes via TF-IDF, and integrated an interactive simulator for real-time roadmap weighting.",
-    result: "Reduced manual backlog review time by 60%, identified Bank Switch 04 timeout spikes, and reduced checkout complaints by 40% in simulation."
-  },
   prioritype: {
     situation: "Product teams at fintech apps received 8,000+ unstructured customer complaint reviews across app stores with zero automated mechanism to prioritize feature bugs versus cosmetic requests.",
     task: "Engineer an objective, data-driven prioritization engine utilizing NLP and the RICE mathematical framework (Reach, Impact, Confidence, Effort) to rank backlog items.",
     action: "Built a Python & HuggingFace pipeline scraping and clustering reviews, extracted key complaint themes via TF-IDF, and integrated an interactive simulator for real-time roadmap weighting.",
     result: "Reduced manual backlog review time by 60%, identified Bank Switch 04 timeout spikes, and reduced checkout complaints by 40% in simulation."
-  },
-  financial: {
-    situation: "Traditional linear bankruptcy scoring models suffered from high false-negative rates when assessing distress in volatile macroeconomic conditions across 78,000+ corporate filings.",
-    task: "Train, tune, and explain an advanced non-linear gradient-boosted machine learning model to predict 1-year corporate insolvency with interpretable risk attributions.",
-    action: "Cleaned and standardized 80+ financial ratios, trained an XGBoost classifier with SMOTE oversampling for class imbalance, and generated SHAP summary matrices for balance sheet risk drivers.",
-    result: "Achieved a 0.88 ROC-AUC score (outperforming Altman-Z 0.72 baseline) and isolated leverage and retained earnings as the top 2 predictive indicators."
   },
   financial_distress: {
     situation: "Traditional linear bankruptcy scoring models suffered from high false-negative rates when assessing distress in volatile macroeconomic conditions across 78,000+ corporate filings.",
@@ -33,62 +20,24 @@ const STAR_SUMMARIES: Record<string, { situation: string; task: string; action: 
     action: "Cleaned and standardized 80+ financial ratios, trained an XGBoost classifier with SMOTE oversampling for class imbalance, and generated SHAP summary matrices for balance sheet risk drivers.",
     result: "Achieved a 0.88 ROC-AUC score (outperforming Altman-Z 0.72 baseline) and isolated leverage and retained earnings as the top 2 predictive indicators."
   },
-  customer: {
-    situation: "A retail financial base of 50,000+ customer records exhibited high churn and low upsell response due to generic mass-marketing campaigns.",
-    task: "Segment the customer base into high-value, churn-risk, and dormant clusters to enable tailored retention strategies.",
-    action: "Engineered RFM (Recency, Frequency, Monetary) features, conducted K-Means clustering with Elbow and Silhouette optimization, and mapped actionable personas.",
-    result: "Identified high-margin VIP segment generating 48% of total revenue with 2.8x higher repeat velocity, enabling targeted campaigns reducing churn by 5%."
-  },
   customer_segmentation: {
     situation: "A retail financial base of 50,000+ customer records exhibited high churn and low upsell response due to generic mass-marketing campaigns.",
     task: "Segment the customer base into high-value, churn-risk, and dormant clusters to enable tailored retention strategies.",
     action: "Engineered RFM (Recency, Frequency, Monetary) features, conducted K-Means clustering with Elbow and Silhouette optimization, and mapped actionable personas.",
     result: "Identified high-margin VIP segment generating 48% of total revenue with 2.8x higher repeat velocity, enabling targeted campaigns reducing churn by 5%."
   },
-  mediflow: {
-    situation: "High-frequency patient monitoring and telemetry streams overwhelmed traditional relational databases with unacceptable latency spikes.",
-    task: "Architect an end-to-end cloud streaming analytics pipeline delivering sub-second anomaly detection.",
-    action: "Configured Azure IoT Hub for event ingestion, implemented Azure Stream Analytics with 5-second tumbling SQL windows, and persisted hot state to Cosmos DB and cold telemetry to Azure Synapse.",
-    result: "Delivered <450ms end-to-end latency SLA with zero packet loss across 12,000+ events/min load tests."
-  },
   mediflow_rt: {
     situation: "High-frequency patient monitoring and telemetry streams overwhelmed traditional relational databases with unacceptable latency spikes.",
     task: "Architect an end-to-end cloud streaming analytics pipeline delivering sub-second anomaly detection.",
     action: "Configured Azure IoT Hub for event ingestion, implemented Azure Stream Analytics with 5-second tumbling SQL windows, and persisted hot state to Cosmos DB and cold telemetry to Azure Synapse.",
     result: "Delivered <450ms end-to-end latency SLA with zero packet loss across 12,000+ events/min load tests."
-  },
-  cardio: {
-    situation: "Clinical coronary artery disease screenings suffered from high false negative rates and lack of explainability in black-box neural networks.",
-    task: "Develop a calibrated hybrid ensemble model uniting XGBoost and Deep Neural Networks with SHAP explainability for cardiology teams.",
-    action: "Engineered Rate-Pressure Product and atherogenic indicators across multi-center datasets, trained a soft-voting ensemble, and generated individual waterfall explanation plots.",
-    result: "Achieved 90.5% prediction accuracy and 0.94 ROC-AUC with 92.4% sensitivity on critical coronary stenosis cases."
-  },
-  cardioinsight: {
-    situation: "Clinical coronary artery disease screenings suffered from high false negative rates and lack of explainability in black-box neural networks.",
-    task: "Develop a calibrated hybrid ensemble model uniting XGBoost and Deep Neural Networks with SHAP explainability for cardiology teams.",
-    action: "Engineered Rate-Pressure Product and atherogenic indicators across multi-center datasets, trained a soft-voting ensemble, and generated individual waterfall explanation plots.",
-    result: "Achieved 90.5% prediction accuracy and 0.94 ROC-AUC with 92.4% sensitivity on critical coronary stenosis cases."
-  },
-  mindease: {
-    situation: "Mental wellness conversational interfaces frequently suffered from 40%+ sentiment misclassification and tone-deaf automated responses.",
-    task: "Build a low-latency transformer NLP pipeline for real-time affective emotion classification and empathetic response routing.",
-    action: "Fine-tuned DistilRoBERTa on 50,000+ conversational utterances, optimized INT8 CPU inference with Flask, and integrated real-time mood trajectory analytics.",
-    result: "Achieved 87% emotion detection accuracy with sub-250ms inference latency, reducing conversational drop-off by 35%."
   }
 };
 
 export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onClose }) => {
   if (!caseStudyId) return null;
-  const lookupKey = caseStudyId.toLowerCase().replace(/[-_]/g, '');
-  const study = CASE_STUDIES[caseStudyId] || 
-                Object.values(CASE_STUDIES).find(s => s.id.toLowerCase().replace(/[-_]/g, '') === lookupKey || lookupKey.includes(s.id.toLowerCase())) ||
-                CASE_STUDIES['priority'] || 
-                CASE_STUDIES['financial'];
-                
-  const starData = STAR_SUMMARIES[caseStudyId] || 
-                   STAR_SUMMARIES[lookupKey] || 
-                   STAR_SUMMARIES['priority'] || 
-                   STAR_SUMMARIES['prioritype'];
+  const study = CASE_STUDIES[caseStudyId] || CASE_STUDIES['prioritype'] || CASE_STUDIES['financial_distress'];
+  const starData = STAR_SUMMARIES[caseStudyId] || STAR_SUMMARIES['prioritype'];
 
   const tabKeys: (keyof typeof study.tabs)[] = [
     'problem',
@@ -102,11 +51,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
   const [activeTab, setActiveTab] = useState<keyof typeof study.tabs>('problem');
   const [viewStarMode, setViewStarMode] = useState<boolean>(false);
   const currentTab = study.tabs[activeTab];
-
-  // Calculate precise estimated reading times
-  const totalReadTime = getCaseStudyReadingTime(study);
-  const starReadTime = getStarReadingTime(starData);
-  const tabReadTime = getTabReadingTime(currentTab.content, currentTab.bulletPoints, currentTab.codeSnippet?.code);
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -127,27 +71,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             <p className="text-xs sm:text-sm text-[#5c6472] dark:text-[#9ea7b4] mt-1">
               {study.tagline}
             </p>
-
-            {/* Estimated Reading Time & Depth Badge */}
-            <div className="flex flex-wrap items-center gap-2 mt-3">
-              <div 
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono bg-amber-500/10 dark:bg-amber-400/10 text-amber-800 dark:text-amber-300 border border-amber-500/20 font-medium"
-                title={`Calculated based on word count: ${totalReadTime.words} words at 200 WPM`}
-              >
-                <Clock className="w-3.5 h-3.5 text-[#a66a12] dark:text-amber-400" />
-                <span>
-                  {viewStarMode 
-                    ? `Brief Skim: ${starReadTime.displayText} (${starReadTime.words} words)` 
-                    : `Full Deep-Dive: ${totalReadTime.displayText} (~${totalReadTime.words} words)`}
-                </span>
-              </div>
-              
-              {!viewStarMode && (
-                <span className="text-[11px] font-mono text-[#8b93a1] hidden sm:inline">
-                  Current section: ~{tabReadTime.words} words ({tabReadTime.displayText})
-                </span>
-              )}
-            </div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -191,14 +114,8 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
         {/* STAR MODE VIEW */}
         {viewStarMode ? (
           <div className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f6f7f9] dark:bg-[#0e1116] space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="font-mono text-xs text-[#a66a12] uppercase tracking-wider flex items-center gap-1.5">
-                <Award className="w-4 h-4" /> Recruiter STAR Method Interview Summary
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 font-medium">
-                <Clock className="w-3 h-3" />
-                <span>60s Skim · {starReadTime.displayText} ({starReadTime.words} words)</span>
-              </div>
+            <div className="font-mono text-xs text-[#a66a12] uppercase tracking-wider flex items-center gap-1.5">
+              <Award className="w-4 h-4" /> Recruiter STAR Method Interview Summary
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -261,15 +178,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
             {/* Modal Scrollable Body */}
             <div className="p-6 sm:p-8 overflow-y-auto flex-1 bg-[#f6f7f9] dark:bg-[#0e1116] space-y-6">
               <div className="bg-white dark:bg-[#151920] p-6 rounded-xl border border-[#dfe3e9] dark:border-[#262c36] shadow-xs space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#dfe3e9] dark:border-[#262c36] pb-3">
-                  <h3 className="font-display font-bold text-xl text-[#101318] dark:text-white">
-                    {currentTab.title}
-                  </h3>
-                  <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#8b93a1]">
-                    <Clock className="w-3.5 h-3.5 text-[#a66a12]" />
-                    <span>~{tabReadTime.words} words · {tabReadTime.displayText}</span>
-                  </div>
-                </div>
+                <h3 className="font-display font-bold text-xl text-[#101318] dark:text-white">
+                  {currentTab.title}
+                </h3>
 
                 <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
                   {currentTab.content}
@@ -306,10 +217,8 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
 
         {/* Modal Footer */}
         <div className="p-4 px-6 border-t border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] flex items-center justify-between">
-          <div className="text-xs font-mono text-[#8b93a1] flex items-center gap-2">
-            <span>{!viewStarMode ? `Section ${tabKeys.indexOf(activeTab) + 1} of ${tabKeys.length}` : 'Executive STAR Summary'}</span>
-            <span>•</span>
-            <span>{viewStarMode ? `${starReadTime.words} words` : `${totalReadTime.displayText} full study`}</span>
+          <div className="text-xs font-mono text-[#8b93a1]">
+            {!viewStarMode && `Step ${tabKeys.indexOf(activeTab) + 1} of ${tabKeys.length}`}
           </div>
 
           <div className="flex items-center gap-2">
@@ -335,4 +244,3 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudyId, onC
     </div>
   );
 };
-

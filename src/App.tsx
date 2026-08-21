@@ -17,8 +17,6 @@ import { CaseStudyModal } from './components/CaseStudyModal';
 import { RecruiterModal } from './components/RecruiterModal';
 import { ResumePreviewModal } from './components/ResumePreviewModal';
 import { CommandPalette } from './components/CommandPalette';
-import { CustomCursor } from './components/CustomCursor';
-import { AmbientBackground } from './components/AmbientBackground';
 import { Toast } from './components/Toast';
 import { ProjectCategory, ResumeRole } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
@@ -68,23 +66,8 @@ export default function App() {
       }
     };
 
-    const handleOnline = () => {
-      showToast('Back online — all resources connected', 'success');
-    };
-
-    const handleOffline = () => {
-      showToast('Offline mode active — using cached portfolio assets', 'info');
-    };
-
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const showToast = (message: string, type: 'success' | 'info' = 'success') => {
@@ -119,14 +102,8 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[#f4f6fb] dark:bg-[#050811] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
+    <div className="min-h-screen bg-[#f6f7f9] dark:bg-[#0e1116] text-[#101318] dark:text-[#f2f4f7] font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-300 ease-in-out">
       <div id="top" />
-
-      {/* Interactive Ambient Dynamic Mesh & Spotlight Background */}
-      <AmbientBackground />
-
-      {/* Interactive Magnetic Custom Cursor (Desktop / Pointer only) */}
-      <CustomCursor />
 
       {/* Primary Sticky Header */}
       <Header
@@ -140,13 +117,12 @@ export default function App() {
         onShowToast={showToast}
       />
 
-      <main className="w-full overflow-x-hidden">
+      <main>
         {/* Hero Section */}
         <Hero
           language={language}
           onOpenCommand={() => setCommandPaletteOpen(true)}
           onOpenRecruiter={() => setRecruiterModalOpen(true)}
-          onSelectResume={handleDownloadResume}
         />
 
         {/* Recruiter Proof Points & Live Animated Metrics */}

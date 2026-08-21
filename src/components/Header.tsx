@@ -120,40 +120,36 @@ export const Header: React.FC<HeaderProps> = ({
         />
       </div>
 
-      <div className="max-w-[1160px] mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-2 sm:gap-4">
+      <div className="max-w-[1160px] mx-auto px-5 sm:px-6 h-[68px] flex items-center justify-between gap-4">
         {/* Brand */}
         <a 
           href="#top" 
           id="brand-logo-link"
-          className="font-display font-bold text-sm sm:text-base lg:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1 whitespace-nowrap text-[#101318] dark:text-white shrink-0 min-w-fit"
+          className="font-display font-bold text-base sm:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1.5 whitespace-nowrap text-[#101318] dark:text-white"
         >
-          <span className="font-bold">{PERSONAL_INFO.name}</span>
+          <span>{PERSONAL_INFO.name}</span>
           <span className="text-[#a66a12]">.</span>
         </a>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-6 text-sm text-[#5c6472] dark:text-[#a0a8b5]" aria-label="Main Navigation">
+        <nav className="hidden md:flex items-center gap-6 text-sm text-[#5c6472] dark:text-[#a0a8b5]" aria-label="Main Navigation">
           <a href="#about" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.about}</a>
           <a href="#work" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.work}</a>
           <a href="#demos" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.demos}</a>
           <a href="#experience" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.experience}</a>
           <a href="#skills" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.toolbox}</a>
           <a href="#academics" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.academics}</a>
-          <a href="#coffee-telemetry" className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 hover:text-amber-500 font-semibold transition-colors">
-            <span>☕</span>
-            <span>Fuel</span>
-          </a>
           <a href="#contact" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.contact}</a>
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Language Switcher */}
           <div className="relative" ref={langMenuRef}>
             <button
               id="language-switcher-btn"
               onClick={() => setLangMenuOpen(!langMenuOpen)}
-              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-white dark:bg-[#151920] border border-[#bfc5cf] dark:border-[#262c36] text-[#101318] dark:text-white hover:border-[#a66a12] transition-colors cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-white dark:bg-[#161b22] border border-[#bfc5cf] dark:border-[#30363d] text-[#101318] dark:text-white hover:border-[#a66a12] transition-colors cursor-pointer shadow-2xs"
               title="Switch Portfolio Language"
               aria-label="Language selector"
               aria-expanded={langMenuOpen}
@@ -166,9 +162,9 @@ export const Header: React.FC<HeaderProps> = ({
             {langMenuOpen && (
               <div 
                 id="language-dropdown-menu"
-                className="absolute right-0 top-full mt-2 w-[160px] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-xl shadow-2xl p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 top-full mt-2 w-[160px] bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] rounded-xl shadow-2xl p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="text-[10px] font-mono uppercase text-[#8b93a1] px-2 py-1 border-b border-[#dfe3e9] dark:border-[#262c36] mb-1">
+                <div className="text-[10px] font-mono uppercase text-[#8b93a1] px-2 py-1 border-b border-[#dfe3e9] dark:border-[#30363d] mb-1">
                   Language / Sprache
                 </div>
                 {languages.map((l) => (
@@ -178,7 +174,7 @@ export const Header: React.FC<HeaderProps> = ({
                     className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono text-left transition-colors cursor-pointer ${
                       language === l.code
                         ? 'bg-[#a66a12]/10 text-[#a66a12] font-semibold'
-                        : 'text-[#101318] dark:text-white hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c]'
+                        : 'text-[#101318] dark:text-white hover:bg-[#f6f7f9] dark:hover:bg-[#21262d]'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -196,12 +192,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="recruiter-mode-btn"
             onClick={onOpenRecruiter}
-            className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-mono font-medium rounded-lg text-[#101318] dark:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-300 transition-all cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg text-[#101318] dark:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-300 transition-all cursor-pointer"
             title="Open quick 60-second summary for hiring managers"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#a66a12]" />
-            <span className="hidden sm:inline">{t.recruiterMode}</span>
-            <span className="sm:hidden">Brief</span>
+            <span>{t.recruiterMode}</span>
           </button>
 
           {/* Resume Dropdown */}
@@ -209,21 +204,21 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="resume-dropdown-btn"
               onClick={() => setResumeMenuOpen(!resumeMenuOpen)}
-              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white dark:bg-[#151920] border border-[#bfc5cf] dark:border-[#262c36] text-[#101318] dark:text-white shadow-xs hover:border-[#a66a12] transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white dark:bg-[#161b22] border border-[#bfc5cf] dark:border-[#30363d] text-[#101318] dark:text-white shadow-xs hover:border-[#a66a12] transition-all cursor-pointer"
               aria-expanded={resumeMenuOpen}
               aria-haspopup="true"
             >
               <FileText className="w-3.5 h-3.5 text-[#a66a12]" />
-              <span className="inline font-semibold">{t.resume}</span>
+              <span>{t.resume}</span>
               <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {resumeMenuOpen && (
               <div 
                 id="resume-dropdown-menu"
-                className="absolute right-0 top-full mt-2 w-[calc(100vw-32px)] max-w-[340px] bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] rounded-xl shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 top-full mt-2 w-[320px] sm:w-[350px] bg-white dark:bg-[#161b22] border border-[#dfe3e9] dark:border-[#30363d] rounded-xl shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#dfe3e9] dark:border-[#262c36] mb-1.5">
+                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#dfe3e9] dark:border-[#30363d] mb-1.5">
                   <span className="font-mono text-[10px] uppercase tracking-wider text-[#8b93a1]">
                     Tailored Resumes (5 Roles)
                   </span>
@@ -236,7 +231,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {RESUME_ROLES.map((role) => (
                     <div 
                       key={role.id}
-                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f6f7f9] dark:hover:bg-[#1f242c] transition-colors cursor-pointer"
+                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f6f7f9] dark:hover:bg-[#21262d] transition-colors cursor-pointer"
                       onClick={() => handleDownload(role)}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -273,7 +268,7 @@ export const Header: React.FC<HeaderProps> = ({
                   ))}
                 </div>
 
-                <div className="mt-2 pt-2 border-t border-[#dfe3e9] dark:border-[#262c36] px-2 text-[10px] font-mono text-[#8b93a1] text-center">
+                <div className="mt-2 pt-2 border-t border-[#dfe3e9] dark:border-[#30363d] px-2 text-[10px] font-mono text-[#8b93a1] text-center">
                   Click any role for instant tailored PDF download
                 </div>
               </div>
@@ -284,7 +279,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="theme-toggle-btn"
             onClick={onToggleTheme}
-            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg border border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white transition-colors cursor-pointer"
+            className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#dfe3e9] dark:border-[#30363d] bg-white dark:bg-[#161b22] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white transition-colors cursor-pointer"
             aria-label="Toggle theme"
           >
             {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
@@ -294,17 +289,17 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg border border-[#dfe3e9] dark:border-[#262c36] bg-white dark:bg-[#151920] text-[#101318] dark:text-white cursor-pointer"
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-[#dfe3e9] dark:border-[#30363d] bg-white dark:bg-[#161b22] text-[#101318] dark:text-white cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#dfe3e9] dark:border-[#262c36] bg-[#f6f7f9] dark:bg-[#0e1116] px-6 py-4 space-y-3 animate-in fade-in duration-150 max-w-full overflow-hidden">
+        <div className="md:hidden border-t border-[#dfe3e9] dark:border-[#30363d] bg-white dark:bg-[#161b22] px-6 py-4 space-y-3 animate-in fade-in duration-150">
           <nav className="flex flex-col gap-3 font-medium text-sm text-[#5c6472] dark:text-[#a0a8b5]">
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#101318] dark:hover:text-white py-1">{t.about}</a>
             <a href="#work" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#101318] dark:hover:text-white py-1">{t.work}</a>
@@ -315,7 +310,7 @@ export const Header: React.FC<HeaderProps> = ({
             <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#101318] dark:hover:text-white py-1">{t.contact}</a>
           </nav>
 
-          <div className="pt-3 border-t border-[#dfe3e9] dark:border-[#262c36] flex flex-col gap-2">
+          <div className="pt-3 border-t border-[#dfe3e9] dark:border-[#30363d] flex flex-col gap-2">
             <button
               onClick={() => {
                 onOpenRecruiter();

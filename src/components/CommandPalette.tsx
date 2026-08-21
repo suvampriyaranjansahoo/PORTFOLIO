@@ -133,7 +133,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'academics-section',
       title: 'Academics & Quantitative Credentials',
-      subtitle: 'B.Tech CSE (8.18 / 10 CGPA), 12th PCM (93.85%), 10th (90.67%)',
+      subtitle: 'B.Tech CSE (8.18 CGPA), 12th PCM (93.85%), 10th (90.67%)',
       category: 'Education & Credentials',
       icon: <Layers className="w-4 h-4 text-[#a66a12]" />,
       action: () => {
