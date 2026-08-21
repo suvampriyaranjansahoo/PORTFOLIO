@@ -9,11 +9,12 @@ interface ProofStripProps {
 
 export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [counts, setCounts] = useState(KEY_METRICS.map(() => 0));
+  const [counts, setCounts] = useState(KEY_METRICS.map((m) => m.value));
   const metricsRef = useRef<HTMLDivElement>(null);
   const t = TRANSLATIONS[language]?.proof;
 
   useEffect(() => {
+    // Only run counter animation on mount once
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
@@ -36,13 +37,15 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
 
             if (progress < 1) {
               requestAnimationFrame(animate);
+            } else {
+              setCounts(KEY_METRICS.map((m) => m.value));
             }
           };
 
           requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     if (metricsRef.current) {
@@ -59,22 +62,20 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
   ];
 
   return (
-    <div className="max-w-[1160px] mx-auto px-5 sm:px-6 mb-14 sm:mb-20 space-y-4">
+    <div className="max-w-[1160px] mx-auto px-4 sm:px-6 mb-12 sm:mb-16 space-y-4">
       {/* Proof Strip */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {proofItems.map((item, idx) => (
           <div 
             key={idx} 
-            className="holo-border-active p-[1.5px] rounded-2xl group shadow-md"
+            className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-center transition-all hover:border-[#a66a12]/40"
           >
-            <div className="p-4 sm:p-5 rounded-[calc(1rem-1.5px)] glass-morphism-card flex flex-col justify-center h-full">
-              <span className="font-mono text-[10px] tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-1">
-                {item.label}
-              </span>
-              <strong className="font-display text-sm sm:text-base font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {item.value}
-              </strong>
-            </div>
+            <span className="font-mono text-[10px] tracking-widest text-[#8b93a1] uppercase mb-1 font-semibold">
+              {item.label}
+            </span>
+            <strong className="font-display text-sm sm:text-base font-semibold text-[#101318] dark:text-white">
+              {item.value}
+            </strong>
           </div>
         ))}
       </div>
@@ -101,30 +102,28 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
           return (
             <div 
               key={idx} 
-              className="holo-border-active p-[1.5px] rounded-2xl group shadow-lg"
+              className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs flex flex-col justify-between transition-all hover:border-[#a66a12]/40 group"
             >
-              <div className="p-5 sm:p-6 rounded-[calc(1rem-1.5px)] glass-morphism-card flex flex-col justify-between h-full">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <div className="font-mono font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white tracking-tight flex items-baseline gap-0.5 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                      <span>{displayValue}</span>
-                      <span className="text-indigo-600 dark:text-indigo-400 text-xl sm:text-2xl">{metric.suffix}</span>
-                    </div>
-                    <SparklinePreview 
-                      data={sparklineDatasets[idx % sparklineDatasets.length]} 
-                      color="#6366f1" 
-                      width={52} 
-                      height={20}
-                      className="opacity-70 group-hover:opacity-100 transition-opacity"
-                    />
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="font-mono font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white tracking-tight flex items-baseline gap-0.5 group-hover:text-[#a66a12] transition-colors">
+                    <span>{displayValue}</span>
+                    <span className="text-[#a66a12] text-xl sm:text-2xl">{metric.suffix}</span>
                   </div>
-                  <div className="font-mono text-[11px] text-slate-600 dark:text-slate-300 uppercase tracking-wider mt-1.5 line-clamp-1 font-semibold">
-                    {metric.label}
-                  </div>
+                  <SparklinePreview 
+                    data={sparklineDatasets[idx % sparklineDatasets.length]} 
+                    color="#a66a12" 
+                    width={52} 
+                    height={20}
+                    className="opacity-70 group-hover:opacity-100 transition-opacity"
+                  />
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-800/80">
-                  {metric.note}
+                <div className="font-mono text-[11px] text-[#5c6472] dark:text-[#a0a8b5] uppercase tracking-wider mt-1.5 line-clamp-1 font-semibold">
+                  {metric.label}
                 </div>
+              </div>
+              <div className="text-[11px] text-[#8b93a1] mt-2.5 pt-2 border-t border-[#dfe3e9] dark:border-[#262c36]">
+                {metric.note}
               </div>
             </div>
           );

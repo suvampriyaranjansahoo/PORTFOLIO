@@ -12,96 +12,87 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
   const t = TRANSLATIONS[language]?.experience;
 
   return (
-    <section id="experience" className="py-16 sm:py-20 bg-white/70 dark:bg-[#151920]/70 backdrop-blur-md border-y border-[#dfe3e9] dark:border-[#262c36]">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
-        <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
+    <section id="experience" className="py-16 sm:py-20 max-w-[1160px] mx-auto px-4 sm:px-6">
+      <div>
+        <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2 font-semibold">
           {t?.label || "06 · EXPERIENCE"}
         </div>
         
-        <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight mb-8">
+        <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-[#101318] dark:text-white tracking-tight mb-8">
           {t?.heading || "Enterprise Track Record"}
         </h2>
 
-        <InteractiveCard
-          glowColor="rgba(99, 102, 241, 0.22)"
-          className="p-6 sm:p-8"
-        >
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800/80">
+        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#dfe3e9] dark:border-[#262c36]">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">VOIS</span>
-                <span className="text-xs font-mono text-slate-500 dark:text-slate-400">· Enterprise Telecommunications Analytics</span>
+                <span className="font-mono text-xs font-bold text-[#a66a12]">VOIS</span>
+                <span className="text-xs font-mono text-[#8b93a1]">· Enterprise Telecommunications Analytics</span>
               </div>
-              <h3 className="font-display font-bold text-2xl text-slate-900 dark:text-white">
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-[#101318] dark:text-white">
                 Data Analyst Intern
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-[#5c6472] dark:text-[#a0a8b5]">
                 Vodafone Intelligent Solutions (VOIS) — Remote
               </p>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-200 self-start md:self-auto shadow-xs">
-              <Clock className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] font-mono text-xs text-[#101318] dark:text-white self-start md:self-auto shadow-2xs">
+              <Clock className="w-3.5 h-3.5 text-[#a66a12]" />
               <span>Sep 2025 – Oct 2025</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 my-6">
-            <div className="holo-border-active p-[1.5px] rounded-xl group">
-              <div className="p-4 rounded-[calc(1.25rem-1.5px)] glass-morphism-card h-full flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <div className="font-mono font-bold text-xl text-emerald-600 dark:text-emerald-400">
-                    +35%
-                  </div>
-                  <SparklinePreview data={[10, 18, 22, 28, 35]} color="#10b981" width={48} height={18} />
+            <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <div className="font-mono font-bold text-xl text-emerald-600 dark:text-emerald-400">
+                  +35%
                 </div>
-                <div className="font-mono text-xs text-slate-900 dark:text-white font-semibold mt-1">
-                  {language === 'de' ? "Berichtsgenauigkeit" : language === 'fr' ? "Précision des Rapports" : language === 'hi' ? "रिपोर्टिंग सटीकता" : "Reporting Accuracy"}
-                </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  {language === 'de' ? "50.000+ Datensätze in SQL & Excel bereinigt" : language === 'fr' ? "50 000+ données nettoyées sous SQL & Excel" : language === 'hi' ? "SQL और Excel में 50,000+ रिकॉर्ड्स सत्यापित" : "50,000+ records cleaned and validated in SQL & Excel"}
-                </div>
+                <SparklinePreview data={[10, 18, 22, 28, 35]} color="#10b981" width={48} height={18} />
+              </div>
+              <div className="font-mono text-xs text-[#101318] dark:text-white font-semibold mt-1">
+                {language === 'de' ? "Berichtsgenauigkeit" : language === 'fr' ? "Précision des Rapports" : language === 'hi' ? "रिपोर्टिंग सटीकता" : "Reporting Accuracy"}
+              </div>
+              <div className="text-xs text-[#5c6472] dark:text-[#8b93a1] mt-1">
+                {language === 'de' ? "50.000+ Datensätze in SQL & Excel bereinigt" : language === 'fr' ? "50 000+ données nettoyées sous SQL & Excel" : language === 'hi' ? "SQL और Excel में 50,000+ रिकॉर्ड्स सत्यापित" : "50,000+ records cleaned and validated in SQL & Excel"}
               </div>
             </div>
 
-            <div className="holo-border-active p-[1.5px] rounded-xl group">
-              <div className="p-4 rounded-[calc(1.25rem-1.5px)] glass-morphism-card h-full flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <div className="font-mono font-bold text-xl text-amber-600 dark:text-amber-400">
-                    -40%
-                  </div>
-                  <SparklinePreview data={[50, 42, 35, 28, 15]} color="#f59e0b" width={48} height={18} />
+            <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <div className="font-mono font-bold text-xl text-amber-600 dark:text-amber-400">
+                  -40%
                 </div>
-                <div className="font-mono text-xs text-slate-900 dark:text-white font-semibold mt-1">
-                  {language === 'de' ? "Durchlaufzeit" : language === 'fr' ? "Délai de Traitement" : language === 'hi' ? "टर्नअराउंड समय" : "Turnaround Time"}
-                </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  {language === 'de' ? "Power BI & Power Query automatisierte Workflows" : language === 'fr' ? "Automatisation Power BI & Power Query" : language === 'hi' ? "Power BI व Power Query स्वचालित वर्कफ़्लो" : "Power BI & Power Query automated workflow pipelines"}
-                </div>
+                <SparklinePreview data={[50, 42, 35, 28, 15]} color="#f59e0b" width={48} height={18} />
+              </div>
+              <div className="font-mono text-xs text-[#101318] dark:text-white font-semibold mt-1">
+                {language === 'de' ? "Durchlaufzeit" : language === 'fr' ? "Délai de Traitement" : language === 'hi' ? "टर्नअराउंड समय" : "Turnaround Time"}
+              </div>
+              <div className="text-xs text-[#5c6472] dark:text-[#8b93a1] mt-1">
+                {language === 'de' ? "Power BI & Power Query automatisierte Workflows" : language === 'fr' ? "Automatisation Power BI & Power Query" : language === 'hi' ? "Power BI व Power Query स्वचालित वर्कफ़्लो" : "Power BI & Power Query automated workflow pipelines"}
               </div>
             </div>
 
-            <div className="holo-border-active p-[1.5px] rounded-xl group">
-              <div className="p-4 rounded-[calc(1.25rem-1.5px)] glass-morphism-card h-full flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <div className="font-mono font-bold text-xl text-indigo-600 dark:text-indigo-400">
-                    -5%
-                  </div>
-                  <SparklinePreview data={[12, 10, 9, 8, 7]} color="#6366f1" width={48} height={18} />
+            <div className="p-4 rounded-xl bg-[#f6f7f9] dark:bg-[#0e1116] border border-[#dfe3e9] dark:border-[#262c36] h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <div className="font-mono font-bold text-xl text-[#a66a12]">
+                  -5%
                 </div>
-                <div className="font-mono text-xs text-slate-900 dark:text-white font-semibold mt-1">
-                  {language === 'de' ? "Churn-Reduktion" : language === 'fr' ? "Réduction du Churn" : language === 'hi' ? "चर्न में कमी" : "Churn Reduction"}
-                </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  {language === 'de' ? "Frühwarnsignale für strategische Kundenbindung" : language === 'fr' ? "Indicateurs d'alerte pour la fidélisation" : language === 'hi' ? "ग्राहक प्रतिधारण के लिए प्रारंभिक चेतावनी संकेत" : "Surfaced retention signals feeding cross-functional actions"}
-                </div>
+                <SparklinePreview data={[12, 10, 9, 8, 7]} color="#a66a12" width={48} height={18} />
+              </div>
+              <div className="font-mono text-xs text-[#101318] dark:text-white font-semibold mt-1">
+                {language === 'de' ? "Churn-Reduktion" : language === 'fr' ? "Réduction du Churn" : language === 'hi' ? "चर्न में कमी" : "Churn Reduction"}
+              </div>
+              <div className="text-xs text-[#5c6472] dark:text-[#8b93a1] mt-1">
+                {language === 'de' ? "Frühwarnsignale für strategische Kundenbindung" : language === 'fr' ? "Indicateurs d'alerte pour la fidélisation" : language === 'hi' ? "ग्राहक प्रतिधारण के लिए प्रारंभिक चेतावनी संकेत" : "Surfaced retention signals feeding cross-functional actions"}
               </div>
             </div>
           </div>
 
-          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+          <div className="space-y-3 text-sm text-[#5c6472] dark:text-[#a0a8b5]">
             <div className="flex items-start gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] mt-2 flex-shrink-0" />
               <p>
                 {language === 'de'
                   ? "Bereinigung und Validierung von über 50.000 Geschäftsdatensätzen mit SQL und Excel unter Anwendung strenger Vollständigkeits- und Duplikatprüfungen (+35% Datenqualität)."
@@ -113,7 +104,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] mt-2 flex-shrink-0" />
               <p>
                 {language === 'de'
                   ? "Automatisierung von Power BI-Berichten und Datenmodellen mittels DAX und Power Query (-40% manuelle Durchlaufzeit)."
@@ -125,7 +116,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#a66a12] mt-2 flex-shrink-0" />
               <p>
                 {language === 'de'
                   ? "Entwicklung von Churn-Analyse-Dashboards zur frühzeitigen Erkennung von Kundenabwanderungsrisiken, was zu einer Reduktion des Churns um 5% beitrug."
@@ -137,7 +128,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </p>
             </div>
           </div>
-        </InteractiveCard>
+        </div>
       </div>
     </section>
   );
