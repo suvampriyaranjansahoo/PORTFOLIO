@@ -22,6 +22,7 @@ import { CohortRetentionMatrix } from './CohortRetentionMatrix';
 import { TrafficD3Chart } from './TrafficD3Chart';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
+import { RiskConstellationCanvas } from './RiskConstellationCanvas';
 
 type DemoTab = 'traffic' | 'rice' | 'risk' | 'sql' | 'pipeline' | 'cohort';
 
@@ -485,6 +486,21 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
                   })}
                 </div>
               </div>
+            </div>
+
+            {/* 3D Advanced Depth Constellation & Decision Boundary Field */}
+            <div className="mt-8 pt-6 border-t border-[#dfe3e9] dark:border-white/10 space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h4 className="font-mono text-xs text-[#a66a12] dark:text-[#fbbf24] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" /> 3D Spatial Feature Distribution & Decision Boundary
+                  </h4>
+                  <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] mt-0.5">
+                    Interactive 3D depth-separated constellation with mouse parallax, bloom luminescence, and depth-of-field optics.
+                  </p>
+                </div>
+              </div>
+              <RiskConstellationCanvas />
             </div>
           </div>
         )}

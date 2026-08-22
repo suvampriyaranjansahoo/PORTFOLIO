@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingNeuralBackground';
 import { NeuralSettings } from '../types';
+import { Global3DBackground } from './Global3DBackground';
 
 /**
  * GlobalBackground Component
@@ -11,8 +12,9 @@ import { NeuralSettings } from '../types';
  * - Layer 3: Distant neural network (Layer 0 on Canvas with low opacity bokeh and 1-3px parallax).
  * - Layer 4: Mid-distance neural connectivity mesh (Layer 1 on Canvas with active connection stretching and 3-7px parallax).
  * - Layer 5: Foreground flagship neural nodes & flowing luminous data signals (Layer 2 on Canvas with 5-12px parallax & gravity physics).
- * - Layer 6: Floating analytical geometry (slowly rotating orbital paths, dimensional arcs, telemetry coordinate markers).
- * - Layer 7: Portfolio content (intact, non-interfering).
+ * - Layer 6: 3D Depth Layer (PerspectiveCamera parallax, Decision Boundary plane at z=-12, point cloud at z=-4 to z=2, Bloom & Depth of Field with fallback).
+ * - Layer 7: Floating analytical geometry (slowly rotating orbital paths, dimensional arcs, telemetry coordinate markers).
+ * - Layer 8: Portfolio content (intact, non-interfering).
  */
 export interface GlobalBackgroundProps {
   motionEnabled?: boolean;
@@ -235,6 +237,9 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ zIndex: 1 }}
       />
+
+      {/* ─── 3D SPATIAL DEPTH SCENE WITH PERSPECTIVE CAMERA PARALLAX & POST-PROCESSING ─── */}
+      <Global3DBackground motionEnabled={motionEnabled && !systemPrefersReducedMotion} />
 
       {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH ─── */}
       <div

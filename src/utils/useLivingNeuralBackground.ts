@@ -210,6 +210,7 @@ export function useLivingNeuralBackground(
   });
   const totalPacketsProcessedRef = useRef(142);
   const lastThroughputEmitRef = useRef(0);
+  const synapticConnectionsRef = useRef<Map<string, { excitation: number; lastTime: number }>>(new Map());
   const mouseRef = useRef({
     targetX: 0,
     targetY: 0,
@@ -290,46 +291,46 @@ export function useLivingNeuralBackground(
         const personality = pTypes[index % pTypes.length];
         
         let mass = 1.0;
-        let damping = 0.938;
-        let springStiffness = 0.0032;
+        let damping = 0.942;
+        let springStiffness = 0.0034;
         let elasticLag = 0.22;
         
         switch (personality) {
           case 'heavy':
-            mass = 1.85 + (index % 3) * 0.15;
-            damping = 0.958;
-            springStiffness = 0.0020;
-            elasticLag = 0.36;
+            mass = 1.75 + (index % 3) * 0.12;
+            damping = 0.962;
+            springStiffness = 0.0022;
+            elasticLag = 0.34;
             break;
           case 'light':
-            mass = 0.62 + (index % 3) * 0.08;
-            damping = 0.918;
-            springStiffness = 0.0044;
-            elasticLag = 0.14;
+            mass = 0.58 + (index % 3) * 0.08;
+            damping = 0.925;
+            springStiffness = 0.0048;
+            elasticLag = 0.12;
             break;
           case 'flow':
-            mass = 0.95;
-            damping = 0.942;
-            springStiffness = 0.0030;
-            elasticLag = 0.20;
-            break;
-          case 'magnetic':
-            mass = 1.05;
-            damping = 0.935;
-            springStiffness = 0.0035;
-            elasticLag = 0.24;
-            break;
-          case 'repulsive':
-            mass = 0.90;
-            damping = 0.930;
-            springStiffness = 0.0034;
+            mass = 0.92;
+            damping = 0.946;
+            springStiffness = 0.0032;
             elasticLag = 0.18;
             break;
+          case 'magnetic':
+            mass = 1.02;
+            damping = 0.938;
+            springStiffness = 0.0036;
+            elasticLag = 0.22;
+            break;
+          case 'repulsive':
+            mass = 0.88;
+            damping = 0.934;
+            springStiffness = 0.0035;
+            elasticLag = 0.16;
+            break;
           case 'orbital':
-            mass = 1.08;
-            damping = 0.940;
-            springStiffness = 0.0031;
-            elasticLag = 0.25;
+            mass = 1.05;
+            damping = 0.944;
+            springStiffness = 0.0033;
+            elasticLag = 0.24;
             break;
         }
 
@@ -340,14 +341,14 @@ export function useLivingNeuralBackground(
           springStiffness,
           elasticLag,
           swirlDir: (index % 2 === 0 ? 1 : -1) as (1 | -1),
-          sensitivityMultiplier: 0.88 + ((index * 7) % 30) / 100,
+          sensitivityMultiplier: 0.92 + ((index * 7) % 32) / 100,
         };
       };
 
       // Layer 0: Distant bokeh nodes (faint, small, parallax 1-3px)
       for (let i = 0; i < DISTANT_COUNT; i++) {
         const { x, y } = generateGridPoint(i, DISTANT_COUNT);
-        const baseOp = Math.min(0.70, (0.28 + Math.random() * 0.12) * visibility);
+        const baseOp = Math.min(0.72, (0.30 + Math.random() * 0.14) * visibility);
         const pProps = getPersonalityProps(i);
         nodes.push({
           x,
@@ -356,13 +357,13 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.12,
           vy: (Math.random() - 0.5) * 0.12,
-          size: 1.2 + Math.random() * 1.0,
+          size: 1.3 + Math.random() * 1.0,
           layer: 0,
           depth: 0.25,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.003 + Math.random() * 0.004,
-          orbitRadius: 15 + Math.random() * 25,
-          pulseGlow: 0.3 + Math.random() * 0.4,
+          orbitRadius: 16 + Math.random() * 24,
+          pulseGlow: 0.35 + Math.random() * 0.4,
           pulseSpeed: 0.008 + Math.random() * 0.012,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.012 + Math.random() * 0.012,
@@ -379,7 +380,7 @@ export function useLivingNeuralBackground(
       // Layer 1: Mid-depth active mesh nodes (parallax 3-7px)
       for (let i = 0; i < MID_COUNT; i++) {
         const { x, y } = generateGridPoint(i, MID_COUNT);
-        const baseOp = Math.min(0.85, (0.45 + Math.random() * 0.15) * visibility);
+        const baseOp = Math.min(0.88, (0.48 + Math.random() * 0.16) * visibility);
         const pProps = getPersonalityProps(i + DISTANT_COUNT);
         nodes.push({
           x,
@@ -388,13 +389,13 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.16,
           vy: (Math.random() - 0.5) * 0.16,
-          size: 2.0 + Math.random() * 1.2,
+          size: 2.2 + Math.random() * 1.2,
           layer: 1,
           depth: 0.6,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.005 + Math.random() * 0.006,
-          orbitRadius: 20 + Math.random() * 35,
-          pulseGlow: 0.5 + Math.random() * 0.5,
+          orbitRadius: 22 + Math.random() * 32,
+          pulseGlow: 0.55 + Math.random() * 0.45,
           pulseSpeed: 0.012 + Math.random() * 0.018,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.015 + Math.random() * 0.015,
@@ -411,7 +412,7 @@ export function useLivingNeuralBackground(
       // Layer 2: Foreground selected flagship nodes (luminous, responsive to cursor, parallax 6-14px)
       for (let i = 0; i < FOREGROUND_COUNT; i++) {
         const { x, y } = generateGridPoint(i, FOREGROUND_COUNT);
-        const baseOp = Math.min(0.95, (0.65 + Math.random() * 0.18) * visibility);
+        const baseOp = Math.min(0.98, (0.68 + Math.random() * 0.18) * visibility);
         const pProps = getPersonalityProps(i + DISTANT_COUNT + MID_COUNT);
         nodes.push({
           x,
@@ -420,13 +421,13 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.20,
           vy: (Math.random() - 0.5) * 0.20,
-          size: 3.0 + Math.random() * 1.8,
+          size: 3.2 + Math.random() * 1.8,
           layer: 2,
           depth: 1.0,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.007 + Math.random() * 0.008,
-          orbitRadius: 28 + Math.random() * 45,
-          pulseGlow: 0.7 + Math.random() * 0.5,
+          orbitRadius: 28 + Math.random() * 40,
+          pulseGlow: 0.75 + Math.random() * 0.45,
           pulseSpeed: 0.016 + Math.random() * 0.022,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.018 + Math.random() * 0.018,
@@ -833,6 +834,34 @@ export function useLivingNeuralBackground(
         return sectionBoost * (1.0 + proximity * 0.42);
       };
 
+      // Synaptic connection excitation tracking: instant bright firing on cursor encounter, followed by a non-linear ease-out decay
+      const getSynapticExcitation = (key: string, instantProximity: number, now: number) => {
+        const map = synapticConnectionsRef.current;
+        const existing = map.get(key);
+        let currentVal = 0;
+        
+        if (existing) {
+          const elapsedSec = (now - existing.lastTime) / 1000;
+          // Non-linear exponential ease-out curve for natural synaptic recovery
+          const decayFactor = Math.exp(-2.85 * elapsedSec);
+          currentVal = existing.excitation * decayFactor;
+        }
+
+        if (instantProximity > currentVal) {
+          // Instant synaptic excitation when cursor touches or comes in close contact
+          currentVal = instantProximity;
+          map.set(key, { excitation: currentVal, lastTime: now });
+        } else if (currentVal > 0.008) {
+          map.set(key, { excitation: currentVal, lastTime: now });
+        } else if (existing) {
+          map.delete(key);
+          currentVal = 0;
+        }
+
+        // Return non-linear ease-out power response (fast high-luminescence core, smooth long tail)
+        return Math.pow(currentVal, 0.88);
+      };
+
       // ─── 0. SMART VISUAL QUIET ZONES UPDATE & CALCULATION ───
       // Periodically scan DOM for cards, text blocks, navigation and headers to establish visual quiet zones
       if (nowTime - lastQuietZoneScanTimeRef.current > 750) {
@@ -1056,10 +1085,10 @@ export function useLivingNeuralBackground(
             node.graphRippleActivation *= 0.86;
           }
 
-          // Gentle organic orbital drift scaled by particleSpeed
+          // Gentle organic harmonic multi-frequency drift scaled by particleSpeed
           node.phase += node.phaseSpeed * particleSpeed;
-          let targetDriftX = node.baseX + Math.cos(node.phase) * node.orbitRadius;
-          let targetDriftY = node.baseY + Math.sin(node.phase * 0.8) * node.orbitRadius;
+          let targetDriftX = node.baseX + Math.cos(node.phase) * node.orbitRadius + Math.sin(node.phase * 0.43) * (node.orbitRadius * 0.28);
+          let targetDriftY = node.baseY + Math.sin(node.phase * 0.82) * node.orbitRadius + Math.cos(node.phase * 0.37) * (node.orbitRadius * 0.24);
 
           // 5. CONSTELLATION LOCK: If node is part of active constellation lock, gently attract to its anchor
           if (cLock && cLock.active && cLockWeight > 0.01) {
@@ -1076,16 +1105,41 @@ export function useLivingNeuralBackground(
           let totalForceX = (targetDriftX - node.x) * node.springStiffness * particleSpeed;
           let totalForceY = (targetDriftY - node.y) * node.springStiffness * particleSpeed;
 
-          // 4. MULTI-LAYER SPATIAL DEPTH & HIGH-SENSITIVITY 3-ZONE CURSOR-AWARE PHYSICS
+          // 3.5. GENTLE EDGE-REPULSION FORCE (Prevents clustering near canvas boundaries across all device viewports)
+          const edgeThresholdX = Math.min(width * 0.14, 120);
+          const edgeThresholdY = Math.min(height * 0.14, 120);
+
+          if (node.x < edgeThresholdX) {
+            const edgeDistFactor = (edgeThresholdX - node.x) / edgeThresholdX;
+            totalForceX += (edgeDistFactor * edgeDistFactor) * 0.042 * particleSpeed;
+          } else if (node.x > width - edgeThresholdX) {
+            const edgeDistFactor = (node.x - (width - edgeThresholdX)) / edgeThresholdX;
+            totalForceX -= (edgeDistFactor * edgeDistFactor) * 0.042 * particleSpeed;
+          }
+
+          if (node.y < edgeThresholdY) {
+            const edgeDistFactor = (edgeThresholdY - node.y) / edgeThresholdY;
+            totalForceY += (edgeDistFactor * edgeDistFactor) * 0.042 * particleSpeed;
+          } else if (node.y > height - edgeThresholdY) {
+            const edgeDistFactor = (node.y - (height - edgeThresholdY)) / edgeThresholdY;
+            totalForceY -= (edgeDistFactor * edgeDistFactor) * 0.042 * particleSpeed;
+          }
+
+          // 4. MULTI-LAYER SPATIAL DEPTH & NON-LINEAR VELOCITY-SENSITIVE CURSOR INTERACTION
           const parallaxX = (mouse.currentX * 0.009 * (node.layer + 1));
           const parallaxY = (mouse.currentY * 0.009 * (node.layer + 1));
 
-          // Multi-Zone Radii scaled by user-tuned sensitivity, layer depth, cursor speed & individual personality
+          // Multi-Zone Radii scaled non-linearly by cursor velocity:
+          // Slow movements yield surgical, pinpoint precision (< 4px expansion)
+          // Rapid sweeps expand non-linearly to generate wide, sweeping ripples and wakes (up to 135px expansion)
           const sensMult = node.sensitivityMultiplier || 1.0;
-          const speedExpansion = Math.min(cursorVel.speed * 28, 85);
-          const outerDetectionRadius = (280 + node.layer * 50 + speedExpansion) * sensitivity * sensMult;
-          const activeInteractionRadius = (130 + node.layer * 38 + speedExpansion * 0.7) * sensitivity * sensMult;
-          const closeContactRadius = (50 + node.layer * 18 + speedExpansion * 0.35) * sensitivity * sensMult;
+          const rawSpeed = cursorVel.speed || 0;
+          const nonLinearSpeedFactor = Math.pow(Math.min(rawSpeed, 5.2), 1.42);
+          const speedExpansion = Math.min(nonLinearSpeedFactor * 32, 135);
+
+          const outerDetectionRadius = (290 + node.layer * 52 + speedExpansion) * sensitivity * sensMult;
+          const activeInteractionRadius = (140 + node.layer * 40 + speedExpansion * 0.76) * sensitivity * sensMult;
+          const closeContactRadius = (56 + node.layer * 20 + speedExpansion * 0.38) * sensitivity * sensMult;
 
           if (mouse.active) {
             const nodeScreenX = node.x + parallaxX;
@@ -1097,106 +1151,109 @@ export function useLivingNeuralBackground(
             const unitY = dy / dist;
 
             if (dist < closeContactRadius) {
-              // ─── ZONE 3: DIRECT NEURAL CONTACT (< 50-85px) ───
+              // ─── ZONE 3: DIRECT NEURAL CONTACT (< 58-105px) ───
               // Elastic spring drag lagging behind cursor, strong momentum transfer, glowing core, ripple trigger
               node.interactionZone = 3;
-              const zone3Factor = 1 - dist / closeContactRadius;
+              const rawZ3 = 1 - dist / closeContactRadius;
+              const zone3Factor = rawZ3 * rawZ3 * (3 - 2 * rawZ3); // Smooth Hermite curve
               node.interactionIntensity = zone3Factor;
 
-              // Elastic drag toward virtual lagging position
-              const lagDist = node.elasticLag * 14;
+              // Elastic drag toward virtual lagging position for organic trailing inertia
+              const lagDist = node.elasticLag * 16;
               const virtualTargetX = mouse.screenX - cursorVel.vx * lagDist;
               const virtualTargetY = mouse.screenY - cursorVel.vy * lagDist;
               const vdx = virtualTargetX - nodeScreenX;
               const vdy = virtualTargetY - nodeScreenY;
 
-              const elasticPull = zone3Factor * 0.046 * interactionStrength * particleSpeed;
-              totalForceX += vdx * elasticPull * (1.15 * node.depth);
-              totalForceY += vdy * elasticPull * (1.15 * node.depth);
+              const elasticPull = zone3Factor * 0.052 * interactionStrength * particleSpeed;
+              totalForceX += vdx * elasticPull * (1.20 * node.depth);
+              totalForceY += vdy * elasticPull * (1.20 * node.depth);
 
               // Impart cursor momentum
-              const momFactor = zone3Factor * 0.12 * interactionStrength;
+              const momFactor = zone3Factor * 0.14 * interactionStrength;
               totalForceX += cursorVel.vx * momFactor;
               totalForceY += cursorVel.vy * momFactor;
 
-              node.targetOpacity = Math.min(1.0, (node.baseOpacity + 0.54 * zone3Factor) * visibility);
+              node.targetOpacity = Math.min(1.0, (node.baseOpacity + 0.58 * zone3Factor) * visibility);
               node.crossingGlowBoost = Math.max(node.crossingGlowBoost || 0, zone3Factor * 1.0);
 
               // Trigger cascading ripple when cursor moves briskly through close contact
-              if (cursorVel.speed > 0.62 && (!node.lastGraphRippleTime || nowTime - node.lastGraphRippleTime > 320)) {
+              if (cursorVel.speed > 0.58 && (!node.lastGraphRippleTime || nowTime - node.lastGraphRippleTime > 300)) {
                 node.lastGraphRippleTime = nowTime;
                 node.graphRippleActivation = Math.max(node.graphRippleActivation || 0, 0.95);
               }
             } else if (dist < activeInteractionRadius) {
-              // ─── ZONE 2: ACTIVE INFLUENCE FIELD (50px - 180px) ───
+              // ─── ZONE 2: ACTIVE INFLUENCE FIELD (58px - 210px) ───
               // Fluid directional flow, personality-specific behaviors (flow, magnetic, repulsive, orbital), enhanced glow
               node.interactionZone = 2;
-              const zone2Factor = 1 - dist / activeInteractionRadius;
-              node.interactionIntensity = zone2Factor * 0.78;
+              const rawZ2 = 1 - (dist - closeContactRadius) / (activeInteractionRadius - closeContactRadius);
+              const zone2Factor = Math.max(0, Math.min(1, rawZ2 * rawZ2 * (3 - 2 * rawZ2)));
+              node.interactionIntensity = zone2Factor * 0.82;
 
-              // Directional fluid flow matching cursor vector
-              const flowPower = zone2Factor * 0.022 * interactionStrength * particleSpeed;
-              totalForceX += cursorVel.vx * flowPower * (node.depth * 0.8 + 0.2);
-              totalForceY += cursorVel.vy * flowPower * (node.depth * 0.8 + 0.2);
+              // Directional fluid flow matching cursor vector with natural slipstream
+              const flowPower = zone2Factor * 0.026 * interactionStrength * particleSpeed;
+              totalForceX += cursorVel.vx * flowPower * (node.depth * 0.85 + 0.25);
+              totalForceY += cursorVel.vy * flowPower * (node.depth * 0.85 + 0.25);
 
               // Personality-specific secondary kinematic behavior
               switch (node.personality) {
                 case 'flow': {
                   // Strongly aligned with stream
-                  const streamBoost = zone2Factor * 0.016 * interactionStrength * particleSpeed;
+                  const streamBoost = zone2Factor * 0.020 * interactionStrength * particleSpeed;
                   totalForceX += cursorVel.vx * streamBoost;
                   totalForceY += cursorVel.vy * streamBoost;
                   break;
                 }
                 case 'magnetic': {
                   // Attractive inward pull toward cursor
-                  const magForce = zone2Factor * 0.015 * interactionStrength * particleSpeed;
+                  const magForce = zone2Factor * 0.018 * interactionStrength * particleSpeed;
                   totalForceX += unitX * magForce;
                   totalForceY += unitY * magForce;
                   break;
                 }
                 case 'repulsive': {
                   // Cushioning repulsion away from cursor path
-                  const repForce = zone2Factor * 0.015 * interactionStrength * particleSpeed;
+                  const repForce = zone2Factor * 0.018 * interactionStrength * particleSpeed;
                   totalForceX -= unitX * repForce;
                   totalForceY -= unitY * repForce;
                   break;
                 }
                 case 'orbital': {
                   // Perpendicular vortex swirl around moving cursor
-                  const swirlForce = zone2Factor * 0.018 * interactionStrength * particleSpeed * node.swirlDir;
+                  const swirlForce = zone2Factor * 0.022 * interactionStrength * particleSpeed * node.swirlDir;
                   totalForceX += -unitY * swirlForce;
                   totalForceY += unitX * swirlForce;
                   break;
                 }
                 case 'heavy': {
                   // Subtle trajectory lag
-                  totalForceX += (unitX * 0.3 + cursorVel.vx * 0.08) * zone2Factor * 0.014;
-                  totalForceY += (unitY * 0.3 + cursorVel.vy * 0.08) * zone2Factor * 0.014;
+                  totalForceX += (unitX * 0.35 + cursorVel.vx * 0.10) * zone2Factor * 0.016;
+                  totalForceY += (unitY * 0.35 + cursorVel.vy * 0.10) * zone2Factor * 0.016;
                   break;
                 }
                 case 'light': {
                   // Highly reactive directional flick
-                  totalForceX += (unitX * 0.4 + cursorVel.vx * 0.16) * zone2Factor * 0.028;
-                  totalForceY += (unitY * 0.4 + cursorVel.vy * 0.16) * zone2Factor * 0.028;
+                  totalForceX += (unitX * 0.45 + cursorVel.vx * 0.18) * zone2Factor * 0.032;
+                  totalForceY += (unitY * 0.45 + cursorVel.vy * 0.18) * zone2Factor * 0.032;
                   break;
                 }
               }
 
-              node.targetOpacity = Math.min(0.92, (node.baseOpacity + 0.34 * zone2Factor) * visibility);
-              node.crossingGlowBoost = Math.max(node.crossingGlowBoost || 0, zone2Factor * 0.48);
+              node.targetOpacity = Math.min(0.94, (node.baseOpacity + 0.38 * zone2Factor) * visibility);
+              node.crossingGlowBoost = Math.max(node.crossingGlowBoost || 0, zone2Factor * 0.52);
             } else if (dist < outerDetectionRadius) {
-              // ─── ZONE 1: OUTER SENSING FIELD (180px - 340px) ───
-              // Very gentle organic trajectory nudge & faint initial wake response
+              // ─── ZONE 1: OUTER SENSING FIELD (210px - 380px) ───
+              // Gentle organic trajectory nudge & faint initial wake response
               node.interactionZone = 1;
-              const zone1Factor = 1 - dist / outerDetectionRadius;
-              node.interactionIntensity = zone1Factor * 0.35;
+              const rawZ1 = 1 - (dist - activeInteractionRadius) / (outerDetectionRadius - activeInteractionRadius);
+              const zone1Factor = Math.max(0, Math.min(1, rawZ1 * rawZ1 * (3 - 2 * rawZ1)));
+              node.interactionIntensity = zone1Factor * 0.40;
 
-              const subtleNudge = Math.pow(zone1Factor, 1.3) * 0.0055 * interactionStrength * particleSpeed;
-              totalForceX += (cursorVel.vx * 0.10 + unitX * 0.90) * subtleNudge;
-              totalForceY += (cursorVel.vy * 0.10 + unitY * 0.90) * subtleNudge;
+              const subtleNudge = zone1Factor * 0.0065 * interactionStrength * particleSpeed;
+              totalForceX += (cursorVel.vx * 0.14 + unitX * 0.86) * subtleNudge;
+              totalForceY += (cursorVel.vy * 0.14 + unitY * 0.86) * subtleNudge;
 
-              node.targetOpacity = Math.min(0.85, (node.baseOpacity + 0.18 * zone1Factor) * visibility);
+              node.targetOpacity = Math.min(0.88, (node.baseOpacity + 0.20 * zone1Factor) * visibility);
             } else {
               // Outside all zones (Idle)
               node.interactionZone = 0;
@@ -1214,36 +1271,36 @@ export function useLivingNeuralBackground(
             for (let t = cursorTrail.length - 1; t >= 0; t--) {
               const sample = cursorTrail[t];
               const age = nowTime - sample.time;
-              if (age < 50 || age > 380) continue; // Focus on mid-age wake disturbance
+              if (age < 45 || age > 380) continue; // Focus on mid-age wake disturbance
 
               const wdx = sample.x - (node.x + parallaxX);
               const wdy = sample.y - (node.y + parallaxY);
               const wdist = Math.sqrt(wdx * wdx + wdy * wdy);
-              const wakeReach = (95 + sample.speed * 22) * sensitivity;
+              const wakeReach = (105 + sample.speed * 26) * sensitivity;
 
               if (wdist < wakeReach) {
                 const wakeDistFactor = 1 - wdist / wakeReach;
-                const timeFactor = 1 - (age - 50) / 330;
-                const wakePush = wakeDistFactor * timeFactor * 0.009 * interactionStrength * particleSpeed;
+                const timeFactor = 1 - (age - 45) / 335;
+                const wakePush = wakeDistFactor * timeFactor * 0.011 * interactionStrength * particleSpeed;
                 
                 totalForceX += sample.dirX * wakePush;
                 totalForceY += sample.dirY * wakePush;
-                node.wakeActivation = Math.max(node.wakeActivation || 0, wakeDistFactor * timeFactor * 0.72);
+                node.wakeActivation = Math.max(node.wakeActivation || 0, wakeDistFactor * timeFactor * 0.78);
                 break;
               }
             }
           }
 
-          // ─── ACCELERATION & VELOCITY INTEGRATION (F = ma) ───
+          // ─── ACCELERATION & VELOCITY INTEGRATION (F = ma with natural inertia) ───
           const accelX = totalForceX / (node.mass || 1.0);
           const accelY = totalForceY / (node.mass || 1.0);
 
-          node.vx = (node.vx + accelX) * (node.damping || 0.938);
-          node.vy = (node.vy + accelY) * (node.damping || 0.938);
+          node.vx = (node.vx + accelX) * (node.damping || 0.942);
+          node.vy = (node.vy + accelY) * (node.damping || 0.942);
 
           // Clamped velocity to prevent erratic spikes under extreme motion
           const currentSpeed = Math.hypot(node.vx, node.vy);
-          const maxAllowedSpeed = 4.5 * particleSpeed;
+          const maxAllowedSpeed = 4.8 * particleSpeed;
           if (currentSpeed > maxAllowedSpeed) {
             const scale = maxAllowedSpeed / currentSpeed;
             node.vx *= scale;
@@ -1253,8 +1310,8 @@ export function useLivingNeuralBackground(
           // Natural autonomous breathing effect
           node.breathingPhase += node.breathingSpeed * particleSpeed;
 
-          // Smooth lerp of opacity toward targetOpacity
-          const lerpRate = node.targetOpacity > node.currentOpacity ? 0.15 : 0.045;
+          // Smooth lerp of opacity toward targetOpacity with organic responsiveness
+          const lerpRate = node.targetOpacity > node.currentOpacity ? 0.18 : 0.048;
           node.currentOpacity += (node.targetOpacity - node.currentOpacity) * lerpRate;
         }
 
@@ -1477,9 +1534,25 @@ export function useLivingNeuralBackground(
           if (dist < maxDist) {
             const extraBright = ((n1.wakeActivation || 0) + (n2.wakeActivation || 0)) * 0.3 + ((n1.ambientScanIllumination || 0) + (n2.ambientScanIllumination || 0)) * 0.25;
             const activityAlpha = ((n1.currentOpacity + n2.currentOpacity) * 0.5) * 0.25;
-            const alpha = Math.min(0.85, (Math.pow(1 - dist / maxDist, 1.5) * palette.lineAlpha * 0.65 * visibility + activityAlpha + extraBright) * localBoost);
+
+            let lineDistToMouse0 = 9999;
+            if (mouse.active) {
+              const segDx = x2 - x1;
+              const segDy = y2 - y1;
+              const segLenSq = segDx * segDx + segDy * segDy;
+              if (segLenSq > 1) {
+                const t = Math.max(0, Math.min(1, ((mouse.screenX - x1) * segDx + (mouse.screenY - y1) * segDy) / segLenSq));
+                lineDistToMouse0 = Math.hypot(mouse.screenX - (x1 + t * segDx), mouse.screenY - (y1 + t * segDy));
+              }
+            }
+            const instantProx0 = (mouse.active && lineDistToMouse0 < 200 * sensitivity)
+              ? Math.pow(1 - lineDistToMouse0 / (200 * sensitivity), 1.2) * 0.26 * interactionStrength
+              : 0;
+            const synapticGlow0 = getSynapticExcitation(`0_${i}_${j}`, instantProx0, nowTime);
+
+            const alpha = Math.min(0.85, (Math.pow(1 - dist / maxDist, 1.5) * palette.lineAlpha * 0.65 * visibility + activityAlpha + synapticGlow0 * 0.32 + extraBright) * localBoost);
             ctx.strokeStyle = `rgba(${palette.indigo}, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 0.75 + (localBoost - 1.0) * 0.35;
+            ctx.lineWidth = 0.75 + (localBoost - 1.0) * 0.35 + (synapticGlow0 > 0.1 ? 0.25 : 0);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -1522,28 +1595,43 @@ export function useLivingNeuralBackground(
           const qzFactorLine = getQuietZoneFactor(midX, midY);
           const localBoost = getLocalBoost(midX, midY) * qzFactorLine;
 
-          const stretch = (n1.interactionZone >= 2 || n2.interactionZone >= 2) ? 1.25 : (n1.interactionZone === 1 || n2.interactionZone === 1) ? 1.12 : 1.0;
+          const stretch = (n1.interactionZone >= 2 || n2.interactionZone >= 2) ? 1.28 : (n1.interactionZone === 1 || n2.interactionZone === 1) ? 1.14 : 1.0;
           const maxDist = CONNECT_DISTANCES[1] * stretch * (1.0 + (localBoost - 1.0) * 0.32);
 
           if (dist < maxDist) {
             const extraBright = (
-              ((n1.crossingGlowBoost || 0) + (n2.crossingGlowBoost || 0)) * 0.4 + 
-              ((n1.rippleIllumination || 0) + (n2.rippleIllumination || 0)) * 0.65 +
-              ((n1.wakeActivation || 0) + (n2.wakeActivation || 0)) * 0.5 +
+              ((n1.crossingGlowBoost || 0) + (n2.crossingGlowBoost || 0)) * 0.45 + 
+              ((n1.rippleIllumination || 0) + (n2.rippleIllumination || 0)) * 0.70 +
+              ((n1.wakeActivation || 0) + (n2.wakeActivation || 0)) * 0.55 +
               ((n1.ambientScanIllumination || 0) + (n2.ambientScanIllumination || 0)) * 0.4
             );
 
-            // Dynamic connection visibility calculation
-            const distFalloff = Math.pow(1 - dist / maxDist, 1.3);
-            const jointActivity = ((n1.currentOpacity + n2.currentOpacity) * 0.5) * 0.38;
-            const midDistToMouse = mouse.active ? Math.sqrt((mouse.screenX - midX) ** 2 + (mouse.screenY - midY) ** 2) : 9999;
-            const cursorProximityBonus = (mouse.active && midDistToMouse < 220 * sensitivity) 
-              ? (1 - midDistToMouse / (220 * sensitivity)) * 0.28 * interactionStrength 
+            // Dynamic connection visibility calculation with segment projection & synaptic decay
+            const distFalloff = Math.pow(1 - dist / maxDist, 1.25);
+            const jointActivity = ((n1.currentOpacity + n2.currentOpacity) * 0.5) * 0.40;
+            
+            let lineDistToMouse = 9999;
+            if (mouse.active) {
+              const segDx = x2 - x1;
+              const segDy = y2 - y1;
+              const segLenSq = segDx * segDx + segDy * segDy;
+              if (segLenSq > 1) {
+                const t = Math.max(0, Math.min(1, ((mouse.screenX - x1) * segDx + (mouse.screenY - y1) * segDy) / segLenSq));
+                const projX = x1 + t * segDx;
+                const projY = y1 + t * segDy;
+                lineDistToMouse = Math.hypot(mouse.screenX - projX, mouse.screenY - projY);
+              }
+            }
+
+            const instantProximity = (mouse.active && lineDistToMouse < 240 * sensitivity) 
+              ? Math.pow(1 - lineDistToMouse / (240 * sensitivity), 1.15) * 0.42 * interactionStrength 
               : 0;
 
-            const alpha = Math.min(0.98, (distFalloff * palette.lineAlpha * 1.15 * visibility + jointActivity + cursorProximityBonus + extraBright) * localBoost);
+            const synapticGlow = getSynapticExcitation(`1_${Math.min(idx1, idx2)}_${Math.max(idx1, idx2)}`, instantProximity, nowTime);
+
+            const alpha = Math.min(0.98, (distFalloff * palette.lineAlpha * 1.20 * visibility + jointActivity + synapticGlow * 0.48 + extraBright) * localBoost);
             ctx.strokeStyle = `rgba(${palette.cyan}, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 1.0 + (localBoost - 1.0) * 0.45 + extraBright * 0.8 + (n1.interactionZone >= 2 ? 0.35 : 0);
+            ctx.lineWidth = 1.0 + (localBoost - 1.0) * 0.45 + extraBright * 0.8 + (n1.interactionZone >= 2 ? 0.4 : 0) + (synapticGlow > 0.08 ? 0.38 : 0);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -1554,9 +1642,9 @@ export function useLivingNeuralBackground(
         }
 
         // Draw midground node
-        const glowRadius = n1.size * 3.2 * (1 + (nodeBoost1 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.3 : 0));
+        const glowRadius = n1.size * 3.4 * (1 + (nodeBoost1 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.35 : 0));
         const glow = ctx.createRadialGradient(x1, y1, 0, x1, y1, glowRadius);
-        glow.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.42 : 0.22)).toFixed(3)})`);
+        glow.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.46 : 0.26)).toFixed(3)})`);
         glow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = glow;
         ctx.beginPath();
@@ -1581,10 +1669,10 @@ export function useLivingNeuralBackground(
         const y1 = n1.y + parallax2Y;
         const qzFactor1 = getQuietZoneFactor(x1, y1);
         const nodeBoost2 = getLocalBoost(x1, y1) * qzFactor1 * (
-          1 + (n1.crossingGlowBoost || 0) * 0.8 + 
-          (n1.rippleIllumination || 0) * 1.5 + 
-          (n1.wakeActivation || 0) * 1.1 +
-          (n1.ambientScanIllumination || 0) * 0.9
+          1 + (n1.crossingGlowBoost || 0) * 0.85 + 
+          (n1.rippleIllumination || 0) * 1.55 + 
+          (n1.wakeActivation || 0) * 1.15 +
+          (n1.ambientScanIllumination || 0) * 0.95
         );
 
         const breathFactor2 = 1.0 + Math.sin(n1.breathingPhase) * 0.18 + Math.cos(n1.breathingPhase * 0.62) * 0.09;
@@ -1603,26 +1691,41 @@ export function useLivingNeuralBackground(
           const qzFactorLine = getQuietZoneFactor(midX, midY);
           const localBoost = getLocalBoost(midX, midY) * qzFactorLine;
 
-          const stretch = (n1.interactionZone >= 2 || n2.interactionZone >= 2) ? 1.30 : (n1.interactionZone === 1 || n2.interactionZone === 1) ? 1.15 : 1.0;
+          const stretch = (n1.interactionZone >= 2 || n2.interactionZone >= 2) ? 1.34 : (n1.interactionZone === 1 || n2.interactionZone === 1) ? 1.18 : 1.0;
           const maxDist = CONNECT_DISTANCES[2] * stretch * (1.0 + (localBoost - 1.0) * 0.35);
 
           if (dist < maxDist) {
             const extraBright = (
-              ((n1.crossingGlowBoost || 0) + (n2.crossingGlowBoost || 0)) * 0.5 + 
-              ((n1.rippleIllumination || 0) + (n2.rippleIllumination || 0)) * 0.8 +
-              ((n1.wakeActivation || 0) + (n2.wakeActivation || 0)) * 0.6 +
+              ((n1.crossingGlowBoost || 0) + (n2.crossingGlowBoost || 0)) * 0.55 + 
+              ((n1.rippleIllumination || 0) + (n2.rippleIllumination || 0)) * 0.85 +
+              ((n1.wakeActivation || 0) + (n2.wakeActivation || 0)) * 0.65 +
               ((n1.ambientScanIllumination || 0) + (n2.ambientScanIllumination || 0)) * 0.45
             );
 
-            // Dynamic connection visibility calculation for foreground layer
-            const distFalloff = Math.pow(1 - dist / maxDist, 1.15);
-            const jointActivity = ((n1.currentOpacity + n2.currentOpacity) * 0.5) * 0.45;
-            const midDistToMouse = mouse.active ? Math.sqrt((mouse.screenX - midX) ** 2 + (mouse.screenY - midY) ** 2) : 9999;
-            const cursorProximityBonus = (mouse.active && midDistToMouse < 260 * sensitivity) 
-              ? (1 - midDistToMouse / (260 * sensitivity)) * 0.35 * interactionStrength 
+            // Dynamic connection visibility calculation for foreground layer with synaptic decay
+            const distFalloff = Math.pow(1 - dist / maxDist, 1.12);
+            const jointActivity = ((n1.currentOpacity + n2.currentOpacity) * 0.5) * 0.48;
+            
+            let lineDistToMouse = 9999;
+            if (mouse.active) {
+              const segDx = x2 - x1;
+              const segDy = y2 - y1;
+              const segLenSq = segDx * segDx + segDy * segDy;
+              if (segLenSq > 1) {
+                const t = Math.max(0, Math.min(1, ((mouse.screenX - x1) * segDx + (mouse.screenY - y1) * segDy) / segLenSq));
+                const projX = x1 + t * segDx;
+                const projY = y1 + t * segDy;
+                lineDistToMouse = Math.hypot(mouse.screenX - projX, mouse.screenY - projY);
+              }
+            }
+
+            const instantProximity = (mouse.active && lineDistToMouse < 280 * sensitivity) 
+              ? Math.pow(1 - lineDistToMouse / (280 * sensitivity), 1.1) * 0.52 * interactionStrength 
               : 0;
 
-            const alpha = Math.min(1.0, (distFalloff * palette.lineAlpha * 1.5 * visibility + jointActivity + cursorProximityBonus + extraBright) * localBoost);
+            const synapticGlow = getSynapticExcitation(`2_${Math.min(idx1, idx2)}_${Math.max(idx1, idx2)}`, instantProximity, nowTime);
+
+            const alpha = Math.min(1.0, (distFalloff * palette.lineAlpha * 1.55 * visibility + jointActivity + synapticGlow * 0.58 + extraBright) * localBoost);
             
             // Dual-tone gradient stroke between foreground nodes
             const grad = ctx.createLinearGradient(x1, y1, x2, y2);
@@ -1630,7 +1733,7 @@ export function useLivingNeuralBackground(
             grad.addColorStop(1, `rgba(${palette.amber}, ${(alpha * 0.88).toFixed(3)})`);
             
             ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.5 + (localBoost - 1.0) * 0.6 + extraBright * 1.0 + (n1.interactionZone >= 2 ? 0.45 : 0);
+            ctx.lineWidth = 1.5 + (localBoost - 1.0) * 0.6 + extraBright * 1.0 + (n1.interactionZone >= 2 ? 0.5 : 0) + (synapticGlow > 0.08 ? 0.52 : 0);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -1642,10 +1745,10 @@ export function useLivingNeuralBackground(
 
         // Luminous flagship node halo & core
         const pulse = 1.0 + Math.sin(n1.phase * 2) * 0.22;
-        const fgGlowRadius = n1.size * 4.8 * pulse * (1 + (nodeBoost2 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.4 : 0));
+        const fgGlowRadius = n1.size * 5.0 * pulse * (1 + (nodeBoost2 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.45 : 0));
         const fgGlow = ctx.createRadialGradient(x1, y1, 0, x1, y1, fgGlowRadius);
-        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha2 * (isDarkRef.current ? 0.55 : 0.30)).toFixed(3)})`);
-        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${(nodeAlpha2 * (isDarkRef.current ? 0.22 : 0.12)).toFixed(3)})`);
+        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha2 * (isDarkRef.current ? 0.58 : 0.32)).toFixed(3)})`);
+        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${(nodeAlpha2 * (isDarkRef.current ? 0.24 : 0.14)).toFixed(3)})`);
         fgGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = fgGlow;
         ctx.beginPath();
