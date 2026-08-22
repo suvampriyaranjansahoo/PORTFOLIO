@@ -765,3 +765,51 @@ input:focus, textarea:focus, select:focus { border-color: var(--accent-secondary
   }
 }
 
+/* ─── AMBIENT DATA-UNIVERSE FINISH ───
+   Presentation-only refinements layered over the existing component system.
+   These rules deliberately do not affect sizing, visibility, focus behavior,
+   event handling, or responsive breakpoints. */
+main > section {
+  position: relative;
+  background-color: color-mix(in srgb, var(--surface-glass) 72%, transparent) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48), inset 0 -1px 0 rgba(148, 163, 184, 0.10);
+}
+
+.dark main > section {
+  background-color: rgba(11, 15, 27, 0.46) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), inset 0 -1px 0 rgba(130, 150, 255, 0.075);
+}
+
+/* A precision edge and low-key telemetry watermark provide visual cohesion to
+   every existing card-level surface while keeping their contents fully intact. */
+.card-level-1::after,
+.card-level-2::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(99, 102, 241, 0.18), transparent 22%, transparent 76%, rgba(217, 139, 24, 0.18)) top / 100% 1px no-repeat,
+    radial-gradient(circle at 92% 86%, rgba(99, 102, 241, 0.08) 0 1px, transparent 1.5px) 0 0 / 11px 11px;
+  opacity: 0.68;
+}
+
+.dark .card-level-1::after,
+.dark .card-level-2::after {
+  background:
+    linear-gradient(90deg, rgba(111, 121, 255, 0.30), transparent 24%, transparent 75%, rgba(240, 169, 40, 0.28)) top / 100% 1px no-repeat,
+    radial-gradient(circle at 92% 86%, rgba(103, 232, 249, 0.13) 0 1px, transparent 1.5px) 0 0 / 11px 11px;
+}
+
+/* Make glass surfaces feel optically elevated when a pointing device is in use.
+   Keyboard focus remains governed by the existing focus-visible treatment. */
+@media (hover: hover) {
+  .card-level-1:hover,
+  .card-level-2:hover {
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+  }
+}
+
