@@ -33,7 +33,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
 
         {/* Contact Card */}
-        <div className="card-level-1 p-8 sm:p-12 !bg-[#111419] dark:!bg-[#131823]/95 text-white border-[#262c36] dark:border-white/[0.1] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="card-level-1 p-8 sm:p-12 !bg-[#111419]/90 dark:!bg-[#131823]/80 backdrop-blur-xl text-white border-[#262c36] dark:border-white/[0.12] shadow-2xl flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <div className="font-mono text-xs text-[#d8a34f] tracking-widest uppercase">
               {t?.contactLabel || "09 · CONTACT"}

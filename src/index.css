@@ -52,9 +52,9 @@
     /* Premium visual-system aliases: use these for new and shared surfaces. */
     --page-bg: #eef2f8;
     --page-bg-secondary: #e7ecf5;
-    --surface: rgba(255, 255, 255, 0.76);
-    --surface-elevated: rgba(255, 255, 255, 0.9);
-    --surface-glass: rgba(255, 255, 255, 0.68);
+    --surface: rgba(255, 255, 255, 0.72);
+    --surface-elevated: rgba(255, 255, 255, 0.82);
+    --surface-glass: rgba(246, 248, 252, 0.64);
     --border-default: rgba(148, 163, 184, 0.36);
     --shadow-sm: 0 2px 8px rgba(30, 41, 59, 0.06), inset 0 1px 0 rgba(255,255,255,.95);
     --shadow-md: 0 12px 28px rgba(30, 41, 59, 0.10), 0 2px 8px rgba(30, 41, 59, .05), inset 0 1px 0 rgba(255,255,255,.92);
@@ -64,7 +64,7 @@
     --radius-sm: 12px;
     --radius-md: 18px;
     --radius-lg: 24px;
-    --blur-glass: 18px;
+    --blur-glass: 14px;
     --duration-ui: 300ms;
     --ease-premium: cubic-bezier(.16, 1, .3, 1);
   }
@@ -106,14 +106,14 @@
     --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     --shadow-elevated: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
     --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.35);
-    --glass-blur: 20px;
+    --glass-blur: 16px;
     --glow-accent: 0 0 32px -2px rgba(56, 189, 248, 0.28);
     --grid-opacity: 0.025;
     --page-bg: #070a13;
     --page-bg-secondary: #0a0f1e;
-    --surface: rgba(10, 15, 30, 0.70);
-    --surface-elevated: rgba(14, 20, 40, 0.86);
-    --surface-glass: rgba(10, 15, 30, 0.72);
+    --surface: rgba(12, 17, 32, 0.72);
+    --surface-elevated: rgba(18, 25, 46, 0.78);
+    --surface-glass: rgba(10, 15, 28, 0.62);
     --border-default: rgba(139, 92, 246, 0.22);
     --shadow-sm: 0 3px 10px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(255,255,255,.10);
     --shadow-md: 0 16px 36px rgba(0, 0, 0, .40), 0 1px 0 rgba(255,255,255,.06) inset;
@@ -666,10 +666,10 @@ input[type="range"] {
 .card-level-3 {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(135deg, var(--surface-elevated), var(--surface-glass));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(246, 248, 252, 0.62));
   border-color: var(--border-default);
-  backdrop-filter: blur(var(--blur-glass)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
 }
 
 /* ─── 3D tilt (Level 1/2 only) ───
@@ -779,13 +779,15 @@ input[type="range"] {
 .dark .card-level-2,
 .dark .card-level-3 {
   border-color: var(--border-default);
-  background: linear-gradient(135deg, rgba(25, 33, 57, .90), rgba(10, 15, 29, .72));
+  background: linear-gradient(135deg, rgba(20, 27, 46, 0.76), rgba(10, 15, 29, 0.58));
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
 }
 
 .dark .card-level-1::before,
 .dark .card-level-2::before,
 .dark .card-level-3::before {
-  background: linear-gradient(125deg, rgba(255,255,255,.13), transparent 30%, rgba(99,102,241,.15) 70%, rgba(217,139,24,.10));
+  background: linear-gradient(125deg, rgba(255,255,255,.08), transparent 30%, rgba(99,102,241,.12) 70%, rgba(217,139,24,.08));
 }
 
 @media (hover: hover) {

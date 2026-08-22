@@ -10,7 +10,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
   const t = TRANSLATIONS[language]?.experience;
 
   return (
-    <section id="experience" className="py-16 sm:py-20 bg-white/60 dark:bg-[#111622]/60 backdrop-blur-md border-y border-[#dfe3e9] dark:border-white/[0.08]">
+    <section id="experience" className="py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08]">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
           {t?.label || "06 · EXPERIENCE"}

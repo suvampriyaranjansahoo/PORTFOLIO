@@ -34,7 +34,7 @@ export function useTilt3DCards() {
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (prefersReducedMotion || !isFinePointer) return;
 
-    const MAX_TILT_DEG = 5.5;
+    const MAX_TILT_DEG = 3.5;
     let activeCard: HTMLElement | null = null;
     let frame: number | null = null;
     let pendingEvent: MouseEvent | null = null;
@@ -44,13 +44,13 @@ export function useTilt3DCards() {
       if (!pendingEvent) return;
       const e = pendingEvent;
 
-      const target = (e.target as HTMLElement)?.closest<HTMLElement>('.card-level-1, .card-level-2');
+      const target = (e.target as HTMLElement)?.closest<HTMLElement>('.card-level-1, .card-level-2, .card-level-3');
 
-      // If we've moved off the previously active card, reset it.
+      // If we've moved off the previously active card, smoothly reset it.
       if (activeCard && activeCard !== target) {
         activeCard.style.setProperty('--tilt-x', '0deg');
         activeCard.style.setProperty('--tilt-y', '0deg');
-        activeCard.style.setProperty('--spot-opacity', '0.16');
+        activeCard.style.setProperty('--spot-opacity', '0.12');
         activeCard = null;
       }
 

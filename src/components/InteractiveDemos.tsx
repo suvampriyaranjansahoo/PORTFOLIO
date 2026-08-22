@@ -98,7 +98,7 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
   }, [roa, currentRatio, debtToEquity, cashFlowRatio, workingCapitalRatio]);
 
   return (
-    <section id="demos" className="py-16 sm:py-20 bg-white/60 dark:bg-[#111622]/60 backdrop-blur-md border-y border-[#dfe3e9] dark:border-white/[0.08] overflow-hidden">
+    <section id="demos" className="py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>

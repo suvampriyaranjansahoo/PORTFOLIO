@@ -60,9 +60,9 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
   return (
     <div className="max-w-[1160px] mx-auto px-5 sm:px-6 mb-14 sm:mb-20 space-y-4">
       {/* Proof Strip */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#dfe3e9] dark:bg-white/[0.08] border border-[#dfe3e9] dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-xs">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#dfe3e9]/60 dark:bg-white/[0.08] border border-[#dfe3e9]/80 dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-xs backdrop-blur-md">
         {proofItems.map((item, idx) => (
-          <div key={idx} className="bg-white/95 dark:bg-[#141924]/90 p-4 sm:p-5 flex flex-col justify-center transition-colors hover:bg-white dark:hover:bg-[#181f2c]">
+          <div key={idx} className="bg-white/75 dark:bg-[#141924]/75 p-4 sm:p-5 flex flex-col justify-center transition-colors hover:bg-white/90 dark:hover:bg-[#181f2c]/85">
             <span className="font-mono text-[10px] tracking-widest text-[#8b93a1] uppercase mb-1">
               {item.label}
             </span>
@@ -77,7 +77,7 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
       <div 
         ref={metricsRef}
         id="key-metrics-grid"
-        className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#dfe3e9] dark:bg-white/[0.08] border border-[#dfe3e9] dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-xs"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#dfe3e9]/60 dark:bg-white/[0.08] border border-[#dfe3e9]/80 dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-xs backdrop-blur-md"
       >
         {KEY_METRICS.map((metric, idx) => {
           const displayValue = metric.decimal 
@@ -87,7 +87,7 @@ export const ProofStrip: React.FC<ProofStripProps> = ({ language = 'en' }) => {
           return (
             <div 
               key={idx} 
-              className="bg-white/95 dark:bg-[#141924]/90 p-5 sm:p-6 group hover:bg-white dark:hover:bg-[#1a2130] transition-all"
+              className="bg-white/75 dark:bg-[#141924]/75 p-5 sm:p-6 group hover:bg-white/90 dark:hover:bg-[#1a2130]/85 transition-all"
             >
               <div className="font-mono font-bold text-2xl sm:text-3xl text-[#101318] dark:text-white tracking-tight flex items-baseline gap-0.5 group-hover:text-[#a66a12] transition-colors">
                 <span>{displayValue}</span>

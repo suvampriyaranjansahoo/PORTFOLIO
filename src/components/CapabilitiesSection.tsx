@@ -77,7 +77,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-white dark:bg-[#151920] border-y border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+    <section className="py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
       <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
