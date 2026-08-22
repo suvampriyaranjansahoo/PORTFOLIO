@@ -76,7 +76,7 @@ const decisionFragmentShader = `
   }
 `;
 
-function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
+export function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { pointer } = useThree();
 
@@ -130,7 +130,7 @@ function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
 }
 
 // ─── 3D NEURAL POINT-CLOUD & SYNAPTIC CONNECTIONS (NORMALIZED SIZE & 3D RIPPLE PROPAGATION) ───
-function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
+export function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const { pointer } = useThree();
   const lastRippleTriggerRef = useRef<number>(0);
@@ -318,7 +318,7 @@ interface PostProcessComposerProps {
   performanceTier: 'high' | 'medium' | 'low';
 }
 
-function PostProcessComposer({ performanceTier }: PostProcessComposerProps) {
+export function PostProcessComposer({ performanceTier }: PostProcessComposerProps) {
   const { gl, scene, camera, size } = useThree();
   const composerRef = useRef<EffectComposer | null>(null);
 

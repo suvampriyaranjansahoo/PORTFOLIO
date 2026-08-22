@@ -1,7 +1,60 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Component, ReactNode, ErrorInfo } from 'react';
 import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingNeuralBackground';
 import { NeuralSettings } from '../types';
-import { Global3DBackground } from './Global3DBackground';
+import {
+  Global3DBackground,
+  CameraParallax,
+  DecisionBoundaryPlane,
+  NeuralPointCloudGroup,
+} from './Global3DBackground';
+import {
+  EffectComposer,
+  RenderPass,
+  EffectPass,
+  BloomEffect,
+  DepthOfFieldEffect,
+  VignetteEffect
+} from 'postprocessing';
+
+/**
+ * ThreeCanvasErrorBoundary
+ * Catches any WebGL / Fiber / EffectComposer initialization errors gracefully
+ * so 2D background and full portfolio remain fully functional on any GPU.
+ */
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  errorInfo?: string;
+}
+
+export class ThreeCanvasErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, errorInfo: error.message };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.warn('[GlobalBackground] 3D Scene / Postprocessing caught by ErrorBoundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || null;
+    }
+    return this.props.children;
+  }
+}
+
+// Re-export postprocessing primitives for seamless composability
+export { EffectComposer, BloomEffect as Bloom, DepthOfFieldEffect as DepthOfField, VignetteEffect as Vignette };
 
 /**
  * GlobalBackground Component
@@ -12,7 +65,7 @@ import { Global3DBackground } from './Global3DBackground';
  * - Layer 3: Distant neural network (Layer 0 on Canvas with low opacity bokeh and 1-3px parallax).
  * - Layer 4: Mid-distance neural connectivity mesh (Layer 1 on Canvas with active connection stretching and 3-7px parallax).
  * - Layer 5: Foreground flagship neural nodes & flowing luminous data signals (Layer 2 on Canvas with 5-12px parallax & gravity physics).
- * - Layer 6: 3D Depth Layer (PerspectiveCamera parallax, Decision Boundary plane at z=-12, point cloud at z=-4 to z=2, Bloom & Depth of Field with fallback).
+ * - Layer 6: 3D Depth Layer (PerspectiveCamera parallax, Decision Boundary plane at z=-12, point cloud at z=-4 to z=2, Bloom, Depth of Field & Vignette EffectComposer).
  * - Layer 7: Floating analytical geometry (slowly rotating orbital paths, dimensional arcs, telemetry coordinate markers).
  * - Layer 8: Portfolio content (intact, non-interfering).
  */
@@ -238,8 +291,10 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
         style={{ zIndex: 1 }}
       />
 
-      {/* ─── 3D SPATIAL DEPTH SCENE WITH PERSPECTIVE CAMERA PARALLAX & POST-PROCESSING ─── */}
-      <Global3DBackground motionEnabled={motionEnabled && !systemPrefersReducedMotion} />
+      {/* ─── 3D SPATIAL DEPTH SCENE WITH PERSPECTIVE CAMERA PARALLAX & POST-PROCESSING (SAFE ERROR BOUNDARY) ─── */}
+      <ThreeCanvasErrorBoundary>
+        <Global3DBackground motionEnabled={motionEnabled && !systemPrefersReducedMotion} />
+      </ThreeCanvasErrorBoundary>
 
       {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH ─── */}
       <div
