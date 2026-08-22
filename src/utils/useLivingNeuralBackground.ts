@@ -112,6 +112,10 @@ export interface WakeParticle {
   life: number;
   colorType: 'indigo' | 'cyan' | 'amber';
   opacity: number;
+  isStar?: boolean;
+  rotation?: number;
+  rotSpeed?: number;
+  sparklePhase?: number;
 }
 
 export interface EnergyRipple {
@@ -134,6 +138,9 @@ export interface MicroSpark {
   life: number;
   maxLife: number;
   colorType: 'indigo' | 'cyan' | 'amber';
+  isStar?: boolean;
+  rotation?: number;
+  rotSpeed?: number;
 }
 
 export interface MouseCoordinates {
@@ -345,25 +352,25 @@ export function useLivingNeuralBackground(
         };
       };
 
-      // Layer 0: Distant bokeh nodes (faint, small, parallax 1-3px)
+      // Layer 0: Distant bokeh nodes (faint, delicate, parallax 1-3px)
       for (let i = 0; i < DISTANT_COUNT; i++) {
         const { x, y } = generateGridPoint(i, DISTANT_COUNT);
-        const baseOp = Math.min(0.72, (0.30 + Math.random() * 0.14) * visibility);
+        const baseOp = Math.min(0.68, (0.24 + Math.random() * 0.12) * visibility);
         const pProps = getPersonalityProps(i);
         nodes.push({
           x,
           y,
           baseX: x,
           baseY: y,
-          vx: (Math.random() - 0.5) * 0.12,
-          vy: (Math.random() - 0.5) * 0.12,
-          size: 1.3 + Math.random() * 1.0,
+          vx: (Math.random() - 0.5) * 0.10,
+          vy: (Math.random() - 0.5) * 0.10,
+          size: 0.75 + Math.random() * 0.55,
           layer: 0,
           depth: 0.25,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.003 + Math.random() * 0.004,
-          orbitRadius: 16 + Math.random() * 24,
-          pulseGlow: 0.35 + Math.random() * 0.4,
+          orbitRadius: 14 + Math.random() * 20,
+          pulseGlow: 0.30 + Math.random() * 0.35,
           pulseSpeed: 0.008 + Math.random() * 0.012,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.012 + Math.random() * 0.012,
@@ -380,22 +387,22 @@ export function useLivingNeuralBackground(
       // Layer 1: Mid-depth active mesh nodes (parallax 3-7px)
       for (let i = 0; i < MID_COUNT; i++) {
         const { x, y } = generateGridPoint(i, MID_COUNT);
-        const baseOp = Math.min(0.88, (0.48 + Math.random() * 0.16) * visibility);
+        const baseOp = Math.min(0.82, (0.42 + Math.random() * 0.14) * visibility);
         const pProps = getPersonalityProps(i + DISTANT_COUNT);
         nodes.push({
           x,
           y,
           baseX: x,
           baseY: y,
-          vx: (Math.random() - 0.5) * 0.16,
-          vy: (Math.random() - 0.5) * 0.16,
-          size: 2.2 + Math.random() * 1.2,
+          vx: (Math.random() - 0.5) * 0.14,
+          vy: (Math.random() - 0.5) * 0.14,
+          size: 1.25 + Math.random() * 0.65,
           layer: 1,
           depth: 0.6,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.005 + Math.random() * 0.006,
-          orbitRadius: 22 + Math.random() * 32,
-          pulseGlow: 0.55 + Math.random() * 0.45,
+          orbitRadius: 18 + Math.random() * 26,
+          pulseGlow: 0.45 + Math.random() * 0.35,
           pulseSpeed: 0.012 + Math.random() * 0.018,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.015 + Math.random() * 0.015,
@@ -412,22 +419,22 @@ export function useLivingNeuralBackground(
       // Layer 2: Foreground selected flagship nodes (luminous, responsive to cursor, parallax 6-14px)
       for (let i = 0; i < FOREGROUND_COUNT; i++) {
         const { x, y } = generateGridPoint(i, FOREGROUND_COUNT);
-        const baseOp = Math.min(0.98, (0.68 + Math.random() * 0.18) * visibility);
+        const baseOp = Math.min(0.92, (0.58 + Math.random() * 0.16) * visibility);
         const pProps = getPersonalityProps(i + DISTANT_COUNT + MID_COUNT);
         nodes.push({
           x,
           y,
           baseX: x,
           baseY: y,
-          vx: (Math.random() - 0.5) * 0.20,
-          vy: (Math.random() - 0.5) * 0.20,
-          size: 3.2 + Math.random() * 1.8,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          size: 1.75 + Math.random() * 0.75,
           layer: 2,
           depth: 1.0,
           phase: Math.random() * Math.PI * 2,
           phaseSpeed: 0.007 + Math.random() * 0.008,
-          orbitRadius: 28 + Math.random() * 40,
-          pulseGlow: 0.75 + Math.random() * 0.45,
+          orbitRadius: 22 + Math.random() * 32,
+          pulseGlow: 0.60 + Math.random() * 0.35,
           pulseSpeed: 0.016 + Math.random() * 0.022,
           breathingPhase: Math.random() * Math.PI * 2,
           breathingSpeed: 0.018 + Math.random() * 0.018,
@@ -500,7 +507,7 @@ export function useLivingNeuralBackground(
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // Data Wake spawner (subtle particles following cursor motion)
+    // Magical Data & Stardust Wake spawner (ethereal sparkling particles following cursor motion)
     const spawnWake = (clientX: number, clientY: number) => {
       if (!motionEnabled || prefersReducedMotion) return;
       const now = performance.now();
@@ -509,27 +516,32 @@ export function useLivingNeuralBackground(
       const dy = clientY - last.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist >= 10 && (now - last.time > 24)) {
-        const types: Array<'indigo' | 'cyan' | 'amber'> = ['indigo', 'cyan', 'indigo', 'amber'];
+      if (dist >= 8 && (now - last.time > 20)) {
+        const types: Array<'indigo' | 'cyan' | 'amber'> = ['cyan', 'indigo', 'amber', 'cyan'];
         const chosenType = types[Math.floor(Math.random() * types.length)];
         const angle = Math.atan2(dy, dx);
         const perp = angle + (Math.random() > 0.5 ? Math.PI / 2 : -Math.PI / 2);
-        const drift = 0.12 + Math.random() * 0.28;
-        const speed = Math.min(dist * 0.025, 0.8);
+        const drift = 0.15 + Math.random() * 0.35;
+        const speed = Math.min(dist * 0.03, 0.9);
+        const isStar = Math.random() < 0.45; // 45% of wake motes are magical twinkling 4-point stars
 
         wakeParticlesRef.current.push({
-          x: clientX,
-          y: clientY,
-          vx: Math.cos(perp) * drift - Math.cos(angle) * (0.10 * speed),
-          vy: Math.sin(perp) * drift - Math.sin(angle) * (0.10 * speed),
-          size: 1.1 + Math.random() * 1.3,
-          maxLife: 32 + Math.floor(Math.random() * 16),
-          life: 32 + Math.floor(Math.random() * 16),
+          x: clientX + (Math.random() - 0.5) * 8,
+          y: clientY + (Math.random() - 0.5) * 8,
+          vx: Math.cos(perp) * drift - Math.cos(angle) * (0.08 * speed),
+          vy: Math.sin(perp) * drift - Math.sin(angle) * (0.08 * speed),
+          size: isStar ? 2.2 + Math.random() * 2.0 : 0.8 + Math.random() * 1.2,
+          maxLife: 36 + Math.floor(Math.random() * 20),
+          life: 36 + Math.floor(Math.random() * 20),
           colorType: chosenType,
-          opacity: 0.65 + Math.random() * 0.25,
+          opacity: 0.75 + Math.random() * 0.25,
+          isStar,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.12,
+          sparklePhase: Math.random() * Math.PI * 2,
         });
 
-        if (wakeParticlesRef.current.length > 28) {
+        if (wakeParticlesRef.current.length > 36) {
           wakeParticlesRef.current.shift();
         }
 
@@ -1501,13 +1513,14 @@ export function useLivingNeuralBackground(
         const breathFactor0 = 1.0 + Math.sin(n1.breathingPhase) * 0.14 + Math.cos(n1.breathingPhase * 0.7) * 0.06;
         const nodeAlpha0 = Math.min(0.95, Math.max(0.08, n1.currentOpacity * breathFactor0 * nodeBoost0));
 
-        // Faint distant bokeh halo
-        const bokehGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, n1.size * 5 * (1 + (nodeBoost0 - 1) * 0.25));
-        bokehGrad.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha0 * (isDarkRef.current ? 0.25 : 0.14)).toFixed(3)})`);
+        // Faint distant bokeh halo (normalized, delicate)
+        const bokehRadius = n1.size * 2.2 * (1 + (nodeBoost0 - 1) * 0.25);
+        const bokehGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, bokehRadius);
+        bokehGrad.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha0 * (isDarkRef.current ? 0.32 : 0.18)).toFixed(3)})`);
         bokehGrad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = bokehGrad;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * 5 * (1 + (nodeBoost0 - 1) * 0.25), 0, Math.PI * 2);
+        ctx.arc(x1, y1, bokehRadius, 0, Math.PI * 2);
         ctx.fill();
 
         // Node dot
@@ -1641,20 +1654,41 @@ export function useLivingNeuralBackground(
           }
         }
 
-        // Draw midground node
-        const glowRadius = n1.size * 3.4 * (1 + (nodeBoost1 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.35 : 0));
-        const glow = ctx.createRadialGradient(x1, y1, 0, x1, y1, glowRadius);
-        glow.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.46 : 0.26)).toFixed(3)})`);
-        glow.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = glow;
+        // Draw midground node (normalized, delicate)
+        const isHovered1 = n1.interactionZone >= 2 || (nodeBoost1 > 1.25);
+        const glowRadius1 = n1.size * 2.4 * (1 + (nodeBoost1 - 1) * 0.25 + (isHovered1 ? 0.4 : 0));
+        const glow1 = ctx.createRadialGradient(x1, y1, 0, x1, y1, glowRadius1);
+        glow1.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.48 : 0.28)).toFixed(3)})`);
+        glow1.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = glow1;
         ctx.beginPath();
-        ctx.arc(x1, y1, glowRadius, 0, Math.PI * 2);
+        ctx.arc(x1, y1, glowRadius1, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = `rgba(${palette.cyan}, ${nodeAlpha1.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost1 - 1) * 0.15), 0, Math.PI * 2);
+        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost1 - 1) * 0.12), 0, Math.PI * 2);
         ctx.fill();
+
+        // Magical hover starlight glint & ring on midground nodes
+        if (isHovered1) {
+          ctx.strokeStyle = `rgba(${palette.cyan}, ${(nodeAlpha1 * 0.6).toFixed(3)})`;
+          ctx.lineWidth = 0.75;
+          ctx.beginPath();
+          ctx.arc(x1, y1, n1.size * 2.2, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // 4-point sparkle cross
+          const sparkSize = n1.size * 1.8;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha1 * 0.75).toFixed(3)})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(x1 - sparkSize, y1);
+          ctx.lineTo(x1 + sparkSize, y1);
+          ctx.moveTo(x1, y1 - sparkSize);
+          ctx.lineTo(x1, y1 + sparkSize);
+          ctx.stroke();
+        }
       }
 
       // ─── 4. RENDER LAYER 2 (FOREGROUND FLAGSHIP NODES & ACTIVE MESH, 6-14px PARALLAX) ───
@@ -1743,9 +1777,10 @@ export function useLivingNeuralBackground(
           }
         }
 
-        // Luminous flagship node halo & core
-        const pulse = 1.0 + Math.sin(n1.phase * 2) * 0.22;
-        const fgGlowRadius = n1.size * 5.0 * pulse * (1 + (nodeBoost2 - 1) * 0.35 + (n1.interactionZone >= 2 ? 0.45 : 0));
+        // Luminous flagship node halo & core (normalized, sleek)
+        const isHovered2 = n1.interactionZone >= 2 || (nodeBoost2 > 1.3);
+        const pulse = 1.0 + Math.sin(n1.phase * 2) * 0.18;
+        const fgGlowRadius = n1.size * 2.6 * pulse * (1 + (nodeBoost2 - 1) * 0.25 + (isHovered2 ? 0.45 : 0));
         const fgGlow = ctx.createRadialGradient(x1, y1, 0, x1, y1, fgGlowRadius);
         fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha2 * (isDarkRef.current ? 0.58 : 0.32)).toFixed(3)})`);
         fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${(nodeAlpha2 * (isDarkRef.current ? 0.24 : 0.14)).toFixed(3)})`);
@@ -1758,14 +1793,35 @@ export function useLivingNeuralBackground(
         // Node center
         ctx.fillStyle = `rgba(${palette.indigo}, ${nodeAlpha2.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost2 - 1) * 0.18 + (n1.interactionZone >= 2 ? 0.2 : 0)), 0, Math.PI * 2);
+        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost2 - 1) * 0.14 + (isHovered2 ? 0.2 : 0)), 0, Math.PI * 2);
         ctx.fill();
 
         // High-contrast pinpoint center
         ctx.fillStyle = isDarkRef.current ? '#ffffff' : '#4338ca';
         ctx.beginPath();
-        ctx.arc(x1, y1, Math.max(0.8, n1.size * 0.4 * (1 + (nodeBoost2 - 1) * 0.15)), 0, Math.PI * 2);
+        ctx.arc(x1, y1, Math.max(0.6, n1.size * 0.35 * (1 + (nodeBoost2 - 1) * 0.12)), 0, Math.PI * 2);
         ctx.fill();
+
+        // Magical celestial hover aura & sparkling star glint
+        if (isHovered2) {
+          // Concentric starlight halo ring
+          ctx.strokeStyle = `rgba(${palette.amber}, ${(nodeAlpha2 * 0.65).toFixed(3)})`;
+          ctx.lineWidth = 0.85;
+          ctx.beginPath();
+          ctx.arc(x1, y1, n1.size * 2.8, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Delicate 4-point starlight glint
+          const sparkSize = n1.size * 2.2;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha2 * 0.85).toFixed(3)})`;
+          ctx.lineWidth = 0.9;
+          ctx.beginPath();
+          ctx.moveTo(x1 - sparkSize, y1);
+          ctx.lineTo(x1 + sparkSize, y1);
+          ctx.moveTo(x1, y1 - sparkSize);
+          ctx.lineTo(x1, y1 + sparkSize);
+          ctx.stroke();
+        }
       }
 
       // ─── 4.2. RENDER ACTIVE CONSTELLATION LOCK VISUALS ───
@@ -1852,17 +1908,17 @@ export function useLivingNeuralBackground(
       ctx.setLineDash([]);
       ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.8).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(trNode1X, trNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.arc(trNode1X, trNode1Y, 1.4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.65).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(trNode3X, trNode3Y, 1.6, 0, Math.PI * 2);
+      ctx.arc(trNode3X, trNode3Y, 1.2, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.85).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(trNode2X, trNode2Y, 2.8, 0, Math.PI * 2);
+      ctx.arc(trNode2X, trNode2Y, 1.6, 0, Math.PI * 2);
       ctx.fill();
 
       // Telemetry labels
@@ -1900,17 +1956,17 @@ export function useLivingNeuralBackground(
       ctx.setLineDash([]);
       ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.75).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(mlNode1X, mlNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.arc(mlNode1X, mlNode1Y, 1.4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.8).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(mlNode2X, mlNode2Y, 2.4, 0, Math.PI * 2);
+      ctx.arc(mlNode2X, mlNode2Y, 1.6, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.6).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(mlNode3X, mlNode3Y, 1.8, 0, Math.PI * 2);
+      ctx.arc(mlNode3X, mlNode3Y, 1.2, 0, Math.PI * 2);
       ctx.fill();
 
       const chX = width * 0.03 + geoParallaxX;
@@ -1954,12 +2010,12 @@ export function useLivingNeuralBackground(
       ctx.setLineDash([]);
       ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.7).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(bpNode1X, bpNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.arc(bpNode1X, bpNode1Y, 1.4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.75).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(bpNode2X, bpNode2Y, 2.8, 0, Math.PI * 2);
+      ctx.arc(bpNode2X, bpNode2Y, 1.6, 0, Math.PI * 2);
       ctx.fill();
 
       const ch2X = width * 0.97 + geoParallaxX;
@@ -2206,8 +2262,66 @@ export function useLivingNeuralBackground(
         }
       }
 
-      // ─── 6. SUBTLE CURSOR DATA WAKE PARTICLES ───
-      if (motionEnabled && !prefersReducedMotion && wakeParticlesRef.current.length > 0) {
+      // ─── 6. MAGICAL CURSOR CELESTIAL FILAMENTS & STARDUST WAKE PARTICLES ───
+      if (motionEnabled && !prefersReducedMotion) {
+        // A. Magical Celestial Hover Tendrils: Connect cursor to 2-3 closest nodes with shimmering light filaments
+        if (mouse.active) {
+          const mX = mouse.screenX;
+          const mY = mouse.screenY;
+          const nearNodes: Array<{ node: NeuralNode; dist: number; scrX: number; scrY: number }> = [];
+
+          for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            const pX = mouse.currentX * 0.009 * (n.layer + 1);
+            const pY = mouse.currentY * 0.009 * (n.layer + 1);
+            const scrX = n.x + pX;
+            const scrY = n.y + pY;
+            const dx = scrX - mX;
+            const dy = scrY - mY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 155) {
+              nearNodes.push({ node: n, dist, scrX, scrY });
+            }
+          }
+
+          nearNodes.sort((a, b) => a.dist - b.dist);
+          const topNear = nearNodes.slice(0, 3);
+
+          for (let k = 0; k < topNear.length; k++) {
+            const item = topNear[k];
+            const filamentFactor = Math.pow(1 - item.dist / 155, 1.25);
+            const filAlpha = filamentFactor * (isDarkRef.current ? 0.42 : 0.26);
+
+            // Shimmering filament gradient
+            const filGrad = ctx.createLinearGradient(mX, mY, item.scrX, item.scrY);
+            filGrad.addColorStop(0, `rgba(${palette.amber}, ${filAlpha.toFixed(3)})`);
+            filGrad.addColorStop(0.5, `rgba(${palette.cyan}, ${(filAlpha * 0.85).toFixed(3)})`);
+            filGrad.addColorStop(1, `rgba(${palette.indigo}, ${(filAlpha * 0.45).toFixed(3)})`);
+
+            ctx.strokeStyle = filGrad;
+            ctx.lineWidth = 0.9 * filamentFactor + 0.3;
+            ctx.setLineDash([4, 6]);
+            ctx.beginPath();
+            ctx.moveTo(mX, mY);
+            ctx.lineTo(item.scrX, item.scrY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Flowing stardust bead along the celestial filament
+            const beadProgress = ( (nowTime * 0.0012 + k * 0.33) % 1.0 );
+            const beadX = mX + (item.scrX - mX) * beadProgress;
+            const beadY = mY + (item.scrY - mY) * beadProgress;
+            const beadAlpha = Math.sin(beadProgress * Math.PI) * filamentFactor * (isDarkRef.current ? 0.75 : 0.55);
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${beadAlpha.toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(beadX, beadY, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // B. Magical Stardust & Twinkling Sparkle Particles
         const wakes = wakeParticlesRef.current;
 
         for (let i = 0; i < wakes.length - 1; i++) {
@@ -2240,29 +2354,70 @@ export function useLivingNeuralBackground(
           p.vy *= 0.93;
           p.life--;
 
+          if (p.rotation !== undefined && p.rotSpeed !== undefined) {
+            p.rotation += p.rotSpeed;
+          }
+
           const progress = Math.max(0, p.life / p.maxLife);
-          const fade = Math.pow(progress, 1.5);
+          const fade = Math.pow(progress, 1.4);
           const color = p.colorType === 'amber' ? palette.amber : p.colorType === 'cyan' ? palette.cyan : palette.indigo;
 
-          const glowRadius = p.size * (2.6 + (1 - progress) * 1.4);
-          const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
-          glow.addColorStop(0, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.42 : 0.25) * p.opacity).toFixed(3)})`);
-          glow.addColorStop(0.55, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.16 : 0.08) * p.opacity).toFixed(3)})`);
-          glow.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
-          ctx.fill();
+          if (p.isStar) {
+            // Render Magical 4-Point Twinkling Sparkle Star
+            const twinkle = Math.sin((p.sparklePhase || 0) + (1 - progress) * 8) * 0.35 + 0.65;
+            const starRadius = p.size * progress * twinkle;
+            const rot = p.rotation || 0;
+            const innerR = starRadius * 0.22;
 
-          ctx.fillStyle = `rgba(${color}, ${(fade * (isDarkRef.current ? 0.85 : 0.65) * p.opacity).toFixed(3)})`;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(0.6, p.size * 0.75 * progress), 0, Math.PI * 2);
-          ctx.fill();
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(rot);
 
-          ctx.fillStyle = `rgba(255, 255, 255, ${(fade * (isDarkRef.current ? 0.90 : 0.75) * p.opacity).toFixed(3)})`;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(0.4, p.size * 0.35 * progress), 0, Math.PI * 2);
-          ctx.fill();
+            // Soft star glow halo
+            const sGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, starRadius * 2.2);
+            sGlow.addColorStop(0, `rgba(${color}, ${(fade * 0.4 * p.opacity).toFixed(3)})`);
+            sGlow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = sGlow;
+            ctx.beginPath();
+            ctx.arc(0, 0, starRadius * 2.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 4-point star shape
+            ctx.fillStyle = `rgba(255, 255, 255, ${(fade * 0.95 * p.opacity).toFixed(3)})`;
+            ctx.beginPath();
+            for (let s = 0; s < 4; s++) {
+              const a1 = (s * Math.PI) / 2;
+              const a2 = a1 + Math.PI / 4;
+              if (s === 0) ctx.moveTo(Math.cos(a1) * starRadius, Math.sin(a1) * starRadius);
+              else ctx.lineTo(Math.cos(a1) * starRadius, Math.sin(a1) * starRadius);
+              ctx.lineTo(Math.cos(a2) * innerR, Math.sin(a2) * innerR);
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.restore();
+          } else {
+            // Render Delicate Glowing Stardust Mote
+            const glowRadius = p.size * (2.2 + (1 - progress) * 1.2);
+            const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
+            glow.addColorStop(0, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.38 : 0.22) * p.opacity).toFixed(3)})`);
+            glow.addColorStop(0.55, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.14 : 0.07) * p.opacity).toFixed(3)})`);
+            glow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = `rgba(${color}, ${(fade * (isDarkRef.current ? 0.85 : 0.65) * p.opacity).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, Math.max(0.5, p.size * 0.7 * progress), 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${(fade * (isDarkRef.current ? 0.92 : 0.78) * p.opacity).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, Math.max(0.3, p.size * 0.3 * progress), 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
 
         wakeParticlesRef.current = wakes.filter(p => p.life > 0);
