@@ -113,6 +113,7 @@ export const GlobalBackground: React.FC = React.memo(() => {
         {/* Top-Right Orbital Arcs (Periphery) */}
         <g className="opacity-75 dark:opacity-85">
           <ellipse
+            className="neural-orbit neural-orbit-slow"
             cx="92%"
             cy="8%"
             rx="420"
@@ -124,6 +125,7 @@ export const GlobalBackground: React.FC = React.memo(() => {
             transform="rotate(-15, 1200, 100)"
           />
           <ellipse
+            className="neural-orbit"
             cx="92%"
             cy="8%"
             rx="640"
@@ -155,6 +157,7 @@ export const GlobalBackground: React.FC = React.memo(() => {
         {/* Mid-Left Vector Coordinate Marks & Subtle Orbit */}
         <g className="opacity-60 dark:opacity-75">
           <ellipse
+            className="neural-orbit neural-orbit-slow"
             cx="6%"
             cy="48%"
             rx="520"
@@ -204,6 +207,7 @@ export const GlobalBackground: React.FC = React.memo(() => {
         {/* Bottom Peripheral Geometry (Spacious & Clean) */}
         <g className="opacity-50 dark:opacity-60">
           <ellipse
+            className="neural-orbit"
             cx="88%"
             cy="88%"
             rx="480"

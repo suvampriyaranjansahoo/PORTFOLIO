@@ -801,6 +801,17 @@ input[type="range"] {
   stroke: var(--page-bg);
   stroke-width: 2px;
   stroke-linejoin: round;
+  animation: telemetry-breathe 5.5s ease-in-out infinite;
+}
+
+.neural-orbit {
+  animation: orbital-sweep 15s linear infinite;
+  transform-origin: center;
+}
+
+.neural-orbit-slow {
+  animation-duration: 24s;
+  animation-direction: reverse;
 }
 
 @keyframes constellation-drift {
@@ -813,9 +824,20 @@ input[type="range"] {
   48% { opacity: 0.95; transform: scale(1.25); }
 }
 
+@keyframes orbital-sweep {
+  to { stroke-dashoffset: -180; }
+}
+
+@keyframes telemetry-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #global-page-background svg,
-  .data-node { animation: none; }
+  .data-node,
+  .data-label,
+  .neural-orbit { animation: none; }
 }
 
 /* All existing controls get tactile depth while their handlers and labels remain unchanged. */
@@ -831,6 +853,33 @@ button:not(:disabled):active, [role="button"]:active { transform: translateY(1px
 .btn-primary:hover { background: linear-gradient(135deg, #3730a3, #4f46e5 56%, #b97816); box-shadow: 0 15px 32px rgba(79,70,229,.30), 0 0 0 4px rgba(99,102,241,.10), inset 0 1px 0 rgba(255,255,255,.36); transform: translateY(-3px); }
 .dark .btn-primary { background: linear-gradient(135deg, #f0a928, #d98b18 58%, #a66a12); border-color: rgba(251,191,36,.58); }
 .dark .btn-primary:hover { background: linear-gradient(135deg, #f8c24e, #e49a1d 58%, #b86b0b); box-shadow: 0 16px 34px rgba(217,139,24,.32), 0 0 0 4px rgba(217,139,24,.10), inset 0 1px 0 rgba(255,255,255,.38); }
+
+/* Continuous but understated activity: flagship cards carry a slow ambient
+   glow and primary actions retain a living gradient even before hover. */
+.card-level-1 {
+  animation: flagship-breathe 8s ease-in-out infinite;
+}
+
+.btn-primary {
+  background-size: 180% 180%;
+  animation: accent-flow 7s ease-in-out infinite;
+}
+
+@keyframes flagship-breathe {
+  0%, 100% {
+    border-color: var(--border-default);
+    box-shadow: var(--shadow-lg);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--accent-secondary) 35%, var(--border-default));
+    box-shadow: var(--shadow-lg), 0 0 34px rgba(99, 102, 241, 0.14);
+  }
+}
+
+@keyframes accent-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
 .btn-secondary, .btn-accent-subtle, .tab-btn, .filter-chip, .tech-pill, .status-indicator-active {
   backdrop-filter: blur(12px) saturate(130%);
@@ -908,4 +957,7 @@ main > section {
   .card-level-2::after {
     display: none !important;
   }
+
+  .card-level-1,
+  .btn-primary { animation: none; }
 }
