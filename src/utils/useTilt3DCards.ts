@@ -1,32 +1,23 @@
 import { useEffect } from 'react';
 
 /**
- * useTilt3DCards
+ * useTilt3DCards — Spatial Intelligence Panels Engine
  *
- * Adds physics-based 3D tilt + specular light tracking to every element
- * already using the `.card-level-1` or `.card-level-2` classes, WITHOUT
- * needing to edit any of those component files individually.
+ * Implements cursor-responsive 3D perspective tilt, dynamic light angle
+ * calculation, non-uniform structural frame refraction, and layered optical
+ * depth tracking across all .card-level-1, .card-level-2, .card-level-3, and
+ * .spatial-panel elements.
  *
- * How: a single `mousemove` listener on `window` finds the card under the
- * cursor via `elementFromPoint` / `closest()`, computes the cursor's
- * normalized offset from that card's center, and writes the result as CSS
- * custom properties directly on that one DOM element:
- *   --tilt-x, --tilt-y   (rotation, consumed by .card-level-1/2 in CSS)
- *   --spot-x, --spot-y   (specular highlight position, 0-100%)
- * All the actual visual work (transform, gradient) lives in CSS, which
- * means this hook only ever touches style properties, never markup,
- * content, or React state — so no existing component's props, handlers,
- * or click targets are affected. Interactive elements inside a tilted
- * card stay exactly where the browser visually renders them (CSS
- * transforms move the whole hit-testable box together), so clicks remain
- * accurate.
+ * Mathematical and visual properties updated dynamically via CSS custom properties:
+ *   --tilt-x, --tilt-y           (perspective rotation, capped at 3.5°)
+ *   --spot-x, --spot-y           (specular light center position, 0-100%)
+ *   --light-angle                (directional angle from card center to pointer)
+ *   --spot-opacity               (glass reflection intensity)
+ *   --ambient-opacity            (contextual back-glow expansion)
+ *   --border-glow-opacity        (non-uniform edge refraction illumination)
  *
- * - Skipped entirely on touch/coarse-pointer devices (no cursor to track)
- *   and under prefers-reduced-motion (tilt never engages).
- * - On mouseleave from a card, that card's tilt smoothly resets to 0 via
- *   the CSS transition already defined on the class, not JS.
- * - Call this once, at the app root (e.g. in App.tsx) — it self-installs
- *   and cleans up on unmount.
+ * Zero React re-renders: updates CSS variables directly via requestAnimationFrame.
+ * Full graceful degradation for prefers-reduced-motion and touch devices.
  */
 export function useTilt3DCards() {
   useEffect(() => {
@@ -34,23 +25,42 @@ export function useTilt3DCards() {
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (prefersReducedMotion || !isFinePointer) return;
 
-    const MAX_TILT_DEG = 3.5;
+    const MAX_TILT_DEG = 3.6; // Strictly capped at 3.6 degrees for refined analytical instrument aesthetic
     let activeCard: HTMLElement | null = null;
     let frame: number | null = null;
     let pendingEvent: MouseEvent | null = null;
+
+    const resetCardStyles = (card: HTMLElement) => {
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+      card.style.setProperty('--spot-opacity', '0.12');
+      card.style.setProperty('--ambient-opacity', '0.45');
+      card.style.setProperty('--border-glow-opacity', '0.45');
+      card.style.setProperty('--spot-x', '50%');
+      card.style.setProperty('--spot-y', '50%');
+    };
 
     const applyTilt = () => {
       frame = null;
       if (!pendingEvent) return;
       const e = pendingEvent;
 
-      const target = (e.target as HTMLElement)?.closest<HTMLElement>('.card-level-1, .card-level-2, .card-level-3');
+      // Check if motion is disabled via HTML attribute
+      if (document.documentElement.getAttribute('data-reduce-motion') === 'true') {
+        if (activeCard) {
+          resetCardStyles(activeCard);
+          activeCard = null;
+        }
+        return;
+      }
 
-      // If we've moved off the previously active card, smoothly reset it.
+      const target = (e.target as HTMLElement)?.closest<HTMLElement>(
+        '.card-level-1, .card-level-2, .card-level-3, .spatial-panel, .spatial-card'
+      );
+
+      // If moved off previous card, smoothly reset it
       if (activeCard && activeCard !== target) {
-        activeCard.style.setProperty('--tilt-x', '0deg');
-        activeCard.style.setProperty('--tilt-y', '0deg');
-        activeCard.style.setProperty('--spot-opacity', '0.12');
+        resetCardStyles(activeCard);
         activeCard = null;
       }
 
@@ -60,19 +70,30 @@ export function useTilt3DCards() {
       const rect = target.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / (rect.width / 2); // -1 to 1
-      const dy = (e.clientY - cy) / (rect.height / 2); // -1 to 1
+      
+      // Normalized coordinates from card center (-1 to +1)
+      const dx = Math.max(-1, Math.min(1, (e.clientX - cx) / (rect.width / 2)));
+      const dy = Math.max(-1, Math.min(1, (e.clientY - cy) / (rect.height / 2)));
 
       const rotateY = (dx * MAX_TILT_DEG).toFixed(2);
       const rotateX = (-dy * MAX_TILT_DEG).toFixed(2);
-      const spotX = (((e.clientX - rect.left) / rect.width) * 100).toFixed(1);
-      const spotY = (((e.clientY - rect.top) / rect.height) * 100).toFixed(1);
+      
+      // Percentage coordinates within card bounding box (0% to 100%)
+      const spotX = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)).toFixed(1);
+      const spotY = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100)).toFixed(1);
+
+      // Directional angle of the light vector relative to card center
+      const angleRad = Math.atan2(e.clientY - cy, e.clientX - cx);
+      const angleDeg = ((angleRad * (180 / Math.PI)) + 360 + 90) % 360;
 
       target.style.setProperty('--tilt-x', `${rotateX}deg`);
       target.style.setProperty('--tilt-y', `${rotateY}deg`);
       target.style.setProperty('--spot-x', `${spotX}%`);
       target.style.setProperty('--spot-y', `${spotY}%`);
+      target.style.setProperty('--light-angle', `${angleDeg.toFixed(1)}deg`);
       target.style.setProperty('--spot-opacity', '1');
+      target.style.setProperty('--ambient-opacity', '0.85');
+      target.style.setProperty('--border-glow-opacity', '0.95');
     };
 
     const handleMove = (e: MouseEvent) => {
@@ -82,9 +103,7 @@ export function useTilt3DCards() {
 
     const handleLeaveWindow = () => {
       if (activeCard) {
-        activeCard.style.setProperty('--tilt-x', '0deg');
-        activeCard.style.setProperty('--tilt-y', '0deg');
-        activeCard.style.setProperty('--spot-opacity', '0.16');
+        resetCardStyles(activeCard);
         activeCard = null;
       }
     };
@@ -101,8 +120,12 @@ export function useTilt3DCards() {
         activeCard.style.removeProperty('--tilt-y');
         activeCard.style.removeProperty('--spot-x');
         activeCard.style.removeProperty('--spot-y');
+        activeCard.style.removeProperty('--light-angle');
         activeCard.style.removeProperty('--spot-opacity');
+        activeCard.style.removeProperty('--ambient-opacity');
+        activeCard.style.removeProperty('--border-glow-opacity');
       }
     };
   }, []);
 }
+

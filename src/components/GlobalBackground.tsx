@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingNeuralBackground';
+import { NeuralSettings } from '../types';
 
 /**
  * GlobalBackground Component
@@ -16,11 +17,37 @@ import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingN
 export interface GlobalBackgroundProps {
   motionEnabled?: boolean;
   nodeDensity?: number;
+  connectionDensity?: number;
+  pulseFrequency?: number;
+  particleSpeed?: number;
+  sensitivity?: number;
+  visibility?: number;
+  interactionStrength?: number;
+  settings?: Partial<NeuralSettings>;
+  systemPrefersReducedMotion?: boolean;
 }
 
-export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({ motionEnabled = true, nodeDensity = 1.0 }) => {
+export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({ 
+  motionEnabled = true, 
+  nodeDensity = 1.0,
+  connectionDensity: propConnectionDensity,
+  pulseFrequency: propPulseFrequency,
+  particleSpeed: propParticleSpeed,
+  sensitivity: propSensitivity,
+  visibility: propVisibility,
+  interactionStrength: propInteractionStrength,
+  settings,
+  systemPrefersReducedMotion
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const effectiveConnectionDensity = propConnectionDensity ?? settings?.connectionDensity ?? 1.0;
+  const effectivePulseFrequency = propPulseFrequency ?? settings?.pulseFrequency ?? 1.0;
+  const effectiveParticleSpeed = propParticleSpeed ?? settings?.particleSpeed ?? 1.0;
+  const effectiveSensitivity = propSensitivity ?? settings?.sensitivity ?? 1.4;
+  const effectiveVisibility = propVisibility ?? settings?.visibility ?? 1.2;
+  const effectiveInteractionStrength = propInteractionStrength ?? settings?.interactionStrength ?? 1.2;
 
   // Store cursor's clientX and clientY in a ref for global tracking without unnecessary re-renders
   const mouseCoordsRef = useRef<MouseCoordinates>({
@@ -86,7 +113,20 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({ m
     };
   }, []);
 
-  useLivingNeuralBackground(canvasRef, containerRef, mouseCoordsRef, motionEnabled, nodeDensity);
+  useLivingNeuralBackground(
+    canvasRef, 
+    containerRef, 
+    mouseCoordsRef, 
+    motionEnabled, 
+    nodeDensity,
+    effectiveConnectionDensity,
+    effectivePulseFrequency,
+    effectiveParticleSpeed,
+    systemPrefersReducedMotion,
+    effectiveSensitivity,
+    effectiveVisibility,
+    effectiveInteractionStrength
+  );
 
   return (
     <div

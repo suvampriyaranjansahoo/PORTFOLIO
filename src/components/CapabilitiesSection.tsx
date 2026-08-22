@@ -78,7 +78,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
   ];
 
   return (
-    <section className="section-ambient-container ambient-theme-indigo py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
+    <section id="capabilities" className="section-ambient-container ambient-theme-indigo py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
       {/* Thematic Ambient Light Shift (Deep Indigo & Analytical Cobalt Glow) */}
       <SectionAmbientAtmosphere />
 

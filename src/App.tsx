@@ -25,7 +25,7 @@ import { SectionAmbientAtmosphere } from './components/SectionAmbientAtmosphere'
 import { useTilt3DCards } from './utils/useTilt3DCards';
 import { useButtonSparkles } from './utils/useButtonSparkles';
 import { useViewportHeadingReveal } from './utils/useViewportHeadingReveal';
-import { ProjectCategory, ResumeRole } from './types';
+import { ProjectCategory, ResumeRole, NeuralSettings } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
 import { PERSONAL_INFO } from './data/portfolioData';
 import { Language } from './data/translations';
@@ -87,6 +87,81 @@ export default function App() {
     setNodeDensity(clamped);
     if (typeof window !== 'undefined') {
       localStorage.setItem('neural-node-density', clamped.toString());
+    }
+  };
+
+  // Dedicated Neural Network Tuning Settings (Connection Density, Pulse Frequency, Particle Speed, Sensitivity, Visibility, Interaction Strength)
+  const [neuralSettings, setNeuralSettings] = useState<NeuralSettings>(() => {
+    if (typeof window !== 'undefined') {
+      const savedConn = localStorage.getItem('neural-connection-density');
+      const savedPulse = localStorage.getItem('neural-pulse-frequency');
+      const savedSpeed = localStorage.getItem('neural-particle-speed');
+      const savedSens = localStorage.getItem('neural-sensitivity');
+      const savedVis = localStorage.getItem('neural-visibility');
+      const savedInteract = localStorage.getItem('neural-interaction-strength');
+      return {
+        connectionDensity: savedConn ? Math.max(0.4, Math.min(2.0, parseFloat(savedConn) || 1.0)) : 1.0,
+        pulseFrequency: savedPulse ? Math.max(0.3, Math.min(2.5, parseFloat(savedPulse) || 1.0)) : 1.0,
+        particleSpeed: savedSpeed ? Math.max(0.3, Math.min(2.5, parseFloat(savedSpeed) || 1.0)) : 1.0,
+        sensitivity: savedSens ? Math.max(0.6, Math.min(2.4, parseFloat(savedSens) || 1.4)) : 1.4,
+        visibility: savedVis ? Math.max(0.6, Math.min(2.2, parseFloat(savedVis) || 1.2)) : 1.2,
+        interactionStrength: savedInteract ? Math.max(0.5, Math.min(2.0, parseFloat(savedInteract) || 1.2)) : 1.2,
+      };
+    }
+    return {
+      connectionDensity: 1.0,
+      pulseFrequency: 1.0,
+      particleSpeed: 1.0,
+      sensitivity: 1.4,
+      visibility: 1.2,
+      interactionStrength: 1.2,
+    };
+  });
+
+  const handleUpdateNeuralSettings = (updates: Partial<NeuralSettings>) => {
+    setNeuralSettings(prev => {
+      const next = { ...prev, ...updates };
+      if (typeof window !== 'undefined') {
+        if (updates.connectionDensity !== undefined) {
+          localStorage.setItem('neural-connection-density', updates.connectionDensity.toString());
+        }
+        if (updates.pulseFrequency !== undefined) {
+          localStorage.setItem('neural-pulse-frequency', updates.pulseFrequency.toString());
+        }
+        if (updates.particleSpeed !== undefined) {
+          localStorage.setItem('neural-particle-speed', updates.particleSpeed.toString());
+        }
+        if (updates.sensitivity !== undefined) {
+          localStorage.setItem('neural-sensitivity', updates.sensitivity.toString());
+        }
+        if (updates.visibility !== undefined) {
+          localStorage.setItem('neural-visibility', updates.visibility.toString());
+        }
+        if (updates.interactionStrength !== undefined) {
+          localStorage.setItem('neural-interaction-strength', updates.interactionStrength.toString());
+        }
+      }
+      return next;
+    });
+  };
+
+  const handleResetNeuralSettings = () => {
+    const defaults: NeuralSettings = {
+      connectionDensity: 1.0,
+      pulseFrequency: 1.0,
+      particleSpeed: 1.0,
+      sensitivity: 1.4,
+      visibility: 1.2,
+      interactionStrength: 1.2,
+    };
+    setNeuralSettings(defaults);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('neural-connection-density', '1.0');
+      localStorage.setItem('neural-pulse-frequency', '1.0');
+      localStorage.setItem('neural-particle-speed', '1.0');
+      localStorage.setItem('neural-sensitivity', '1.4');
+      localStorage.setItem('neural-visibility', '1.2');
+      localStorage.setItem('neural-interaction-strength', '1.2');
     }
   };
 
@@ -202,7 +277,12 @@ export default function App() {
   return (
     <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-500 ease-out" style={{ color: 'var(--text-primary)' }}>
       {/* Global Analytical Atmosphere Background System */}
-      <GlobalBackground motionEnabled={motionEnabled} nodeDensity={nodeDensity} />
+      <GlobalBackground 
+        motionEnabled={motionEnabled} 
+        nodeDensity={nodeDensity}
+        settings={neuralSettings}
+        systemPrefersReducedMotion={systemPrefersReducedMotion}
+      />
 
       <div id="top" />
 
@@ -332,6 +412,11 @@ export default function App() {
         onSelectResume={handleDownloadResume}
         onOpenCaseStudy={(id) => setCaseStudyId(id)}
         onOpenRecruiter={() => setRecruiterModalOpen(true)}
+        neuralSettings={neuralSettings}
+        onUpdateNeuralSettings={handleUpdateNeuralSettings}
+        onResetNeuralSettings={handleResetNeuralSettings}
+        motionEnabled={motionEnabled}
+        onToggleMotion={handleToggleMotion}
       />
 
       {/* Toast Notification Pill */}

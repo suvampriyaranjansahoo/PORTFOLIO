@@ -46,7 +46,7 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
   ];
 
   return (
-    <section className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+    <section id="thinking" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
       {/* Thematic Ambient Light Shift (Warm Golden Amber & Epistemic Bronze Glow) */}
       <SectionAmbientAtmosphere />
 
