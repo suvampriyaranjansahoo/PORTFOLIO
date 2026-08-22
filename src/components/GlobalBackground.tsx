@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useDataNetwork } from '../utils/useDataNetwork';
+import { useDeepSpaceParticles } from '../utils/useDeepSpaceParticles';
 
 /**
  * GlobalBackground Component
@@ -14,7 +14,7 @@ import { useDataNetwork } from '../utils/useDataNetwork';
  */
 export const GlobalBackground: React.FC = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  useDataNetwork(canvasRef);
+  useDeepSpaceParticles(canvasRef);
 
   return (
     <div
@@ -225,13 +225,13 @@ export const GlobalBackground: React.FC = React.memo(() => {
         </g>
       </svg>
 
-      {/* ─── SIGNATURE INTERACTION: live data network ───
-          Canvas layer: drifting nodes connect when close, with pulses
-          traveling along connections. Activity rises with scroll velocity
-          and decays back to a low ambient baseline. See useDataNetwork.
-          Placed above the solid/gradient/grid layers (which would
-          otherwise paint over it) but below the vignette so it still
-          fades out toward the page edges. */}
+      {/* ─── SIGNATURE INTERACTION: deep-space particle mesh ───
+          Three-layer canvas field (background bokeh, midground
+          constellation, foreground fast nodes) with mouse gravity/
+          repulsion physics on the foreground layer. See
+          useDeepSpaceParticles. Placed above the solid/gradient/grid
+          layers (which would otherwise paint over it) but below the
+          vignette so it still fades out toward the page edges. */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }} />
 
       {/* ─── 4. ULTRA-SUBTLE VIGNETTE FOR CLEAN DEPTH ─── */}
