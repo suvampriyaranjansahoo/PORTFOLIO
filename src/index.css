@@ -92,13 +92,14 @@
     --border-accent: rgba(217, 139, 24, 0.35);
 
     /* Accents & States */
-    --accent-primary: #d98b18;
-    --accent-primary-hover: #ebb03a;
-    --accent-primary-subtle: rgba(217, 139, 24, 0.12);
-    --accent-secondary: #6366f1;
-    --accent-secondary-subtle: rgba(99, 102, 241, 0.12);
-    --accent-data: #06b6d4;
-    --accent-data-subtle: rgba(6, 182, 212, 0.12);
+     /* Accents & States — dark-luxury deep-space palette */
+    --accent-primary: #38bdf8;
+    --accent-primary-hover: #67cff9;
+    --accent-primary-subtle: rgba(56, 189, 248, 0.12);
+    --accent-secondary: #8b5cf6;
+    --accent-secondary-subtle: rgba(139, 92, 246, 0.14);
+    --accent-data: #f59e0b;
+    --accent-data-subtle: rgba(245, 158, 11, 0.12);
     --accent-success: #10b981;
     --accent-success-subtle: rgba(16, 185, 129, 0.12);
 
@@ -106,18 +107,18 @@
     --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     --shadow-elevated: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
     --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.35);
-    --glass-blur: 16px;
-    --glow-accent: 0 0 28px -2px rgba(217, 139, 24, 0.22);
+    --glass-blur: 20px;
+    --glow-accent: 0 0 32px -2px rgba(56, 189, 248, 0.28);
     --grid-opacity: 0.025;
-    --page-bg: #070a12;
-    --page-bg-secondary: #0c1020;
-    --surface: rgba(15, 21, 38, 0.70);
-    --surface-elevated: rgba(18, 25, 45, 0.86);
-    --surface-glass: rgba(13, 18, 34, 0.72);
-    --border-default: rgba(176, 190, 255, 0.16);
+    --page-bg: #070a13;
+    --page-bg-secondary: #0a0f1e;
+    --surface: rgba(10, 15, 30, 0.70);
+    --surface-elevated: rgba(14, 20, 40, 0.86);
+    --surface-glass: rgba(10, 15, 30, 0.72);
+    --border-default: rgba(139, 92, 246, 0.22);
     --shadow-sm: 0 3px 10px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(255,255,255,.10);
     --shadow-md: 0 16px 36px rgba(0, 0, 0, .40), 0 1px 0 rgba(255,255,255,.06) inset;
-    --shadow-lg: 0 30px 80px rgba(0, 0, 0, .58), 0 0 50px rgba(79,70,229,.10), inset 0 1px 0 rgba(255,255,255,.12);
+    --shadow-lg: 0 30px 80px rgba(0, 0, 0, .58), 0 0 50px rgba(139,92,246,.14), inset 0 1px 0 rgba(255,255,255,.12);
     --glow-primary: 0 18px 56px rgba(99, 102, 241, .25);
     --glow-secondary: 0 18px 56px rgba(217, 139, 24, .18);
     
