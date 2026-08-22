@@ -146,6 +146,10 @@ export const GlobalBackground: React.FC = React.memo(() => {
             strokeDasharray="2 4"
             className="opacity-40"
           />
+          <g className="data-label text-slate-500/45 dark:text-indigo-300/55">
+            <text x="73%" y="10%">DIM_768</text>
+            <text x="88%" y="27%">LAT: 12ms</text>
+          </g>
         </g>
 
         {/* Mid-Left Vector Coordinate Marks & Subtle Orbit */}
@@ -191,6 +195,10 @@ export const GlobalBackground: React.FC = React.memo(() => {
             <line x1="2%" y1="36%" x2="4%" y2="36%" stroke="currentColor" strokeWidth="1" />
             <line x1="3%" y1="35%" x2="3%" y2="37%" stroke="currentColor" strokeWidth="1" />
           </g>
+          <g className="data-label text-slate-500/40 dark:text-indigo-300/50">
+            <text x="5%" y="39%">NODE_04</text>
+            <text x="12%" y="64%">SYNC: OK</text>
+          </g>
         </g>
 
         {/* Bottom Peripheral Geometry (Spacious & Clean) */}
@@ -221,6 +229,9 @@ export const GlobalBackground: React.FC = React.memo(() => {
           <g className="text-slate-400/30 dark:text-indigo-400/25">
             <line x1="96%" y1="78%" x2="98%" y2="78%" stroke="currentColor" strokeWidth="1" />
             <line x1="97%" y1="77%" x2="97%" y2="79%" stroke="currentColor" strokeWidth="1" />
+          </g>
+          <g className="data-label text-slate-500/40 dark:text-cyan-200/45">
+            <text x="84%" y="80%">VECTOR / 03</text>
           </g>
         </g>
       </svg>
