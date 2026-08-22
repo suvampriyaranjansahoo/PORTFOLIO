@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDeepSpaceParticles } from '../utils/useDeepSpaceParticles';
 
 /**
  * GlobalBackground Component
@@ -12,6 +13,9 @@ import React from 'react';
  * Entirely decoupled from content to guarantee zero text, layout, or interaction changes.
  */
 export const GlobalBackground: React.FC = React.memo(() => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useDeepSpaceParticles(canvasRef);
+
   return (
     <div
       id="global-page-background"
@@ -221,11 +225,21 @@ export const GlobalBackground: React.FC = React.memo(() => {
         </g>
       </svg>
 
+      {/* ─── SIGNATURE INTERACTION: deep-space particle mesh ───
+          Three-layer canvas field (background bokeh, midground
+          constellation, foreground fast nodes) with mouse gravity/
+          repulsion physics on the foreground layer. See
+          useDeepSpaceParticles. Placed above the solid/gradient/grid
+          layers (which would otherwise paint over it) but below the
+          vignette so it still fades out toward the page edges. */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }} />
+
       {/* ─── 4. ULTRA-SUBTLE VIGNETTE FOR CLEAN DEPTH ─── */}
       <div
         className="absolute inset-0 opacity-40 dark:opacity-70 pointer-events-none"
         style={{
           background: 'radial-gradient(circle 80% 80% at 50% 50%, transparent 60%, rgba(10, 14, 22, 0.4) 100%)',
+          zIndex: 2,
         }}
       />
     </div>

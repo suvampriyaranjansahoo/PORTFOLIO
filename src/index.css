@@ -91,14 +91,14 @@
     --border-hover: #333d52;
     --border-accent: rgba(217, 139, 24, 0.35);
 
-    /* Accents & States */
-    --accent-primary: #d98b18;
-    --accent-primary-hover: #ebb03a;
-    --accent-primary-subtle: rgba(217, 139, 24, 0.12);
-    --accent-secondary: #6366f1;
-    --accent-secondary-subtle: rgba(99, 102, 241, 0.12);
-    --accent-data: #06b6d4;
-    --accent-data-subtle: rgba(6, 182, 212, 0.12);
+    /* Accents & States — dark-luxury deep-space palette */
+    --accent-primary: #38bdf8;
+    --accent-primary-hover: #67cff9;
+    --accent-primary-subtle: rgba(56, 189, 248, 0.12);
+    --accent-secondary: #8b5cf6;
+    --accent-secondary-subtle: rgba(139, 92, 246, 0.14);
+    --accent-data: #f59e0b;
+    --accent-data-subtle: rgba(245, 158, 11, 0.12);
     --accent-success: #10b981;
     --accent-success-subtle: rgba(16, 185, 129, 0.12);
 
@@ -106,21 +106,21 @@
     --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     --shadow-elevated: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
     --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.35);
-    --glass-blur: 16px;
-    --glow-accent: 0 0 28px -2px rgba(217, 139, 24, 0.22);
+    --glass-blur: 20px;
+    --glow-accent: 0 0 32px -2px rgba(56, 189, 248, 0.28);
     --grid-opacity: 0.025;
-    --page-bg: #070a12;
-    --page-bg-secondary: #0c1020;
-    --surface: rgba(15, 21, 38, 0.70);
-    --surface-elevated: rgba(18, 25, 45, 0.86);
-    --surface-glass: rgba(13, 18, 34, 0.72);
-    --border-default: rgba(176, 190, 255, 0.16);
+    --page-bg: #070a13;
+    --page-bg-secondary: #0a0f1e;
+    --surface: rgba(10, 15, 30, 0.70);
+    --surface-elevated: rgba(14, 20, 40, 0.86);
+    --surface-glass: rgba(10, 15, 30, 0.72);
+    --border-default: rgba(139, 92, 246, 0.22);
     --shadow-sm: 0 3px 10px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(255,255,255,.10);
     --shadow-md: 0 16px 36px rgba(0, 0, 0, .40), 0 1px 0 rgba(255,255,255,.06) inset;
-    --shadow-lg: 0 30px 80px rgba(0, 0, 0, .58), 0 0 50px rgba(79,70,229,.10), inset 0 1px 0 rgba(255,255,255,.12);
+    --shadow-lg: 0 30px 80px rgba(0, 0, 0, .58), 0 0 50px rgba(139,92,246,.14), inset 0 1px 0 rgba(255,255,255,.12);
     --glow-primary: 0 18px 56px rgba(99, 102, 241, .25);
     --glow-secondary: 0 18px 56px rgba(217, 139, 24, .18);
-    
+
     color-scheme: dark;
   }
 
@@ -658,8 +658,63 @@ input[type="range"] {
   isolation: isolate;
   background: linear-gradient(135deg, var(--surface-elevated), var(--surface-glass));
   border-color: var(--border-default);
-  backdrop-filter: blur(var(--blur-glass)) saturate(135%);
-  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(135%);
+  backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+}
+
+/* ─── 3D tilt (Level 1/2 only) ───
+   --tilt-x/--tilt-y are written by useTilt3DCards on mousemove; default to
+   0deg so cards sit flat until the cursor engages them. perspective lives
+   on the card itself so translateZ on inner content (if used) has
+   somewhere to project into. backface-visibility + isolated will-change
+   keep text crisp instead of rasterizing under the blur. */
+.card-level-1,
+.card-level-2 {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --spot-x: 50%;
+  --spot-y: 50%;
+  --spot-opacity: 0;
+  perspective: 1200px;
+  transform: translateZ(0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: transform 0.25s var(--ease-premium, cubic-bezier(.16,1,.3,1)),
+              box-shadow 0.25s var(--ease-premium, cubic-bezier(.16,1,.3,1)),
+              border-color 0.25s var(--ease-premium, cubic-bezier(.16,1,.3,1));
+}
+
+/* Specular light sheen that follows --spot-x/--spot-y. Sits above the
+   glass surface, below actual content (z-index scoped to this stacking
+   context via `isolation: isolate` on the card itself). */
+.card-level-1::after,
+.card-level-2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: var(--spot-opacity, 0);
+  transition: opacity 0.3s var(--ease-premium, cubic-bezier(.16,1,.3,1));
+  background: radial-gradient(
+    420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(56, 189, 248, 0.16),
+    rgba(139, 92, 246, 0.08) 45%,
+    transparent 70%
+  );
+}
+
+.dark .card-level-1::after,
+.dark .card-level-2::after {
+  background: radial-gradient(
+    460px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(56, 189, 248, 0.22),
+    rgba(139, 92, 246, 0.12) 45%,
+    transparent 72%
+  );
 }
 
 .card-level-1 { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
@@ -694,7 +749,7 @@ input[type="range"] {
 @media (hover: hover) {
   .card-level-1:hover,
   .card-level-2:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) translateZ(0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
     border-color: var(--border-hover);
   }
   .card-level-1:hover { box-shadow: var(--shadow-lg), var(--glow-primary); }
@@ -763,8 +818,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--accent-secondary
   .card-hover:hover {
     transform: none !important;
   }
-}
 
+<<<<<<< HEAD
 /* ─── AMBIENT DATA-UNIVERSE FINISH ───
    Presentation-only refinements layered over the existing component system.
    These rules deliberately do not affect sizing, visibility, focus behavior,
@@ -813,3 +868,10 @@ main > section {
   }
 }
 
+=======
+  .card-level-1::after,
+  .card-level-2::after {
+    display: none !important;
+  }
+}
+>>>>>>> 2583f7dc4c7d46105f5857100dde1239549ec909
