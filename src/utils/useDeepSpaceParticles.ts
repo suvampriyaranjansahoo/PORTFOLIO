@@ -84,6 +84,9 @@ export function useDeepSpaceParticles(canvasRef: RefObject<HTMLCanvasElement | n
 
     const seed = () => {
       const particles: Particle[] = [];
+      // Preserve the layered effect on smaller viewports while lowering the
+      // connection workload so the visual layer stays responsive on mobile.
+      const density = width < 640 ? 0.52 : width < 1024 ? 0.76 : 1;
       const make = (count: number, layer: 0 | 1 | 2, sizeRange: [number, number]) => {
         for (let i = 0; i < count; i++) {
           const x = Math.random() * width;
@@ -100,9 +103,9 @@ export function useDeepSpaceParticles(canvasRef: RefObject<HTMLCanvasElement | n
           });
         }
       };
-      make(BG_COUNT, 0, [3.5, 6]);
-      make(MID_COUNT, 1, [1.4, 2.2]);
-      make(FG_COUNT, 2, [1, 1.8]);
+      make(Math.round(BG_COUNT * density), 0, [3.5, 6]);
+      make(Math.round(MID_COUNT * density), 1, [1.4, 2.2]);
+      make(Math.round(FG_COUNT * density), 2, [1, 1.8]);
       particlesRef.current = particles;
     };
 

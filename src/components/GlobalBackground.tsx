@@ -29,21 +29,21 @@ export const GlobalBackground: React.FC = React.memo(() => {
       <div className="absolute inset-0 opacity-100 dark:opacity-0 transition-opacity duration-700">
         {/* Soft cool-slate / indigo radiance at top-right */}
         <div
-          className="absolute -top-[10%] -right-[10%] w-[900px] h-[900px] rounded-full blur-[140px]"
+          className="ambient-light ambient-light-indigo absolute -top-[10%] -right-[10%] w-[900px] h-[900px] rounded-full blur-[140px]"
           style={{
             background: 'radial-gradient(circle, rgba(79, 70, 229, 0.22) 0%, rgba(199, 210, 254, 0.20) 36%, transparent 70%)',
           }}
         />
         {/* Restrained warm amber highlight at mid-left */}
         <div
-          className="absolute top-[35%] -left-[15%] w-[800px] h-[800px] rounded-full blur-[160px]"
+          className="ambient-light ambient-light-amber absolute top-[35%] -left-[15%] w-[800px] h-[800px] rounded-full blur-[160px]"
           style={{
             background: 'radial-gradient(circle, rgba(217, 139, 24, 0.17) 0%, rgba(254, 243, 199, 0.25) 48%, transparent 72%)',
           }}
         />
         {/* Soft geometric slate atmosphere at bottom */}
         <div
-          className="absolute bottom-[5%] right-[10%] w-[850px] h-[850px] rounded-full blur-[150px]"
+          className="ambient-light ambient-light-cyan absolute bottom-[5%] right-[10%] w-[850px] h-[850px] rounded-full blur-[150px]"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(224, 231, 255, 0.24) 50%, transparent 72%)',
           }}
@@ -54,21 +54,21 @@ export const GlobalBackground: React.FC = React.memo(() => {
       <div className="absolute inset-0 opacity-0 dark:opacity-100 transition-opacity duration-700">
         {/* Deep primary indigo nebula at top-right */}
         <div
-          className="absolute -top-[12%] -right-[12%] w-[1000px] h-[1000px] rounded-full blur-[160px]"
+          className="ambient-light ambient-light-indigo absolute -top-[12%] -right-[12%] w-[1000px] h-[1000px] rounded-full blur-[160px]"
           style={{
             background: 'radial-gradient(circle, rgba(99, 102, 241, 0.36) 0%, rgba(49, 46, 129, 0.18) 44%, transparent 72%)',
           }}
         />
         {/* Extremely restrained warm amber ambient glow mid-left */}
         <div
-          className="absolute top-[38%] -left-[12%] w-[850px] h-[850px] rounded-full blur-[180px]"
+          className="ambient-light ambient-light-amber absolute top-[38%] -left-[12%] w-[850px] h-[850px] rounded-full blur-[180px]"
           style={{
             background: 'radial-gradient(circle, rgba(217, 139, 24, 0.18) 0%, rgba(180, 83, 9, 0.09) 42%, transparent 70%)',
           }}
         />
         {/* Deep cyan/slate data field at lower right */}
         <div
-          className="absolute bottom-[8%] right-[5%] w-[950px] h-[950px] rounded-full blur-[170px]"
+          className="ambient-light ambient-light-cyan absolute bottom-[8%] right-[5%] w-[950px] h-[950px] rounded-full blur-[170px]"
           style={{
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.16) 0%, rgba(67, 56, 202, 0.12) 45%, transparent 72%)',
           }}

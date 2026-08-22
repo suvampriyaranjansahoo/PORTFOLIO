@@ -50,7 +50,7 @@ export function useTilt3DCards() {
       if (activeCard && activeCard !== target) {
         activeCard.style.setProperty('--tilt-x', '0deg');
         activeCard.style.setProperty('--tilt-y', '0deg');
-        activeCard.style.setProperty('--spot-opacity', '0');
+        activeCard.style.setProperty('--spot-opacity', '0.16');
         activeCard = null;
       }
 
@@ -84,7 +84,7 @@ export function useTilt3DCards() {
       if (activeCard) {
         activeCard.style.setProperty('--tilt-x', '0deg');
         activeCard.style.setProperty('--tilt-y', '0deg');
-        activeCard.style.setProperty('--spot-opacity', '0');
+        activeCard.style.setProperty('--spot-opacity', '0.16');
         activeCard = null;
       }
     };
