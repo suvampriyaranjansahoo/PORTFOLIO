@@ -113,7 +113,40 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#f6f7f9]/90 dark:bg-[#0e1116]/90 backdrop-blur-md border-b border-[#dfe3e9] dark:border-[#262c36] transition-colors duration-200">
+    <header className="sticky top-0 z-50 bg-[#f8fafc]/75 dark:bg-[#0a0e18]/75 backdrop-blur-xl sm:backdrop-blur-2xl backdrop-saturate-150 border-b border-slate-200/80 dark:border-white/[0.08] shadow-[0_1px_3px_0_rgba(15,23,42,0.03)] dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.6)] transition-colors duration-300 overflow-hidden">
+      {/* Dynamic Specular Shimmer & Light Reflection Tracking Scroll */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        {/* Soft Ambient Light Gradient Sweep */}
+        <div 
+          className="absolute -top-[120%] -bottom-[120%] w-[380px] sm:w-[560px] bg-gradient-to-r from-transparent via-white/20 dark:via-white/[0.07] to-transparent transform -skew-x-25 transition-transform duration-100 ease-out filter blur-[1px]"
+          style={{
+            transform: `translateX(calc(${scrollProgress * 9.5}px - 140px)) skewX(-24deg)`,
+            opacity: scrollProgress > 2 ? 0.85 : 0.35
+          }}
+        />
+        
+        {/* Glass Prismatic Edge Accent (Reflecting Header Surface) */}
+        <div 
+          className="absolute top-0 bottom-0 w-[240px] bg-gradient-to-r from-transparent via-[#a66a12]/15 dark:via-amber-400/12 to-transparent filter blur-md transition-transform duration-100 ease-out"
+          style={{
+            transform: `translateX(calc(${scrollProgress * 11}px - 80px))`
+          }}
+        />
+
+        {/* Subtle Top Specular Inset Rim */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/80 dark:via-white/20 to-transparent" />
+
+        {/* Dynamic Bottom Border Shimmering Reflection */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500/40 dark:via-amber-400/50 to-transparent transition-all duration-100 ease-out"
+          style={{
+            transform: `translateX(calc(${scrollProgress * 1.5 - 50}%))`,
+            width: '180%',
+            opacity: scrollProgress > 0 ? 0.75 : 0.25
+          }}
+        />
+      </div>
+
       {/* Slim Fixed Progress Bar at the top of the header */}
       <div 
         id="scroll-progress-container"
@@ -130,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
         />
       </div>
 
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6 h-[68px] flex items-center justify-between gap-4">
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6 h-[68px] flex items-center justify-between gap-4">
         {/* Brand */}
         <a 
           href="#top" 

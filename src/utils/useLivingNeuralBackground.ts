@@ -26,6 +26,18 @@ export interface DataSignal {
   size: number;
 }
 
+export interface WakeParticle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  maxLife: number;
+  life: number;
+  colorType: 'indigo' | 'cyan' | 'amber';
+  opacity: number;
+}
+
 export interface MouseCoordinates {
   clientX: number;
   clientY: number;
@@ -61,11 +73,17 @@ export interface SectionAtmosphere {
 export function useLivingNeuralBackground(
   canvasRef: RefObject<HTMLCanvasElement | null>,
   containerRef?: RefObject<HTMLElement | null>,
-  mouseCoordsRef?: RefObject<MouseCoordinates>
+  mouseCoordsRef?: RefObject<MouseCoordinates>,
+  motionEnabled: boolean = true,
+  nodeDensityMultiplier: number = 1.0
 ) {
   const rafRef = useRef<number | null>(null);
   const nodesRef = useRef<NeuralNode[]>([]);
   const signalsRef = useRef<DataSignal[]>([]);
+  const wakeParticlesRef = useRef<WakeParticle[]>([]);
+  const lastWakeSpawnRef = useRef<{ x: number; y: number; time: number }>({ x: -9999, y: -9999, time: 0 });
+  const totalPacketsProcessedRef = useRef(142);
+  const lastThroughputEmitRef = useRef(0);
   const mouseRef = useRef({
     targetX: 0,
     targetY: 0,
@@ -76,6 +94,7 @@ export function useLivingNeuralBackground(
     active: false,
   });
   const scrollRef = useRef({ progress: 0, targetProgress: 0, activeSection: 'hero' });
+  const sectionHoverRef = useRef({ isOverSection: false, targetBoost: 1.0, currentBoost: 1.0 });
   const isDarkRef = useRef(false);
 
   useEffect(() => {
@@ -105,11 +124,11 @@ export function useLivingNeuralBackground(
     const seedNodes = () => {
       const isMobile = width < 640;
       const isTablet = width < 1024;
-      const density = isMobile ? 0.6 : isTablet ? 0.85 : 1.0;
+      const density = (isMobile ? 0.6 : isTablet ? 0.85 : 1.0) * nodeDensityMultiplier;
 
-      const DISTANT_COUNT = Math.round(26 * density);
-      const MID_COUNT = Math.round(42 * density);
-      const FOREGROUND_COUNT = Math.round(24 * density);
+      const DISTANT_COUNT = Math.max(6, Math.round(26 * density));
+      const MID_COUNT = Math.max(10, Math.round(42 * density));
+      const FOREGROUND_COUNT = Math.max(6, Math.round(24 * density));
 
       const nodes: NeuralNode[] = [];
 
@@ -233,6 +252,45 @@ export function useLivingNeuralBackground(
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
+    // Data Wake spawner (subtle particles following cursor motion)
+    const spawnWake = (clientX: number, clientY: number) => {
+      if (!motionEnabled || prefersReducedMotion) return;
+      const now = performance.now();
+      const last = lastWakeSpawnRef.current;
+      const dx = clientX - last.x;
+      const dy = clientY - last.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      // Only spawn when cursor moves by at least 10px and at reasonable cadence
+      if (dist >= 10 && (now - last.time > 24)) {
+        const types: Array<'indigo' | 'cyan' | 'amber'> = ['indigo', 'cyan', 'indigo', 'amber'];
+        const chosenType = types[Math.floor(Math.random() * types.length)];
+        const angle = Math.atan2(dy, dx);
+        const perp = angle + (Math.random() > 0.5 ? Math.PI / 2 : -Math.PI / 2);
+        const drift = 0.12 + Math.random() * 0.28;
+        const speed = Math.min(dist * 0.025, 0.8);
+
+        wakeParticlesRef.current.push({
+          x: clientX,
+          y: clientY,
+          vx: Math.cos(perp) * drift - Math.cos(angle) * (0.10 * speed),
+          vy: Math.sin(perp) * drift - Math.sin(angle) * (0.10 * speed),
+          size: 1.1 + Math.random() * 1.3,
+          maxLife: 32 + Math.floor(Math.random() * 16), // ~0.55s to 0.8s lifespan
+          life: 32 + Math.floor(Math.random() * 16),
+          colorType: chosenType,
+          opacity: 0.65 + Math.random() * 0.25,
+        });
+
+        // Cap buffer to keep performance ultra-lightweight
+        if (wakeParticlesRef.current.length > 28) {
+          wakeParticlesRef.current.shift();
+        }
+
+        lastWakeSpawnRef.current = { x: clientX, y: clientY, time: now };
+      }
+    };
+
     // Global Pointer events for smooth multi-depth parallax
     const handleGlobalPointerMove = (e: MouseEvent | PointerEvent) => {
       const centerX = width / 2;
@@ -242,12 +300,26 @@ export function useLivingNeuralBackground(
       mouseRef.current.screenX = e.clientX;
       mouseRef.current.screenY = e.clientY;
       mouseRef.current.active = true;
+
+      // Detect if cursor is positioned over a specific section container or card
+      try {
+        const target = document.elementFromPoint(e.clientX, e.clientY);
+        const isOver = !!target?.closest('section, .section-ambient-container, .card-level-1, .card-level-2, .card-level-3, [data-section]');
+        sectionHoverRef.current.isOverSection = isOver;
+        sectionHoverRef.current.targetBoost = isOver ? 1.32 : 1.0;
+      } catch {
+        // Fallback for isolated pointer calls
+      }
+
+      spawnWake(e.clientX, e.clientY);
     };
 
     const handlePointerLeave = () => {
       mouseRef.current.targetX = 0;
       mouseRef.current.targetY = 0;
       mouseRef.current.active = false;
+      sectionHoverRef.current.isOverSection = false;
+      sectionHoverRef.current.targetBoost = 1.0;
     };
 
     if (isFinePointer && !prefersReducedMotion) {
@@ -337,6 +409,26 @@ export function useLivingNeuralBackground(
       mouse.currentY += (mouse.targetY - mouse.currentY) * 0.055;
       scroll.progress += (scroll.targetProgress - scroll.progress) * 0.08;
 
+      // Section hover smooth interpolation for localized feedback
+      const secHover = sectionHoverRef.current;
+      secHover.currentBoost += (secHover.targetBoost - secHover.currentBoost) * 0.08;
+      const sectionBoost = secHover.currentBoost;
+
+      // Localized feedback helper: dynamically increases connectivity intensity near cursor and active section containers
+      const getLocalBoost = (x: number, y: number) => {
+        if (!mouse.active || prefersReducedMotion) {
+          return sectionBoost;
+        }
+        const dx = x - mouse.screenX;
+        const dy = y - mouse.screenY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 320) {
+          return sectionBoost;
+        }
+        const proximity = Math.pow(1 - dist / 320, 1.25);
+        return sectionBoost * (1.0 + proximity * 0.42);
+      };
+
       // Pass coordinates to container CSS custom properties for SVG & atmospheric layer parallax
       if (containerRef?.current && !prefersReducedMotion) {
         containerRef.current.style.setProperty('--bg-mouse-x', `${mouse.currentX.toFixed(2)}px`);
@@ -409,18 +501,19 @@ export function useLivingNeuralBackground(
         const n1 = distantNodes[i];
         const x1 = n1.x + parallax0X;
         const y1 = n1.y + parallax0Y;
+        const nodeBoost0 = getLocalBoost(x1, y1);
 
         // Faint distant bokeh halo
-        const bokehGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, n1.size * 5);
-        bokehGrad.addColorStop(0, `rgba(${palette.indigo}, ${isDarkRef.current ? 0.14 : 0.07})`);
+        const bokehGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, n1.size * 5 * (1 + (nodeBoost0 - 1) * 0.25));
+        bokehGrad.addColorStop(0, `rgba(${palette.indigo}, ${Math.min(0.4, (isDarkRef.current ? 0.14 : 0.07) * nodeBoost0)})`);
         bokehGrad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = bokehGrad;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * 5, 0, Math.PI * 2);
+        ctx.arc(x1, y1, n1.size * 5 * (1 + (nodeBoost0 - 1) * 0.25), 0, Math.PI * 2);
         ctx.fill();
 
         // Node dot
-        ctx.fillStyle = `rgba(${palette.indigo}, ${isDarkRef.current ? 0.38 : 0.22})`;
+        ctx.fillStyle = `rgba(${palette.indigo}, ${Math.min(0.8, (isDarkRef.current ? 0.38 : 0.22) * nodeBoost0)})`;
         ctx.beginPath();
         ctx.arc(x1, y1, n1.size, 0, Math.PI * 2);
         ctx.fill();
@@ -432,12 +525,13 @@ export function useLivingNeuralBackground(
           const dx = x1 - x2;
           const dy = y1 - y2;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = CONNECT_DISTANCES[0];
+          const localBoost = getLocalBoost((x1 + x2) * 0.5, (y1 + y2) * 0.5);
+          const maxDist = CONNECT_DISTANCES[0] * (1.0 + (localBoost - 1.0) * 0.3);
 
           if (dist < maxDist) {
-            const alpha = Math.pow(1 - dist / maxDist, 1.6) * palette.lineAlpha * 0.5;
+            const alpha = Math.min(0.75, Math.pow(1 - dist / maxDist, 1.6) * palette.lineAlpha * 0.5 * localBoost);
             ctx.strokeStyle = `rgba(${palette.indigo}, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 0.75;
+            ctx.lineWidth = 0.75 + (localBoost - 1.0) * 0.35;
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -456,6 +550,7 @@ export function useLivingNeuralBackground(
         const idx1 = nodes.indexOf(n1);
         const x1 = n1.x + parallax1X;
         const y1 = n1.y + parallax1Y;
+        const nodeBoost1 = getLocalBoost(x1, y1);
 
         for (let j = i + 1; j < midNodes.length; j++) {
           const n2 = midNodes[j];
@@ -465,12 +560,13 @@ export function useLivingNeuralBackground(
           const dx = x1 - x2;
           const dy = y1 - y2;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = CONNECT_DISTANCES[1];
+          const localBoost = getLocalBoost((x1 + x2) * 0.5, (y1 + y2) * 0.5);
+          const maxDist = CONNECT_DISTANCES[1] * (1.0 + (localBoost - 1.0) * 0.32);
 
           if (dist < maxDist) {
-            const alpha = Math.pow(1 - dist / maxDist, 1.4) * palette.lineAlpha * 0.9;
+            const alpha = Math.min(0.9, Math.pow(1 - dist / maxDist, 1.4) * palette.lineAlpha * 0.9 * localBoost);
             ctx.strokeStyle = `rgba(${palette.cyan}, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 1.0;
+            ctx.lineWidth = 1.0 + (localBoost - 1.0) * 0.45;
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -481,17 +577,18 @@ export function useLivingNeuralBackground(
         }
 
         // Draw midground node
-        const glow = ctx.createRadialGradient(x1, y1, 0, x1, y1, n1.size * 3.0);
-        glow.addColorStop(0, `rgba(${palette.cyan}, ${isDarkRef.current ? 0.32 : 0.16})`);
+        const glowRadius = n1.size * 3.0 * (1 + (nodeBoost1 - 1) * 0.35);
+        const glow = ctx.createRadialGradient(x1, y1, 0, x1, y1, glowRadius);
+        glow.addColorStop(0, `rgba(${palette.cyan}, ${Math.min(0.65, (isDarkRef.current ? 0.32 : 0.16) * nodeBoost1)})`);
         glow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * 3.0, 0, Math.PI * 2);
+        ctx.arc(x1, y1, glowRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = `rgba(${palette.cyan}, ${isDarkRef.current ? 0.80 : 0.60})`;
+        ctx.fillStyle = `rgba(${palette.cyan}, ${Math.min(1.0, (isDarkRef.current ? 0.80 : 0.60) * nodeBoost1)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size, 0, Math.PI * 2);
+        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost1 - 1) * 0.15), 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -505,6 +602,7 @@ export function useLivingNeuralBackground(
         const idx1 = nodes.indexOf(n1);
         const x1 = n1.x + parallax2X;
         const y1 = n1.y + parallax2Y;
+        const nodeBoost2 = getLocalBoost(x1, y1);
 
         for (let j = i + 1; j < fgNodes.length; j++) {
           const n2 = fgNodes[j];
@@ -514,10 +612,11 @@ export function useLivingNeuralBackground(
           const dx = x1 - x2;
           const dy = y1 - y2;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = CONNECT_DISTANCES[2];
+          const localBoost = getLocalBoost((x1 + x2) * 0.5, (y1 + y2) * 0.5);
+          const maxDist = CONNECT_DISTANCES[2] * (1.0 + (localBoost - 1.0) * 0.35);
 
           if (dist < maxDist) {
-            const alpha = Math.pow(1 - dist / maxDist, 1.2) * palette.lineAlpha * 1.4;
+            const alpha = Math.min(1.0, Math.pow(1 - dist / maxDist, 1.2) * palette.lineAlpha * 1.4 * localBoost);
             
             // Dual-tone gradient stroke between foreground nodes
             const grad = ctx.createLinearGradient(x1, y1, x2, y2);
@@ -525,7 +624,7 @@ export function useLivingNeuralBackground(
             grad.addColorStop(1, `rgba(${palette.amber}, ${(alpha * 0.85).toFixed(3)})`);
             
             ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.5;
+            ctx.lineWidth = 1.5 + (localBoost - 1.0) * 0.6;
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -537,33 +636,219 @@ export function useLivingNeuralBackground(
 
         // Luminous flagship node halo & core
         const pulse = 1.0 + Math.sin(n1.phase * 2) * 0.25;
-        const fgGlow = ctx.createRadialGradient(x1, y1, 0, x1, y1, n1.size * 4.5 * pulse);
-        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${isDarkRef.current ? 0.48 : 0.25})`);
-        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${isDarkRef.current ? 0.18 : 0.09})`);
+        const fgGlowRadius = n1.size * 4.5 * pulse * (1 + (nodeBoost2 - 1) * 0.35);
+        const fgGlow = ctx.createRadialGradient(x1, y1, 0, x1, y1, fgGlowRadius);
+        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${Math.min(0.85, (isDarkRef.current ? 0.48 : 0.25) * nodeBoost2)})`);
+        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${Math.min(0.5, (isDarkRef.current ? 0.18 : 0.09) * nodeBoost2)})`);
         fgGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = fgGlow;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * 4.5 * pulse, 0, Math.PI * 2);
+        ctx.arc(x1, y1, fgGlowRadius, 0, Math.PI * 2);
         ctx.fill();
 
         // Node center
-        ctx.fillStyle = `rgba(${palette.indigo}, ${isDarkRef.current ? 0.95 : 0.85})`;
+        ctx.fillStyle = `rgba(${palette.indigo}, ${Math.min(1.0, (isDarkRef.current ? 0.95 : 0.85) * nodeBoost2)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size, 0, Math.PI * 2);
+        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost2 - 1) * 0.18), 0, Math.PI * 2);
         ctx.fill();
 
         // High-contrast pinpoint center
         ctx.fillStyle = isDarkRef.current ? '#ffffff' : '#4338ca';
         ctx.beginPath();
-        ctx.arc(x1, y1, Math.max(0.8, n1.size * 0.4), 0, Math.PI * 2);
+        ctx.arc(x1, y1, Math.max(0.8, n1.size * 0.4 * (1 + (nodeBoost2 - 1) * 0.15)), 0, Math.PI * 2);
         ctx.fill();
       }
 
+      // ─── 4.5. ANALYTICAL ORBITAL GEOMETRY & TELEMETRY (CANVAS-ACCELERATED) ───
+      // Seamlessly render orbital trajectories, geodesics, crosshairs, and telemetry on the single canvas
+      const geoParallaxX = mouse.currentX * 0.012;
+      const geoParallaxY = mouse.currentY * 0.012;
+      const geoAlpha = isDarkRef.current ? 0.35 : 0.22;
+
+      ctx.save();
+      // Top-Right Orbital Geometries
+      const trX = width * 0.92 + geoParallaxX;
+      const trY = height * 0.08 + geoParallaxY;
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.55).toFixed(3)})`;
+      ctx.lineWidth = 1.0;
+      ctx.setLineDash([4, 8]);
+      ctx.beginPath();
+      ctx.ellipse(trX, trY, 460, 260, -15 * Math.PI / 180, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.35).toFixed(3)})`;
+      ctx.lineWidth = 0.85;
+      ctx.beginPath();
+      ctx.ellipse(trX, trY, 680, 380, -15 * Math.PI / 180, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Top-right data nodes & dashed connection
+      const trNode1X = width * 0.82 + geoParallaxX;
+      const trNode1Y = height * 0.14 + geoParallaxY;
+      const trNode2X = width * 0.94 + geoParallaxX;
+      const trNode2Y = height * 0.22 + geoParallaxY;
+      const trNode3X = width * 0.75 + geoParallaxX;
+      const trNode3Y = height * 0.06 + geoParallaxY;
+
+      ctx.setLineDash([3, 4]);
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.45).toFixed(3)})`;
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(trNode1X, trNode1Y);
+      ctx.lineTo(trNode2X, trNode2Y);
+      ctx.stroke();
+
+      // Nodes on top right
+      ctx.setLineDash([]);
+      ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.8).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(trNode1X, trNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.65).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(trNode3X, trNode3Y, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.85).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(trNode2X, trNode2Y, 2.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Telemetry labels
+      ctx.font = '600 8.5px ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace';
+      ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.75).toFixed(3)})`;
+      ctx.fillText('DIM_768', width * 0.73 + geoParallaxX, height * 0.10 + geoParallaxY);
+      ctx.fillText('LAT: 12ms', width * 0.88 + geoParallaxX, height * 0.27 + geoParallaxY);
+
+      // Mid-Left Orbital Geometry & Crosshairs
+      const mlX = width * 0.06 + geoParallaxX;
+      const mlY = height * 0.48 + geoParallaxY;
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.50).toFixed(3)})`;
+      ctx.lineWidth = 1.0;
+      ctx.setLineDash([6, 10]);
+      ctx.beginPath();
+      ctx.ellipse(mlX, mlY, 540, 320, 22 * Math.PI / 180, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Mid-left dashed connections
+      const mlNode1X = width * 0.08 + geoParallaxX;
+      const mlNode1Y = height * 0.42 + geoParallaxY;
+      const mlNode2X = width * 0.14 + geoParallaxX;
+      const mlNode2Y = height * 0.54 + geoParallaxY;
+      const mlNode3X = width * 0.04 + geoParallaxX;
+      const mlNode3Y = height * 0.60 + geoParallaxY;
+
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.40).toFixed(3)})`;
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(mlNode1X, mlNode1Y);
+      ctx.lineTo(mlNode2X, mlNode2Y);
+      ctx.lineTo(mlNode3X, mlNode3Y);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+      ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.75).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(mlNode1X, mlNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.8).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(mlNode2X, mlNode2Y, 2.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.6).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(mlNode3X, mlNode3Y, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Mid-left precision crosshairs
+      const chX = width * 0.03 + geoParallaxX;
+      const chY = height * 0.36 + geoParallaxY;
+      ctx.strokeStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.55).toFixed(3)})`;
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      ctx.moveTo(chX - 6, chY);
+      ctx.lineTo(chX + 6, chY);
+      ctx.moveTo(chX, chY - 6);
+      ctx.lineTo(chX, chY + 6);
+      ctx.stroke();
+
+      ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.7).toFixed(3)})`;
+      ctx.fillText('NODE_04', width * 0.05 + geoParallaxX, height * 0.39 + geoParallaxY);
+      ctx.fillText('SYNC: OK', width * 0.12 + geoParallaxX, height * 0.64 + geoParallaxY);
+
+      // Bottom Peripheral Geometry
+      const bpX = width * 0.88 + geoParallaxX;
+      const bpY = height * 0.88 + geoParallaxY;
+      ctx.strokeStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.45).toFixed(3)})`;
+      ctx.lineWidth = 0.85;
+      ctx.setLineDash([8, 12]);
+      ctx.beginPath();
+      ctx.ellipse(bpX, bpY, 500, 280, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const bpNode1X = width * 0.80 + geoParallaxX;
+      const bpNode1Y = height * 0.84 + geoParallaxY;
+      const bpNode2X = width * 0.91 + geoParallaxX;
+      const bpNode2Y = height * 0.92 + geoParallaxY;
+
+      ctx.setLineDash([2, 4]);
+      ctx.strokeStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.4).toFixed(3)})`;
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(bpNode1X, bpNode1Y);
+      ctx.lineTo(bpNode2X, bpNode2Y);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+      ctx.fillStyle = `rgba(${palette.indigo}, ${(geoAlpha * 0.7).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(bpNode1X, bpNode1Y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${palette.amber}, ${(geoAlpha * 0.75).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(bpNode2X, bpNode2Y, 2.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      const ch2X = width * 0.97 + geoParallaxX;
+      const ch2Y = height * 0.78 + geoParallaxY;
+      ctx.strokeStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.5).toFixed(3)})`;
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      ctx.moveTo(ch2X - 5, ch2Y);
+      ctx.lineTo(ch2X + 5, ch2Y);
+      ctx.moveTo(ch2X, ch2Y - 5);
+      ctx.lineTo(ch2X, ch2Y + 5);
+      ctx.stroke();
+
+      ctx.fillStyle = `rgba(${palette.cyan}, ${(geoAlpha * 0.7).toFixed(3)})`;
+      ctx.fillText('VECTOR / 03', width * 0.84 + geoParallaxX, height * 0.80 + geoParallaxY);
+
+      ctx.restore();
+
       // ─── 5. FLOWING DATA SIGNALS & LUMINOUS PULSES ───
-      if (!prefersReducedMotion) {
+      if (motionEnabled && !prefersReducedMotion) {
         maybeSpawnSignal(validConnections);
 
-        signalsRef.current = signalsRef.current.filter(sig => sig.progress < 1.0);
+        // Track completed packets
+        const remainingSignals: DataSignal[] = [];
+        let completedCount = 0;
+        for (let i = 0; i < signalsRef.current.length; i++) {
+          if (signalsRef.current[i].progress >= 1.0) {
+            completedCount++;
+          } else {
+            remainingSignals.push(signalsRef.current[i]);
+          }
+        }
+        if (completedCount > 0) {
+          totalPacketsProcessedRef.current += completedCount;
+        }
+        signalsRef.current = remainingSignals;
 
         for (let i = 0; i < signalsRef.current.length; i++) {
           const sig = signalsRef.current[i];
@@ -621,6 +906,116 @@ export function useLivingNeuralBackground(
           ctx.fill();
         }
       }
+
+      // ─── 6. SUBTLE CURSOR DATA WAKE PARTICLES ───
+      if (motionEnabled && !prefersReducedMotion && wakeParticlesRef.current.length > 0) {
+        const wakes = wakeParticlesRef.current;
+
+        // Faint neural connective filaments between consecutive wake nodes
+        for (let i = 0; i < wakes.length - 1; i++) {
+          const p1 = wakes[i];
+          const p2 = wakes[i + 1];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 46) {
+            const ratio1 = p1.life / p1.maxLife;
+            const ratio2 = p2.life / p2.maxLife;
+            const lineFade = Math.min(ratio1, ratio2) * (1 - dist / 46);
+            const lineAlpha = (lineFade * (isDarkRef.current ? 0.22 : 0.14)).toFixed(3);
+
+            ctx.strokeStyle = `rgba(${palette.indigo}, ${lineAlpha})`;
+            ctx.lineWidth = 0.85;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+
+        // Render individual wake particles with fading radial glows
+        for (let i = 0; i < wakes.length; i++) {
+          const p = wakes[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.93;
+          p.vy *= 0.93;
+          p.life--;
+
+          const progress = Math.max(0, p.life / p.maxLife);
+          const fade = Math.pow(progress, 1.5);
+          const color = p.colorType === 'amber' ? palette.amber : p.colorType === 'cyan' ? palette.cyan : palette.indigo;
+
+          // 1. Soft ambient glow halo
+          const glowRadius = p.size * (2.6 + (1 - progress) * 1.4);
+          const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
+          glow.addColorStop(0, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.42 : 0.25) * p.opacity).toFixed(3)})`);
+          glow.addColorStop(0.55, `rgba(${color}, ${(fade * (isDarkRef.current ? 0.16 : 0.08) * p.opacity).toFixed(3)})`);
+          glow.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
+          ctx.fill();
+
+          // 2. Micro neural node core
+          ctx.fillStyle = `rgba(${color}, ${(fade * (isDarkRef.current ? 0.85 : 0.65) * p.opacity).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(0.6, p.size * 0.75 * progress), 0, Math.PI * 2);
+          ctx.fill();
+
+          // 3. Bright pinpoint white center
+          ctx.fillStyle = `rgba(255, 255, 255, ${(fade * (isDarkRef.current ? 0.90 : 0.75) * p.opacity).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(0.4, p.size * 0.35 * progress), 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        wakeParticlesRef.current = wakes.filter(p => p.life > 0);
+      }
+
+      // ─── 7. DISPATCH REAL-TIME THROUGHPUT TELEMETRY ───
+      const now = performance.now();
+      if (now - lastThroughputEmitRef.current > 100) {
+        lastThroughputEmitRef.current = now;
+        if (motionEnabled && !prefersReducedMotion) {
+          const activeCount = signalsRef.current.length;
+          let speedSum = 0;
+          for (let i = 0; i < signalsRef.current.length; i++) {
+            speedSum += signalsRef.current[i].speed * 1000;
+          }
+          // Dynamic throughput synced with active signals speed and frequency
+          const baseThroughput = 18.5 * nodeDensityMultiplier;
+          const signalContribution = speedSum * 2.4 * nodeDensityMultiplier;
+          const jitter = Math.sin(now * 0.003) * 3.5;
+          const calculatedThroughput = Math.max(8.0, baseThroughput + signalContribution + jitter);
+          const networkLoad = Math.min(98, Math.round((activeCount / 7) * 70 + (nodeDensityMultiplier * 25)));
+
+          window.dispatchEvent(new CustomEvent('neural-throughput-update', {
+            detail: {
+              throughputMBps: calculatedThroughput,
+              activeSignalsCount: activeCount,
+              maxSignals: 7,
+              totalPacketsProcessed: totalPacketsProcessedRef.current,
+              networkLoadPercent: networkLoad,
+              nodeCount: nodesRef.current.length,
+              motionEnabled: true
+            }
+          }));
+        } else {
+          window.dispatchEvent(new CustomEvent('neural-throughput-update', {
+            detail: {
+              throughputMBps: 0,
+              activeSignalsCount: 0,
+              maxSignals: 7,
+              totalPacketsProcessed: totalPacketsProcessedRef.current,
+              networkLoadPercent: 0,
+              nodeCount: nodesRef.current.length,
+              motionEnabled: false
+            }
+          }));
+        }
+      }
     };
 
     const animationLoop = () => {
@@ -630,7 +1025,7 @@ export function useLivingNeuralBackground(
       rafRef.current = requestAnimationFrame(animationLoop);
     };
 
-    if (prefersReducedMotion) {
+    if (!motionEnabled || prefersReducedMotion) {
       renderFrame();
     } else {
       rafRef.current = requestAnimationFrame(animationLoop);
@@ -646,5 +1041,5 @@ export function useLivingNeuralBackground(
       document.removeEventListener('visibilitychange', handleVisibility);
       themeObserver.disconnect();
     };
-  }, [canvasRef, containerRef]);
+  }, [canvasRef, containerRef, mouseCoordsRef, motionEnabled, nodeDensityMultiplier]);
 }

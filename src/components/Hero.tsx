@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface HeroProps {
   language?: Language;
@@ -26,9 +27,9 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
   const t = TRANSLATIONS[language]?.hero || TRANSLATIONS['en'].hero;
 
   return (
-    <section className="relative pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-5 sm:px-6 overflow-hidden">
-      {/* Subtle ambient lighting accent behind Hero */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] max-w-full h-[280px] bg-amber-500/5 dark:bg-amber-400/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+    <section className="section-ambient-container ambient-theme-indigo relative pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-5 sm:px-6 overflow-hidden">
+      {/* Thematic Ambient Light Shift (Hero Deep Analytical Indigo & Warm Gold Glow) */}
+      <SectionAmbientAtmosphere />
 
       {/* Top Eyebrow & Status Chip */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -51,7 +52,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
               {t.roleHeadline}
             </p>
 
-            <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-[-0.035em] leading-[1.04] text-[#101318] dark:text-white">
+            <h1 className="hero-heading-breathe font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-[-0.035em] leading-[1.04] text-[#101318] dark:text-white">
               {PERSONAL_INFO.name}
             </h1>
           </div>

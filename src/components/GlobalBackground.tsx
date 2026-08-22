@@ -13,7 +13,12 @@ import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingN
  * - Layer 6: Floating analytical geometry (slowly rotating orbital paths, dimensional arcs, telemetry coordinate markers).
  * - Layer 7: Portfolio content (intact, non-interfering).
  */
-export const GlobalBackground: React.FC = React.memo(() => {
+export interface GlobalBackgroundProps {
+  motionEnabled?: boolean;
+  nodeDensity?: number;
+}
+
+export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({ motionEnabled = true, nodeDensity = 1.0 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +47,13 @@ export const GlobalBackground: React.FC = React.memo(() => {
         active: true,
       };
 
+      // Reflect mouse coordinates directly on document.documentElement for global native CSS var() usage across all cards
+      const root = document.documentElement;
+      root.style.setProperty('--mouse-x', `${e.clientX}px`);
+      root.style.setProperty('--mouse-y', `${e.clientY}px`);
+      root.style.setProperty('--bg-mouse-x', `${offsetX.toFixed(2)}px`);
+      root.style.setProperty('--bg-mouse-y', `${offsetY.toFixed(2)}px`);
+
       if (containerRef.current) {
         containerRef.current.style.setProperty('--cursor-x', `${e.clientX}px`);
         containerRef.current.style.setProperty('--cursor-y', `${e.clientY}px`);
@@ -54,6 +66,11 @@ export const GlobalBackground: React.FC = React.memo(() => {
       mouseCoordsRef.current.active = false;
       mouseCoordsRef.current.offsetX = 0;
       mouseCoordsRef.current.offsetY = 0;
+      
+      const root = document.documentElement;
+      root.style.setProperty('--bg-mouse-x', '0px');
+      root.style.setProperty('--bg-mouse-y', '0px');
+
       if (containerRef.current) {
         containerRef.current.style.setProperty('--bg-mouse-x', '0px');
         containerRef.current.style.setProperty('--bg-mouse-y', '0px');
@@ -69,13 +86,14 @@ export const GlobalBackground: React.FC = React.memo(() => {
     };
   }, []);
 
-  useLivingNeuralBackground(canvasRef, containerRef, mouseCoordsRef);
+  useLivingNeuralBackground(canvasRef, containerRef, mouseCoordsRef, motionEnabled, nodeDensity);
 
   return (
     <div
       ref={containerRef}
       id="global-page-background"
       aria-hidden="true"
+      data-motion-active={motionEnabled ? "true" : "false"}
       className="fixed inset-0 pointer-events-none select-none overflow-hidden z-0"
     >
       {/* ─── LAYER 1: BASE ATMOSPHERIC BASE (LIGHT & DARK) ─── */}
@@ -171,169 +189,12 @@ export const GlobalBackground: React.FC = React.memo(() => {
         }}
       />
 
-      {/* ─── LAYERS 3, 4, 5: LIVING 3D NEURAL CANVAS (DISTANT, MID, FOREGROUND & DATA SIGNALS) ─── */}
+      {/* ─── UNIFIED PERFORMANT NEURAL CANVAS (DISTANT, MID, FOREGROUND, ANALYTICAL GEOMETRY & DATA SIGNALS) ─── */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ zIndex: 1 }}
       />
-
-      {/* ─── LAYER 6: FLOATING ANALYTICAL GEOMETRY & ORBITAL PATHS ─── */}
-      <svg
-        className="absolute inset-0 w-full h-full text-slate-400/25 dark:text-indigo-400/20 pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        style={{ 
-          zIndex: 2,
-          transform: 'translate3d(calc(var(--bg-mouse-x, 0px) * 0.016), calc(var(--bg-mouse-y, 0px) * 0.016), 0)',
-          willChange: 'transform',
-        }}
-      >
-        <defs>
-          <linearGradient id="vector-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="currentColor" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="currentColor" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-          </linearGradient>
-
-          <linearGradient id="amber-accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#d98b18" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#d98b18" stopOpacity="0" />
-          </linearGradient>
-
-          <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        {/* Top-Right Orbital Arcs & Dimensional Paths */}
-        <g className="opacity-75 dark:opacity-85">
-          <ellipse
-            className="neural-orbit neural-orbit-slow"
-            cx="92%"
-            cy="8%"
-            rx="460"
-            ry="260"
-            fill="none"
-            stroke="url(#vector-grad-1)"
-            strokeWidth="1.2"
-            strokeDasharray="4 8"
-            transform="rotate(-15, 1200, 100)"
-          />
-          <ellipse
-            className="neural-orbit"
-            cx="92%"
-            cy="8%"
-            rx="680"
-            ry="380"
-            fill="none"
-            stroke="url(#vector-grad-1)"
-            strokeWidth="0.85"
-            transform="rotate(-15, 1200, 100)"
-          />
-          <circle cx="82%" cy="14%" r="2.2" className="data-node fill-indigo-500/50 dark:fill-indigo-400/70" />
-          <circle cx="75%" cy="6%" r="1.6" className="data-node data-node-delayed fill-slate-400/40 dark:fill-indigo-300/60" />
-          <circle cx="94%" cy="22%" r="2.8" className="data-node data-node-amber fill-amber-500/50 dark:fill-amber-400/70" />
-          <line
-            x1="82%"
-            y1="14%"
-            x2="94%"
-            y2="22%"
-            stroke="currentColor"
-            strokeWidth="0.6"
-            strokeDasharray="3 4"
-            className="opacity-45"
-          />
-          <g className="data-label text-slate-500/50 dark:text-indigo-300/60">
-            <text x="73%" y="10%">DIM_768</text>
-            <text x="88%" y="27%">LAT: 12ms</text>
-          </g>
-        </g>
-
-        {/* Mid-Left Vector Coordinates & Orbital Geometry */}
-        <g className="opacity-65 dark:opacity-75">
-          <ellipse
-            className="neural-orbit neural-orbit-slow"
-            cx="6%"
-            cy="48%"
-            rx="540"
-            ry="320"
-            fill="none"
-            stroke="url(#vector-grad-1)"
-            strokeWidth="1"
-            strokeDasharray="6 10"
-            transform="rotate(22, 100, 500)"
-          />
-          <circle cx="8%" cy="42%" r="2.2" className="data-node data-node-delayed fill-indigo-500/50 dark:fill-indigo-400/70" />
-          <circle cx="14%" cy="54%" r="2.4" className="data-node data-node-amber fill-amber-500/50 dark:fill-amber-400/70" />
-          <circle cx="4%" cy="60%" r="1.8" className="data-node fill-slate-400/40 dark:fill-slate-500/50" />
-          <line
-            x1="8%"
-            y1="42%"
-            x2="14%"
-            y2="54%"
-            stroke="currentColor"
-            strokeWidth="0.6"
-            strokeDasharray="3 3"
-            className="opacity-35"
-          />
-          <line
-            x1="14%"
-            y1="54%"
-            x2="4%"
-            y2="60%"
-            stroke="currentColor"
-            strokeWidth="0.6"
-            strokeDasharray="3 3"
-            className="opacity-25"
-          />
-
-          {/* Precision Crosshairs */}
-          <g className="text-slate-400/40 dark:text-indigo-400/40">
-            <line x1="2%" y1="36%" x2="4%" y2="36%" stroke="currentColor" strokeWidth="1" />
-            <line x1="3%" y1="35%" x2="3%" y2="37%" stroke="currentColor" strokeWidth="1" />
-          </g>
-          <g className="data-label text-slate-500/45 dark:text-indigo-300/60">
-            <text x="5%" y="39%">NODE_04</text>
-            <text x="12%" y="64%">SYNC: OK</text>
-          </g>
-        </g>
-
-        {/* Bottom Peripheral Geometry */}
-        <g className="opacity-55 dark:opacity-65">
-          <ellipse
-            className="neural-orbit"
-            cx="88%"
-            cy="88%"
-            rx="500"
-            ry="280"
-            fill="none"
-            stroke="url(#vector-grad-1)"
-            strokeWidth="0.85"
-            strokeDasharray="8 12"
-          />
-          <circle cx="80%" cy="84%" r="2.2" className="data-node data-node-delayed fill-indigo-500/50 dark:fill-indigo-400/60" />
-          <circle cx="91%" cy="92%" r="2.8" className="data-node data-node-amber fill-amber-500/40 dark:fill-amber-400/60" />
-          <line
-            x1="80%"
-            y1="84%"
-            x2="91%"
-            y2="92%"
-            stroke="currentColor"
-            strokeWidth="0.6"
-            strokeDasharray="2 4"
-            className="opacity-35"
-          />
-          <g className="text-slate-400/35 dark:text-indigo-400/30">
-            <line x1="96%" y1="78%" x2="98%" y2="78%" stroke="currentColor" strokeWidth="1" />
-            <line x1="97%" y1="77%" x2="97%" y2="79%" stroke="currentColor" strokeWidth="1" />
-          </g>
-          <g className="data-label text-slate-500/45 dark:text-cyan-200/55">
-            <text x="84%" y="80%">VECTOR / 03</text>
-          </g>
-        </g>
-      </svg>
 
       {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH ─── */}
       <div

@@ -19,7 +19,12 @@ import { ResumePreviewModal } from './components/ResumePreviewModal';
 import { CommandPalette } from './components/CommandPalette';
 import { Toast } from './components/Toast';
 import { GlobalBackground } from './components/GlobalBackground';
+import { MotionAccessibilityToggle } from './components/MotionAccessibilityToggle';
+import { DataStreamCounter } from './components/DataStreamCounter';
+import { SectionAmbientAtmosphere } from './components/SectionAmbientAtmosphere';
 import { useTilt3DCards } from './utils/useTilt3DCards';
+import { useButtonSparkles } from './utils/useButtonSparkles';
+import { useViewportHeadingReveal } from './utils/useViewportHeadingReveal';
 import { ProjectCategory, ResumeRole } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
 import { PERSONAL_INFO } from './data/portfolioData';
@@ -42,6 +47,96 @@ export default function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastType, setToastType] = useState<'success' | 'info'>('success');
+
+  // Accessibility: OS-level Reduced Motion Detection & Neural Motion Toggle
+  const [systemPrefersReducedMotion, setSystemPrefersReducedMotion] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
+
+  const [motionEnabled, setMotionEnabled] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('neural-motion-preference');
+      if (saved !== null) {
+        return saved === 'enabled';
+      }
+      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return true;
+  });
+
+  useButtonSparkles(motionEnabled);
+  useViewportHeadingReveal(motionEnabled);
+
+  // Granular Visual Complexity Control: Neural Node Density (0.3 - 1.6)
+  const [nodeDensity, setNodeDensity] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('neural-node-density');
+      if (saved) {
+        const parsed = parseFloat(saved);
+        if (!isNaN(parsed) && parsed >= 0.3 && parsed <= 1.6) return parsed;
+      }
+    }
+    return 1.0;
+  });
+
+  const handleNodeDensityChange = (density: number) => {
+    const clamped = Math.max(0.3, Math.min(1.6, Math.round(density * 10) / 10));
+    setNodeDensity(clamped);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('neural-node-density', clamped.toString());
+    }
+  };
+
+  // Listen to OS prefers-reduced-motion media query changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setSystemPrefersReducedMotion(e.matches);
+      // Auto-update if user hasn't stored a manual preference
+      const saved = localStorage.getItem('neural-motion-preference');
+      if (saved === null) {
+        setMotionEnabled(!e.matches);
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleMediaChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleMediaChange);
+      }
+    };
+  }, []);
+
+  // Update HTML data-reduce-motion attribute for system-wide CSS animation synchronization
+  useEffect(() => {
+    if (!motionEnabled) {
+      document.documentElement.setAttribute('data-reduce-motion', 'true');
+    } else {
+      document.documentElement.removeAttribute('data-reduce-motion');
+    }
+  }, [motionEnabled]);
+
+  const handleToggleMotion = () => {
+    setMotionEnabled(prev => {
+      const next = !prev;
+      localStorage.setItem('neural-motion-preference', next ? 'enabled' : 'disabled');
+      showToast(
+        next 
+          ? 'Neural canvas animations active' 
+          : 'Neural animations paused (Reduced Motion)', 
+        'info'
+      );
+      return next;
+    });
+  };
 
   // Handle Theme Toggle
   useEffect(() => {
@@ -107,7 +202,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden font-sans antialiased selection:bg-[#a66a12]/20 selection:text-[#a66a12] transition-colors duration-500 ease-out" style={{ color: 'var(--text-primary)' }}>
       {/* Global Analytical Atmosphere Background System */}
-      <GlobalBackground />
+      <GlobalBackground motionEnabled={motionEnabled} nodeDensity={nodeDensity} />
 
       <div id="top" />
 
@@ -158,12 +253,15 @@ export default function App() {
         <InteractiveDemos language={language} />
 
         {/* Recruiter Evaluation Engine · Instant Job Description (JD) Matcher */}
-        <div className="max-w-[1160px] mx-auto px-5 sm:px-6 my-16">
-          <JdMatcherSection
-            onSelectResume={handleDownloadResume}
-            onOpenCaseStudy={(id) => setCaseStudyId(id)}
-          />
-        </div>
+        <section className="section-ambient-container ambient-theme-violet my-16 overflow-hidden">
+          <SectionAmbientAtmosphere />
+          <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
+            <JdMatcherSection
+              onSelectResume={handleDownloadResume}
+              onOpenCaseStudy={(id) => setCaseStudyId(id)}
+            />
+          </div>
+        </section>
 
         {/* 05 · How I Think (8-step Analytical Decision Framework) */}
         <ThinkingSection language={language} />
@@ -182,8 +280,26 @@ export default function App() {
           language={language}
           onCopyEmail={handleCopyEmail}
           onOpenRecruiter={() => setRecruiterModalOpen(true)}
+          motionEnabled={motionEnabled}
+          onToggleMotion={handleToggleMotion}
+          systemPrefersReducedMotion={systemPrefersReducedMotion}
         />
       </main>
+
+      {/* Persistent Synaptic Data Throughput Stream HUD */}
+      <DataStreamCounter
+        motionEnabled={motionEnabled}
+        nodeDensity={nodeDensity}
+      />
+
+      {/* Floating Accessibility Motion & Node Density Control Button */}
+      <MotionAccessibilityToggle
+        motionEnabled={motionEnabled}
+        onToggle={handleToggleMotion}
+        systemPrefersReducedMotion={systemPrefersReducedMotion}
+        nodeDensity={nodeDensity}
+        onNodeDensityChange={handleNodeDensityChange}
+      />
 
       {/* Case Study Deep-Dive Modal */}
       <CaseStudyModal

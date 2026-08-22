@@ -21,6 +21,7 @@ import { PipelineArchitecture } from './PipelineArchitecture';
 import { CohortRetentionMatrix } from './CohortRetentionMatrix';
 import { TrafficD3Chart } from './TrafficD3Chart';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 type DemoTab = 'traffic' | 'rice' | 'risk' | 'sql' | 'pipeline' | 'cohort';
 
@@ -98,8 +99,11 @@ export const InteractiveDemos: React.FC<InteractiveDemosProps> = ({ language = '
   }, [roa, currentRatio, debtToEquity, cashFlowRatio, workingCapitalRatio]);
 
   return (
-    <section id="demos" className="py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section id="demos" className="section-ambient-container ambient-theme-emerald py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
+      {/* Thematic Ambient Light Shift (Emerald & Quantitative Mint Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">

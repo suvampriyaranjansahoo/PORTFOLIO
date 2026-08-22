@@ -18,6 +18,7 @@ import {
 import { ACADEMIC_MILESTONES, ACADEMIC_DOMAINS, PERSONAL_INFO } from '../data/portfolioData';
 import { AcademicMilestone } from '../types';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface AcademicsSectionProps {
   language?: Language;
@@ -31,8 +32,11 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ language = '
     ACADEMIC_MILESTONES.find(m => m.id === selectedMilestoneId) || ACADEMIC_MILESTONES[0];
 
   return (
-    <section id="academics" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section id="academics" className="section-ambient-container ambient-theme-emerald py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+      {/* Thematic Ambient Light Shift (Scholarly Forest Emerald & Slate Sapphire Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>

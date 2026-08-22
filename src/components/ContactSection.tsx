@@ -2,23 +2,33 @@ import React from 'react';
 import { Mail, Copy, ArrowUpRight, MapPin, Sparkles, Check } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface ContactSectionProps {
   language?: Language;
   onCopyEmail: () => void;
   onOpenRecruiter: () => void;
+  motionEnabled?: boolean;
+  onToggleMotion?: () => void;
+  systemPrefersReducedMotion?: boolean;
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ 
   language = 'en',
   onCopyEmail, 
-  onOpenRecruiter 
+  onOpenRecruiter,
+  motionEnabled = true,
+  onToggleMotion,
+  systemPrefersReducedMotion = false,
 }) => {
   const t = TRANSLATIONS[language]?.contact;
 
   return (
-    <section id="contact" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36]">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6 space-y-12">
+    <section id="contact" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+      {/* Thematic Ambient Light Shift (Warm Bronze & Amber Executive Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6 space-y-12">
         {/* Currently Exploring Banner */}
         <div className="card-level-2 p-6 sm:p-8">
           <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
@@ -89,8 +99,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
 
         {/* Footer */}
-        <footer className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#8b93a1]">
+        <footer className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs text-[#8b93a1]">
           <div>© 2026 {PERSONAL_INFO.name}. All rights reserved.</div>
+          
+          {onToggleMotion && (
+            <button
+              id="footer-motion-toggle-btn"
+              role="switch"
+              aria-checked={motionEnabled}
+              aria-label={motionEnabled ? "Pause neural background animations (reduce motion)" : "Enable neural background animations"}
+              onClick={onToggleMotion}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300/80 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none"
+            >
+              <span className={`inline-block w-2 h-2 rounded-full ${motionEnabled ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+              <span>Animations: {motionEnabled ? 'Active' : 'Paused (Reduced Motion)'}</span>
+              {systemPrefersReducedMotion && (
+                <span className="text-[10px] text-amber-600 dark:text-amber-400 font-mono">(OS Default)</span>
+              )}
+            </button>
+          )}
+
           <div className="text-right">Data → Insight → Decision → Impact</div>
         </footer>
       </div>

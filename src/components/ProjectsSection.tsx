@@ -3,6 +3,7 @@ import { ArrowUpRight, BookOpen, Check, ExternalLink, Layers, Sparkles } from 'l
 import { Project, ProjectCategory } from '../types';
 import { PROJECTS } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface ProjectsSectionProps {
   language?: Language;
@@ -33,8 +34,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   ];
 
   return (
-    <section id="work" className="py-16 sm:py-20 overflow-hidden">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section id="work" className="section-ambient-container ambient-theme-cool py-16 sm:py-20 overflow-hidden">
+      {/* Thematic Ambient Light Shift (Cooler Cyan / Electric Ice Blue Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">

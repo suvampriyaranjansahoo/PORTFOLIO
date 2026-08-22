@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface AboutSectionProps {
   language?: Language;
@@ -78,8 +79,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   const currentPillar = pillars.find(p => p.id === activePillar) || pillars[0];
 
   return (
-    <section id="about" className="py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section id="about" className="section-ambient-container ambient-theme-violet py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+      {/* Thematic Ambient Light Shift (Violet & Warm Amber Analytical Aura) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-12">

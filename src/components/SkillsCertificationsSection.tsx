@@ -2,6 +2,7 @@ import React from 'react';
 import { Award, CheckCircle2, ShieldCheck, Terminal, Wrench } from 'lucide-react';
 import { SKILL_CATEGORIES, CERTIFICATIONS } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface SkillsCertificationsSectionProps {
   language?: Language;
@@ -11,8 +12,11 @@ export const SkillsCertificationsSection: React.FC<SkillsCertificationsSectionPr
   const t = TRANSLATIONS[language]?.skills;
 
   return (
-    <section id="skills" className="py-16 sm:py-20">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section id="skills" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 overflow-hidden">
+      {/* Thematic Ambient Light Shift (Warmer Amber/Gold Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
           {t?.label || "07 · TOOLBOX & CREDENTIALS"}
         </div>

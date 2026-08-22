@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart3, Target, Database, Brain, ArrowUpRight } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
+import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
 
 interface CapabilitiesSectionProps {
   language?: Language;
@@ -77,8 +78,11 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
   ];
 
   return (
-    <section className="py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
-      <div className="max-w-[1160px] mx-auto px-5 sm:px-6">
+    <section className="section-ambient-container ambient-theme-indigo py-16 sm:py-20 border-y border-[#dfe3e9]/70 dark:border-white/[0.08] overflow-hidden">
+      {/* Thematic Ambient Light Shift (Deep Indigo & Analytical Cobalt Glow) */}
+      <SectionAmbientAtmosphere />
+
+      <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
