@@ -1,41 +1,16 @@
-import React, { useMemo, useRef, useEffect, useState, Component, ReactNode, ErrorInfo } from 'react';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { EffectComposer, Bloom, DepthOfField, Vignette } from '@react-three/postprocessing';
+import {
+  EffectComposer,
+  RenderPass,
+  EffectPass,
+  BloomEffect,
+  DepthOfFieldEffect,
+  VignetteEffect
+} from 'postprocessing';
 
-// ─── POSTPROCESSING SAFETY ERROR BOUNDARY ───
-interface ErrorBoundaryProps {
-  children: ReactNode;
-  fallback?: ReactNode;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
-
-class ThreePostProcessingErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.warn('[GlobalBackground3D] Postprocessing fallback activated:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback || null;
-    }
-    return this.props.children;
-  }
-}
-
-// ─── CAMERA PARALLAX COMPONENT ───
+// ─── CAMERA PARALLAX CONTROLLER ───
 export function CameraParallax() {
   const { camera, pointer } = useThree();
   const targetPos = useRef(new THREE.Vector3(0, 0, 8));
@@ -71,7 +46,7 @@ const decisionFragmentShader = `
   void main() {
     vec2 p = (vUv - 0.5) * 8.0;
     
-    // Magical pointer shimmer disturbance
+    // Pointer shimmer disturbance
     vec2 mPos = (uMouse - 0.5) * 8.0;
     float mDist = length(p - mPos);
     float magicWave = sin(mDist * 3.5 - uTime * 3.0) * exp(-mDist * 0.85) * uHoverIntensity * 0.6;
@@ -85,7 +60,7 @@ const decisionFragmentShader = `
     float contourLine = smoothstep(0.04, 0.0, contour) * 0.28;
     float boundaryLine = smoothstep(0.08, 0.0, abs(prob - 0.5)) * 0.65;
 
-    // Magical celestial cursor aura ripple
+    // Celestial cursor aura ripple
     float cursorGlow = smoothstep(2.4, 0.0, mDist) * uHoverIntensity * 0.45;
     vec3 magicalGlowColor = mix(vec3(0.38, 0.74, 0.98), vec3(0.98, 0.75, 0.25), sin(uTime * 1.5) * 0.5 + 0.5);
 
@@ -118,7 +93,6 @@ function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
   useFrame((_, delta) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value += delta * 0.45;
-      // Convert normalized pointer [-1, 1] to UV [0, 1]
       const targetMouseX = pointer.x * 0.5 + 0.5;
       const targetMouseY = pointer.y * 0.5 + 0.5;
       materialRef.current.uniforms.uMouse.value.x = THREE.MathUtils.lerp(
@@ -155,10 +129,11 @@ function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
   );
 }
 
-// ─── 3D NEURAL POINT-CLOUD & SYNAPTIC CONNECTIONS (NORMALIZED SIZE & MAGICAL HOVER GLOW) ───
+// ─── 3D NEURAL POINT-CLOUD & SYNAPTIC CONNECTIONS (NORMALIZED SIZE & 3D RIPPLE PROPAGATION) ───
 function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const { pointer } = useThree();
+  const lastRippleTriggerRef = useRef<number>(0);
 
   // Generate 3D spatial points with normal, delicate node sizing and deep z-placement
   const pointsData = useMemo(() => {
@@ -180,25 +155,31 @@ function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
       // Position nodes safely at depth between -7.5 and -2.5 (no giant foreground orbs)
       const z = -7.5 + rnd() * 5.0;
       const color = colors[Math.floor(rnd() * colors.length)];
-      // Subtle, normal-sized delicate radius (0.024 - 0.055)
       pts.push({ 
+        id: i,
         x, 
         y, 
         z, 
         color, 
         baseSize: 0.024 + rnd() * 0.032,
         twinklePhase: rnd() * Math.PI * 2,
-        twinkleSpeed: 0.8 + rnd() * 1.4
+        twinkleSpeed: 0.8 + rnd() * 1.4,
+        rippleGlow: 0.0,
       });
     }
     return pts;
   }, [darkMode]);
 
-  // Compute 3D constellation link lines
-  const linesGeometry = useMemo(() => {
+  // Compute 3D constellation link lines and adjacency table
+  const { linesGeometry, adjacency } = useMemo(() => {
     const positions: number[] = [];
     const colors: number[] = [];
+    const adj: Map<number, Array<{ id: number; dist: number }>> = new Map();
     const maxDist = 3.2;
+
+    for (let i = 0; i < pointsData.length; i++) {
+      adj.set(i, []);
+    }
 
     for (let i = 0; i < pointsData.length; i++) {
       let conns = 0;
@@ -214,6 +195,8 @@ function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
           const c1 = new THREE.Color(p1.color);
           const c2 = new THREE.Color(p2.color);
           colors.push(c1.r, c1.g, c1.b, c2.r, c2.g, c2.b);
+          adj.get(i)?.push({ id: j, dist: d });
+          adj.get(j)?.push({ id: i, dist: d });
           conns++;
         }
       }
@@ -222,7 +205,7 @@ function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    return geo;
+    return { linesGeometry: geo, adjacency: adj };
   }, [pointsData]);
 
   // Instanced nodes
@@ -242,29 +225,62 @@ function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
     // Approximate pointer position projected in 3D coordinates
     const ptr3DX = pointer.x * 10;
     const ptr3DY = pointer.y * 7;
+    const now = performance.now();
+
+    // Check if cursor strongly interacts with any node to propagate energy ripples
+    pointsData.forEach((p) => {
+      const dx = p.x - ptr3DX;
+      const dy = p.y - ptr3DY;
+      const distToCursor = Math.sqrt(dx * dx + dy * dy);
+
+      if (distToCursor < 1.6 && now - lastRippleTriggerRef.current > 220) {
+        lastRippleTriggerRef.current = now;
+        p.rippleGlow = 1.0;
+
+        // Propagate to adjacent nodes with distance-based delay/decay
+        const neighbors = adjacency.get(p.id) || [];
+        neighbors.forEach(({ id: nId, dist }) => {
+          const neighbor = pointsData[nId];
+          if (neighbor) {
+            const decay = Math.exp(-dist / 1.8);
+            setTimeout(() => {
+              neighbor.rippleGlow = Math.max(neighbor.rippleGlow, decay * 0.9);
+            }, (dist / 3.0) * 140);
+          }
+        });
+      }
+    });
 
     pointsData.forEach((p, idx) => {
-      // Check distance to mouse pointer for magical celestial hover effect
+      // Check distance to mouse pointer for hover effect
       const dx = p.x - ptr3DX;
       const dy = p.y - ptr3DY;
       const distToCursor = Math.sqrt(dx * dx + dy * dy);
       const isHovered = distToCursor < 3.2;
       const hoverFactor = isHovered ? Math.max(0, 1 - distToCursor / 3.2) : 0;
 
-      // Magical subtle twinkle
+      // Smooth decay of ripple energy
+      if (p.rippleGlow > 0.01) {
+        p.rippleGlow *= 0.93;
+      } else {
+        p.rippleGlow = 0;
+      }
+
+      // Subtle twinkle & ripple surge
       const twinkle = 1.0 + Math.sin(t * p.twinkleSpeed + p.twinklePhase) * 0.18;
-      const scale = p.baseSize * twinkle * (1.0 + hoverFactor * 0.9);
+      const effectiveScale = p.baseSize * twinkle * (1.0 + hoverFactor * 0.9 + p.rippleGlow * 1.2);
 
       dummy.position.set(p.x, p.y, p.z);
-      dummy.scale.set(scale, scale, scale);
+      dummy.scale.set(effectiveScale, effectiveScale, effectiveScale);
       dummy.updateMatrix();
       instMesh.setMatrixAt(idx, dummy.matrix);
 
       cObj.set(p.color);
-      // Brighten on hover for a luminous magical starlight sheen
-      if (isHovered) {
-        cObj.lerp(new THREE.Color('#ffffff'), hoverFactor * 0.65);
-        cObj.multiplyScalar(1.2 + hoverFactor * 0.8);
+      // Brighten on hover and ripple energy surge for a luminous starlight sheen
+      const totalGlow = Math.min(1.0, hoverFactor * 0.75 + p.rippleGlow * 1.2);
+      if (totalGlow > 0.01) {
+        cObj.lerp(new THREE.Color('#ffffff'), totalGlow * 0.65);
+        cObj.multiplyScalar(1.2 + totalGlow * 0.9);
       } else {
         cObj.multiplyScalar(0.95);
       }
@@ -297,36 +313,84 @@ function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
   );
 }
 
-// ─── POST-PROCESSING PIPELINE WITH TIER GUARDS ───
+// ─── POSTPROCESSING EFFECT COMPOSER WITH TRY-CATCH SAFETY WRAPPER ───
 interface PostProcessComposerProps {
   performanceTier: 'high' | 'medium' | 'low';
 }
 
 function PostProcessComposer({ performanceTier }: PostProcessComposerProps) {
-  if (performanceTier === 'low') {
-    return null;
-  }
+  const { gl, scene, camera, size } = useThree();
+  const composerRef = useRef<EffectComposer | null>(null);
 
-  return (
-    <ThreePostProcessingErrorBoundary>
-      <EffectComposer multisampling={performanceTier === 'high' ? 4 : 0}>
-        <Bloom
-          intensity={0.35}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.9}
-          mipmapBlur
-        />
-        {performanceTier === 'high' && (
-          <DepthOfField
-            focusDistance={0.02}
-            focalLength={0.05}
-            bokehScale={2.2}
-          />
-        )}
-        <Vignette eskil={false} offset={0.18} darkness={0.55} />
-      </EffectComposer>
-    </ThreePostProcessingErrorBoundary>
-  );
+  useEffect(() => {
+    if (performanceTier === 'low') {
+      composerRef.current = null;
+      return;
+    }
+
+    try {
+      const composer = new EffectComposer(gl, {
+        multisampling: performanceTier === 'high' ? 4 : 0,
+        frameBufferType: THREE.HalfFloatType
+      });
+
+      composer.addPass(new RenderPass(scene, camera));
+
+      const effects = [];
+
+      // 1. Bloom Effect
+      const bloomEffect = new BloomEffect({
+        intensity: 0.35,
+        luminanceThreshold: 0.2,
+        luminanceSmoothing: 0.9,
+        mipmapBlur: true
+      });
+      effects.push(bloomEffect);
+
+      // 2. Depth of Field Effect (on high-tier devices)
+      if (performanceTier === 'high') {
+        const dofEffect = new DepthOfFieldEffect(camera, {
+          focusDistance: 0.02,
+          focalLength: 0.05,
+          bokehScale: 2.2
+        });
+        effects.push(dofEffect);
+      }
+
+      // 3. Vignette Effect
+      const vignetteEffect = new VignetteEffect({
+        offset: 0.18,
+        darkness: 0.55
+      });
+      effects.push(vignetteEffect);
+
+      composer.addPass(new EffectPass(camera, ...effects));
+      composer.setSize(size.width, size.height);
+
+      composerRef.current = composer;
+    } catch (err) {
+      console.warn('[Global3DBackground] Postprocessing initialization skipped, using fallback render:', err);
+      composerRef.current = null;
+    }
+
+    return () => {
+      if (composerRef.current) {
+        composerRef.current.dispose();
+        composerRef.current = null;
+      }
+    };
+  }, [gl, scene, camera, size.width, size.height, performanceTier]);
+
+  // Render pass hook: If composer initialized cleanly, render via composer, otherwise let default renderer work
+  useFrame((_, delta) => {
+    if (composerRef.current) {
+      gl.autoClear = false;
+      gl.clear();
+      composerRef.current.render(delta);
+    }
+  }, 1);
+
+  return null;
 }
 
 // ─── GLOBAL 3D BACKGROUND COMPONENT ───
@@ -369,7 +433,7 @@ export const Global3DBackground: React.FC<Global3DBackgroundProps> = ({ motionEn
   return (
     <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" style={{ zIndex: 2 }}>
       <Canvas
-        camera={{ position: [0, 0, 8], fov: 45 }}
+        camera={{ position: [0, 0, 8], fov: 45, near: 0.1, far: 100 }}
         gl={{
           antialias: performanceTier !== 'low',
           alpha: true,
@@ -380,6 +444,9 @@ export const Global3DBackground: React.FC<Global3DBackgroundProps> = ({ motionEn
         dpr={Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, performanceTier === 'low' ? 1 : 1.75)}
         className="w-full h-full"
       >
+        {/* Native Three.js PerspectiveCamera configuration via Fiber */}
+        <perspectiveCamera position={[0, 0, 8]} fov={45} />
+
         {/* Subtle mouse parallax */}
         {motionEnabled && <CameraParallax />}
 
@@ -388,10 +455,10 @@ export const Global3DBackground: React.FC<Global3DBackgroundProps> = ({ motionEn
         {/* Layer 1: Decision Boundary Field Plane at Z = -12 */}
         <DecisionBoundaryPlane darkMode={isDark} />
 
-        {/* Layer 2: Point Cloud & Neural Group at Z = -4 to Z = 2 */}
+        {/* Layer 2: Point Cloud & Neural Group at Z = -4 to Z = 2 with dynamic ripple */}
         <NeuralPointCloudGroup darkMode={isDark} />
 
-        {/* Layer 3: Bloom, DepthOfField & Vignette Postprocessing with error boundary & tier guard */}
+        {/* Layer 3: Try-Catch Wrapped EffectComposer with Bloom, DepthOfField & Vignette */}
         {motionEnabled && <PostProcessComposer performanceTier={performanceTier} />}
       </Canvas>
     </div>

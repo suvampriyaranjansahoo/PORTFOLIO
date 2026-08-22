@@ -72,6 +72,27 @@ export interface DataSignal {
   intensity?: number;
 }
 
+/**
+ * Uniform scaling function to normalize background neural node sizes
+ * across all zoom levels, device pixel ratios, and viewport resolutions,
+ * ensuring consistent, delicate proportions without oversized nodes.
+ */
+export function getUniformNodeScale(
+  baseSize: number,
+  layer: 0 | 1 | 2,
+  viewportWidth: number,
+  viewportHeight: number,
+  dpr: number = 1
+): number {
+  const baseDim = 1440;
+  const currentDim = Math.min(viewportWidth, viewportHeight * 1.6);
+  const viewportFactor = Math.sqrt(currentDim / baseDim);
+  // Clamp strictly between 0.85 and 1.15 to prevent ballooning on wide screens or shrinking on small devices
+  const clampedScale = Math.max(0.85, Math.min(1.15, viewportFactor));
+  const layerFactor = layer === 0 ? 0.72 : layer === 1 ? 0.95 : 1.18;
+  return baseSize * clampedScale * layerFactor;
+}
+
 export interface AmbientScanWave {
   x: number;
   y: number;
@@ -116,6 +137,17 @@ export interface WakeParticle {
   rotation?: number;
   rotSpeed?: number;
   sparklePhase?: number;
+}
+
+export interface NeuralRipplePacket {
+  targetNodeIndex: number;
+  intensity: number;
+  triggerTime: number;
+  sourceX: number;
+  sourceY: number;
+  hopCount: number;
+  maxHops: number;
+  colorType: 'indigo' | 'cyan' | 'amber';
 }
 
 export interface EnergyRipple {
@@ -195,6 +227,7 @@ export function useLivingNeuralBackground(
   const wakeParticlesRef = useRef<WakeParticle[]>([]);
   const energyRipplesRef = useRef<EnergyRipple[]>([]);
   const microSparksRef = useRef<MicroSpark[]>([]);
+  const neuralRipplePacketsRef = useRef<NeuralRipplePacket[]>([]);
   const ambientScanWavesRef = useRef<AmbientScanWave[]>([]);
   const constellationLockRef = useRef<ConstellationLock | null>(null);
   const quietZonesRef = useRef<QuietZoneRect[]>([]);
@@ -364,7 +397,7 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.10,
           vy: (Math.random() - 0.5) * 0.10,
-          size: 0.75 + Math.random() * 0.55,
+          size: 0.75 + Math.random() * 0.35,
           layer: 0,
           depth: 0.25,
           phase: Math.random() * Math.PI * 2,
@@ -396,7 +429,7 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.14,
           vy: (Math.random() - 0.5) * 0.14,
-          size: 1.25 + Math.random() * 0.65,
+          size: 1.10 + Math.random() * 0.40,
           layer: 1,
           depth: 0.6,
           phase: Math.random() * Math.PI * 2,
@@ -428,7 +461,7 @@ export function useLivingNeuralBackground(
           baseY: y,
           vx: (Math.random() - 0.5) * 0.18,
           vy: (Math.random() - 0.5) * 0.18,
-          size: 1.75 + Math.random() * 0.75,
+          size: 1.45 + Math.random() * 0.45,
           layer: 2,
           depth: 1.0,
           phase: Math.random() * Math.PI * 2,
@@ -549,6 +582,79 @@ export function useLivingNeuralBackground(
       }
     };
 
+    // ─── SUBTLE NEURAL RIPPLE PROPAGATION ENGINE ───
+    // When the cursor strongly interacts with a node, energy propagates through nearby connected
+    // nodes with distance-based delay and decay, briefly increasing node opacity, glow, and connection brightness,
+    // then smoothly returning to normal.
+    const triggerNeuralRippleCascade = (sourceIndex: number, initialPower: number = 0.95) => {
+      if (!motionEnabled || prefersReducedMotion) return;
+      const nodes = nodesRef.current;
+      const src = nodes[sourceIndex];
+      if (!src) return;
+
+      const now = performance.now();
+      src.lastGraphRippleTime = now;
+      src.crossingGlowBoost = Math.max(src.crossingGlowBoost || 0, initialPower * 0.95);
+      src.rippleIllumination = Math.max(src.rippleIllumination || 0, initialPower * 0.95);
+      src.targetOpacity = Math.min(1.0, (src.baseOpacity + 0.48 * initialPower) * visibility);
+
+      // Micro ripple circle on the source node itself
+      if (energyRipplesRef.current.length < 16) {
+        energyRipplesRef.current.push({
+          x: src.x,
+          y: src.y,
+          radius: 3,
+          maxRadius: 40 * (src.depth + 0.35),
+          speed: 2.0 * particleSpeed,
+          opacity: 0.72,
+          colorType: src.layer === 2 ? 'amber' : src.layer === 1 ? 'cyan' : 'indigo',
+        });
+      }
+
+      // Propagate energy outward to connected/neighbor nodes
+      const maxConnDist = (src.layer === 0 ? 140 : src.layer === 1 ? 180 : 220) * connectionDensity;
+      const propSpeed = 0.42 * particleSpeed; // Propagation speed in pixels/ms
+      const rippleColor = src.layer === 2 ? 'amber' : src.layer === 1 ? 'cyan' : 'indigo';
+
+      for (let j = 0; j < nodes.length; j++) {
+        if (j === sourceIndex) continue;
+        const n2 = nodes[j];
+        if (Math.abs(n2.layer - src.layer) > 1) continue;
+
+        const dx = n2.x - src.x;
+        const dy = n2.y - src.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < maxConnDist * 1.15 && dist > 2) {
+          // Distance-based propagation delay (40ms - 380ms)
+          const delayMs = dist / propSpeed;
+          // Organic distance-based exponential decay
+          const distDecay = Math.exp(-dist / (maxConnDist * 0.65));
+          const packetEnergy = initialPower * distDecay * 0.78;
+
+          if (packetEnergy > 0.08 && neuralRipplePacketsRef.current.length < 54) {
+            neuralRipplePacketsRef.current.push({
+              targetNodeIndex: j,
+              intensity: packetEnergy,
+              triggerTime: now + delayMs,
+              sourceX: src.x,
+              sourceY: src.y,
+              hopCount: 1,
+              maxHops: 3,
+              colorType: rippleColor,
+            });
+
+            // Instant synaptic connection glow excitation
+            const connKey = `${Math.min(sourceIndex, j)}_${Math.max(sourceIndex, j)}`;
+            synapticConnectionsRef.current.set(connKey, {
+              excitation: packetEnergy * 0.88,
+              lastTime: now + delayMs * 0.5,
+            });
+          }
+        }
+      }
+    };
+
     // Global Pointer events for smooth multi-depth parallax and neural wake trail / ripple interaction
     const handleGlobalPointerMove = (e: MouseEvent | PointerEvent) => {
       const centerX = width / 2;
@@ -620,23 +726,9 @@ export function useLivingNeuralBackground(
               const wakePower = prox * Math.min(1.0, 0.45 + clampedSpeed * 0.38) * (n.depth * 0.6 + 0.4);
               n.wakeActivation = Math.max(n.wakeActivation || 0, wakePower);
 
-              // 2. RIPPLE PROPAGATION: When cursor strongly interacts (fast or close), trigger connected node graph ripple
-              if (dist < 52 && clampedSpeed > 0.75 && (!n.lastGraphRippleTime || now - n.lastGraphRippleTime > 360)) {
-                n.lastGraphRippleTime = now;
-                n.graphRippleActivation = Math.max(n.graphRippleActivation || 0, 0.95);
-
-                // Small micro ripple on the node itself
-                if (energyRipplesRef.current.length < 12) {
-                  energyRipplesRef.current.push({
-                    x: n.x,
-                    y: n.y,
-                    radius: 2,
-                    maxRadius: 36 * (n.depth + 0.3),
-                    speed: 1.8 * particleSpeed,
-                    opacity: 0.7,
-                    colorType: n.layer === 2 ? 'amber' : 'cyan',
-                  });
-                }
+              // 2. RIPPLE PROPAGATION: When cursor strongly interacts (fast or close), trigger connected node graph ripple cascade
+              if (dist < 56 && clampedSpeed > 0.60 && (!n.lastGraphRippleTime || now - n.lastGraphRippleTime > 280)) {
+                triggerNeuralRippleCascade(i, Math.min(1.0, 0.65 + clampedSpeed * 0.22));
               }
             }
           }
@@ -1053,18 +1145,91 @@ export function useLivingNeuralBackground(
         const cursorVel = cursorVelocityRef.current;
         const cursorTrail = cursorTrailRef.current;
 
+        // ─── PROCESS NEURAL RIPPLE ENERGY PROPAGATION (DISTANCE-BASED DELAY & DECAY) ───
+        if (!prefersReducedMotion && neuralRipplePacketsRef.current.length > 0) {
+          const packets = neuralRipplePacketsRef.current;
+          const remaining: NeuralRipplePacket[] = [];
+
+          for (let pIdx = 0; pIdx < packets.length; pIdx++) {
+            const packet = packets[pIdx];
+            if (nowTime >= packet.triggerTime) {
+              const target = nodes[packet.targetNodeIndex];
+              if (target) {
+                // 1. Briefly boost node opacity, glow, and corona
+                target.rippleIllumination = Math.max(target.rippleIllumination || 0, packet.intensity * 0.95);
+                target.crossingGlowBoost = Math.max(target.crossingGlowBoost || 0, packet.intensity * 0.85);
+                target.targetOpacity = Math.min(1.0, (target.baseOpacity + 0.44 * packet.intensity) * visibility);
+
+                // 2. Physics-based nudge along propagation line
+                const pdx = target.x - packet.sourceX;
+                const pdy = target.y - packet.sourceY;
+                const pdist = Math.sqrt(pdx * pdx + pdy * pdy) || 1;
+                const nudgeStrength = packet.intensity * 0.018 * particleSpeed * (target.depth * 0.8 + 0.2);
+                target.vx += (pdx / pdist) * nudgeStrength;
+                target.vy += (pdy / pdist) * nudgeStrength;
+
+                // 3. Multi-hop energy propagation to second-degree neighbors
+                if (packet.hopCount < packet.maxHops && packet.intensity > 0.24) {
+                  const nextHops = packet.hopCount + 1;
+                  const nextPower = packet.intensity * 0.52;
+                  const maxDist = CONNECT_DISTANCES[target.layer] || 180;
+                  const propSpeed = 0.40 * particleSpeed;
+
+                  for (let k = 0; k < nodes.length; k++) {
+                    if (k === packet.targetNodeIndex) continue;
+                    const neighbor = nodes[k];
+                    if (Math.abs(neighbor.layer - target.layer) > 1) continue;
+
+                    const ndx = neighbor.x - target.x;
+                    const ndy = neighbor.y - target.y;
+                    const ndist = Math.sqrt(ndx * ndx + ndy * ndy);
+
+                    if (ndist < maxDist * 0.88 && ndist > 2) {
+                      const hopDelay = ndist / propSpeed;
+                      const hopDecay = Math.exp(-ndist / (maxDist * 0.6));
+                      const subEnergy = nextPower * hopDecay;
+
+                      if (subEnergy > 0.08 && remaining.length < 42) {
+                        remaining.push({
+                          targetNodeIndex: k,
+                          intensity: subEnergy,
+                          triggerTime: nowTime + hopDelay,
+                          sourceX: target.x,
+                          sourceY: target.y,
+                          hopCount: nextHops,
+                          maxHops: packet.maxHops,
+                          colorType: packet.colorType,
+                        });
+
+                        const subKey = `${Math.min(packet.targetNodeIndex, k)}_${Math.max(packet.targetNodeIndex, k)}`;
+                        synapticConnectionsRef.current.set(subKey, {
+                          excitation: subEnergy * 0.82,
+                          lastTime: nowTime + hopDelay * 0.5,
+                        });
+                      }
+                    }
+                  }
+                }
+              }
+            } else {
+              remaining.push(packet);
+            }
+          }
+          neuralRipplePacketsRef.current = remaining;
+        }
+
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i];
 
-          // Decay crossing glow boost, ripple illumination, wake activation, graph ripple, and ambient scan
+          // Decay crossing glow boost, ripple illumination, wake activation, and ambient scan back smoothly to normal
           if (node.crossingGlowBoost && node.crossingGlowBoost > 0) {
-            node.crossingGlowBoost *= 0.94;
+            node.crossingGlowBoost *= 0.93;
           }
           if (node.rippleIllumination && node.rippleIllumination > 0) {
             node.rippleIllumination *= 0.92;
           }
           if (node.wakeActivation && node.wakeActivation > 0) {
-            node.wakeActivation *= 0.95; // Smooth wake trail dissipation
+            node.wakeActivation *= 0.94; // Smooth wake trail dissipation
           }
           if (node.ambientScanIllumination && node.ambientScanIllumination > 0) {
             node.ambientScanIllumination *= 0.93;
@@ -1190,9 +1355,8 @@ export function useLivingNeuralBackground(
               node.crossingGlowBoost = Math.max(node.crossingGlowBoost || 0, zone3Factor * 1.0);
 
               // Trigger cascading ripple when cursor moves briskly through close contact
-              if (cursorVel.speed > 0.58 && (!node.lastGraphRippleTime || nowTime - node.lastGraphRippleTime > 300)) {
-                node.lastGraphRippleTime = nowTime;
-                node.graphRippleActivation = Math.max(node.graphRippleActivation || 0, 0.95);
+              if (cursorVel.speed > 0.50 && (!node.lastGraphRippleTime || nowTime - node.lastGraphRippleTime > 260)) {
+                triggerNeuralRippleCascade(i, 0.95);
               }
             } else if (dist < activeInteractionRadius) {
               // ─── ZONE 2: ACTIVE INFLUENCE FIELD (58px - 210px) ───
@@ -1513,8 +1677,15 @@ export function useLivingNeuralBackground(
         const breathFactor0 = 1.0 + Math.sin(n1.breathingPhase) * 0.14 + Math.cos(n1.breathingPhase * 0.7) * 0.06;
         const nodeAlpha0 = Math.min(0.95, Math.max(0.08, n1.currentOpacity * breathFactor0 * nodeBoost0));
 
+        // Uniform scaling & magical hover / ripple pulsation
+        const nodeBaseRadius0 = getUniformNodeScale(n1.size, 0, width, height, dpr);
+        const distToCursor0 = mouse.active ? Math.hypot(mouse.screenX - x1, mouse.screenY - y1) : 9999;
+        const hoverFactor0 = distToCursor0 < 180 * sensitivity ? Math.pow(1 - distToCursor0 / (180 * sensitivity), 1.5) : 0;
+        const ripPulse0 = (n1.rippleIllumination || 0) * 0.22 * Math.sin(nowTime * 0.007 + n1.breathingPhase);
+        const currentRadius0 = nodeBaseRadius0 * (1.0 + hoverFactor0 * 0.35 + ripPulse0);
+
         // Faint distant bokeh halo (normalized, delicate)
-        const bokehRadius = n1.size * 2.2 * (1 + (nodeBoost0 - 1) * 0.25);
+        const bokehRadius = currentRadius0 * 2.2 * (1 + (nodeBoost0 - 1) * 0.25 + hoverFactor0 * 0.4);
         const bokehGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, bokehRadius);
         bokehGrad.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha0 * (isDarkRef.current ? 0.32 : 0.18)).toFixed(3)})`);
         bokehGrad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -1526,7 +1697,7 @@ export function useLivingNeuralBackground(
         // Node dot
         ctx.fillStyle = `rgba(${palette.indigo}, ${nodeAlpha0.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size, 0, Math.PI * 2);
+        ctx.arc(x1, y1, currentRadius0, 0, Math.PI * 2);
         ctx.fill();
 
         for (let j = i + 1; j < distantNodes.length; j++) {
@@ -1562,6 +1733,17 @@ export function useLivingNeuralBackground(
               ? Math.pow(1 - lineDistToMouse0 / (200 * sensitivity), 1.2) * 0.26 * interactionStrength
               : 0;
             const synapticGlow0 = getSynapticExcitation(`0_${i}_${j}`, instantProx0, nowTime);
+
+            const emissiveFactor0 = Math.max(instantProx0, synapticGlow0 * 0.8);
+            if (emissiveFactor0 > 0.05) {
+              // Emissive glow halo pass
+              ctx.strokeStyle = `rgba(${palette.indigo}, ${(emissiveFactor0 * (isDarkRef.current ? 0.32 : 0.18)).toFixed(3)})`;
+              ctx.lineWidth = 1.6 + emissiveFactor0 * 1.8;
+              ctx.beginPath();
+              ctx.moveTo(x1, y1);
+              ctx.lineTo(x2, y2);
+              ctx.stroke();
+            }
 
             const alpha = Math.min(0.85, (Math.pow(1 - dist / maxDist, 1.5) * palette.lineAlpha * 0.65 * visibility + activityAlpha + synapticGlow0 * 0.32 + extraBright) * localBoost);
             ctx.strokeStyle = `rgba(${palette.indigo}, ${alpha.toFixed(3)})`;
@@ -1642,6 +1824,19 @@ export function useLivingNeuralBackground(
 
             const synapticGlow = getSynapticExcitation(`1_${Math.min(idx1, idx2)}_${Math.max(idx1, idx2)}`, instantProximity, nowTime);
 
+            // Emissive Connection Glow: Dual-pass rendering on hover
+            const emissiveFactor1 = Math.max(instantProximity, synapticGlow * 0.9);
+            if (emissiveFactor1 > 0.04) {
+              // Pass 1: Soft wide emissive glow aura
+              ctx.strokeStyle = `rgba(${palette.cyan}, ${(emissiveFactor1 * (isDarkRef.current ? 0.38 : 0.22)).toFixed(3)})`;
+              ctx.lineWidth = 2.2 + emissiveFactor1 * 2.6;
+              ctx.beginPath();
+              ctx.moveTo(x1, y1);
+              ctx.lineTo(x2, y2);
+              ctx.stroke();
+            }
+
+            // Pass 2: Crisp core line
             const alpha = Math.min(0.98, (distFalloff * palette.lineAlpha * 1.20 * visibility + jointActivity + synapticGlow * 0.48 + extraBright) * localBoost);
             ctx.strokeStyle = `rgba(${palette.cyan}, ${alpha.toFixed(3)})`;
             ctx.lineWidth = 1.0 + (localBoost - 1.0) * 0.45 + extraBright * 0.8 + (n1.interactionZone >= 2 ? 0.4 : 0) + (synapticGlow > 0.08 ? 0.38 : 0);
@@ -1654,11 +1849,17 @@ export function useLivingNeuralBackground(
           }
         }
 
-        // Draw midground node (normalized, delicate)
-        const isHovered1 = n1.interactionZone >= 2 || (nodeBoost1 > 1.25);
-        const glowRadius1 = n1.size * 2.4 * (1 + (nodeBoost1 - 1) * 0.25 + (isHovered1 ? 0.4 : 0));
+        // Draw midground node (normalized, delicate with uniform scaling)
+        const nodeBaseRadius1 = getUniformNodeScale(n1.size, 1, width, height, dpr);
+        const distToCursor1 = mouse.active ? Math.hypot(mouse.screenX - x1, mouse.screenY - y1) : 9999;
+        const hoverFactor1 = distToCursor1 < 220 * sensitivity ? Math.pow(1 - distToCursor1 / (220 * sensitivity), 1.5) : 0;
+        const ripPulse1 = (n1.rippleIllumination || 0) * 0.25 * Math.sin(nowTime * 0.007 + n1.breathingPhase);
+        const currentRadius1 = nodeBaseRadius1 * (1.0 + hoverFactor1 * 0.40 + ripPulse1);
+
+        const isHovered1 = n1.interactionZone >= 2 || (nodeBoost1 > 1.25) || hoverFactor1 > 0.15;
+        const glowRadius1 = currentRadius1 * 2.6 * (1 + (nodeBoost1 - 1) * 0.25 + (isHovered1 ? 0.45 : 0));
         const glow1 = ctx.createRadialGradient(x1, y1, 0, x1, y1, glowRadius1);
-        glow1.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.48 : 0.28)).toFixed(3)})`);
+        glow1.addColorStop(0, `rgba(${palette.cyan}, ${(nodeAlpha1 * (isDarkRef.current ? 0.52 : 0.32)).toFixed(3)})`);
         glow1.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = glow1;
         ctx.beginPath();
@@ -1667,21 +1868,21 @@ export function useLivingNeuralBackground(
 
         ctx.fillStyle = `rgba(${palette.cyan}, ${nodeAlpha1.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost1 - 1) * 0.12), 0, Math.PI * 2);
+        ctx.arc(x1, y1, currentRadius1, 0, Math.PI * 2);
         ctx.fill();
 
         // Magical hover starlight glint & ring on midground nodes
         if (isHovered1) {
-          ctx.strokeStyle = `rgba(${palette.cyan}, ${(nodeAlpha1 * 0.6).toFixed(3)})`;
-          ctx.lineWidth = 0.75;
+          ctx.strokeStyle = `rgba(${palette.cyan}, ${(nodeAlpha1 * 0.68).toFixed(3)})`;
+          ctx.lineWidth = 0.85;
           ctx.beginPath();
-          ctx.arc(x1, y1, n1.size * 2.2, 0, Math.PI * 2);
+          ctx.arc(x1, y1, currentRadius1 * 2.3, 0, Math.PI * 2);
           ctx.stroke();
 
           // 4-point sparkle cross
-          const sparkSize = n1.size * 1.8;
-          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha1 * 0.75).toFixed(3)})`;
-          ctx.lineWidth = 0.8;
+          const sparkSize = currentRadius1 * 1.9;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha1 * 0.80).toFixed(3)})`;
+          ctx.lineWidth = 0.85;
           ctx.beginPath();
           ctx.moveTo(x1 - sparkSize, y1);
           ctx.lineTo(x1 + sparkSize, y1);
@@ -1759,6 +1960,17 @@ export function useLivingNeuralBackground(
 
             const synapticGlow = getSynapticExcitation(`2_${Math.min(idx1, idx2)}_${Math.max(idx1, idx2)}`, instantProximity, nowTime);
 
+            // Foreground Emissive Connection Glow
+            const emissiveFactor2 = Math.max(instantProximity, synapticGlow);
+            if (emissiveFactor2 > 0.04) {
+              ctx.strokeStyle = `rgba(${palette.amber}, ${(emissiveFactor2 * (isDarkRef.current ? 0.42 : 0.26)).toFixed(3)})`;
+              ctx.lineWidth = 2.8 + emissiveFactor2 * 3.2;
+              ctx.beginPath();
+              ctx.moveTo(x1, y1);
+              ctx.lineTo(x2, y2);
+              ctx.stroke();
+            }
+
             const alpha = Math.min(1.0, (distFalloff * palette.lineAlpha * 1.55 * visibility + jointActivity + synapticGlow * 0.58 + extraBright) * localBoost);
             
             // Dual-tone gradient stroke between foreground nodes
@@ -1767,7 +1979,7 @@ export function useLivingNeuralBackground(
             grad.addColorStop(1, `rgba(${palette.amber}, ${(alpha * 0.88).toFixed(3)})`);
             
             ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.5 + (localBoost - 1.0) * 0.6 + extraBright * 1.0 + (n1.interactionZone >= 2 ? 0.5 : 0) + (synapticGlow > 0.08 ? 0.52 : 0);
+            ctx.lineWidth = 1.4 + (localBoost - 1.0) * 0.6 + extraBright * 1.0 + (n1.interactionZone >= 2 ? 0.5 : 0) + (synapticGlow > 0.08 ? 0.52 : 0);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -1777,13 +1989,19 @@ export function useLivingNeuralBackground(
           }
         }
 
-        // Luminous flagship node halo & core (normalized, sleek)
-        const isHovered2 = n1.interactionZone >= 2 || (nodeBoost2 > 1.3);
+        // Luminous flagship node halo & core (normalized with getUniformNodeScale)
+        const nodeBaseRadius2 = getUniformNodeScale(n1.size, 2, width, height, dpr);
+        const distToCursor2 = mouse.active ? Math.hypot(mouse.screenX - x1, mouse.screenY - y1) : 9999;
+        const hoverFactor2 = distToCursor2 < 260 * sensitivity ? Math.pow(1 - distToCursor2 / (260 * sensitivity), 1.5) : 0;
+        const ripPulse2 = (n1.rippleIllumination || 0) * 0.28 * Math.sin(nowTime * 0.007 + n1.breathingPhase);
+        const currentRadius2 = nodeBaseRadius2 * (1.0 + hoverFactor2 * 0.45 + ripPulse2);
+
+        const isHovered2 = n1.interactionZone >= 2 || (nodeBoost2 > 1.3) || hoverFactor2 > 0.15;
         const pulse = 1.0 + Math.sin(n1.phase * 2) * 0.18;
-        const fgGlowRadius = n1.size * 2.6 * pulse * (1 + (nodeBoost2 - 1) * 0.25 + (isHovered2 ? 0.45 : 0));
+        const fgGlowRadius = currentRadius2 * 2.8 * pulse * (1 + (nodeBoost2 - 1) * 0.25 + (isHovered2 ? 0.5 : 0));
         const fgGlow = ctx.createRadialGradient(x1, y1, 0, x1, y1, fgGlowRadius);
-        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha2 * (isDarkRef.current ? 0.58 : 0.32)).toFixed(3)})`);
-        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${(nodeAlpha2 * (isDarkRef.current ? 0.24 : 0.14)).toFixed(3)})`);
+        fgGlow.addColorStop(0, `rgba(${palette.indigo}, ${(nodeAlpha2 * (isDarkRef.current ? 0.62 : 0.36)).toFixed(3)})`);
+        fgGlow.addColorStop(0.5, `rgba(${palette.amber}, ${(nodeAlpha2 * (isDarkRef.current ? 0.28 : 0.18)).toFixed(3)})`);
         fgGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = fgGlow;
         ctx.beginPath();
@@ -1793,28 +2011,28 @@ export function useLivingNeuralBackground(
         // Node center
         ctx.fillStyle = `rgba(${palette.indigo}, ${nodeAlpha2.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x1, y1, n1.size * (1 + (nodeBoost2 - 1) * 0.14 + (isHovered2 ? 0.2 : 0)), 0, Math.PI * 2);
+        ctx.arc(x1, y1, currentRadius2, 0, Math.PI * 2);
         ctx.fill();
 
         // High-contrast pinpoint center
         ctx.fillStyle = isDarkRef.current ? '#ffffff' : '#4338ca';
         ctx.beginPath();
-        ctx.arc(x1, y1, Math.max(0.6, n1.size * 0.35 * (1 + (nodeBoost2 - 1) * 0.12)), 0, Math.PI * 2);
+        ctx.arc(x1, y1, Math.max(0.6, currentRadius2 * 0.35), 0, Math.PI * 2);
         ctx.fill();
 
         // Magical celestial hover aura & sparkling star glint
         if (isHovered2) {
           // Concentric starlight halo ring
-          ctx.strokeStyle = `rgba(${palette.amber}, ${(nodeAlpha2 * 0.65).toFixed(3)})`;
-          ctx.lineWidth = 0.85;
+          ctx.strokeStyle = `rgba(${palette.amber}, ${(nodeAlpha2 * 0.70).toFixed(3)})`;
+          ctx.lineWidth = 0.95;
           ctx.beginPath();
-          ctx.arc(x1, y1, n1.size * 2.8, 0, Math.PI * 2);
+          ctx.arc(x1, y1, currentRadius2 * 2.6, 0, Math.PI * 2);
           ctx.stroke();
 
           // Delicate 4-point starlight glint
-          const sparkSize = n1.size * 2.2;
-          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha2 * 0.85).toFixed(3)})`;
-          ctx.lineWidth = 0.9;
+          const sparkSize = currentRadius2 * 2.2;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${(nodeAlpha2 * 0.90).toFixed(3)})`;
+          ctx.lineWidth = 0.95;
           ctx.beginPath();
           ctx.moveTo(x1 - sparkSize, y1);
           ctx.lineTo(x1 + sparkSize, y1);
