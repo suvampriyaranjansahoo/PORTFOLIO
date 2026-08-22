@@ -84,10 +84,10 @@ export function DecisionBoundaryPlane({ darkMode }: { darkMode: boolean }) {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
     uHoverIntensity: { value: 0.0 },
-    uColorHigh: { value: new THREE.Color(darkMode ? '#6366f1' : '#4f46e5') },
-    uColorLow: { value: new THREE.Color(darkMode ? '#06b6d4' : '#0891b2') },
-    uColorBoundary: { value: new THREE.Color(darkMode ? '#f59e0b' : '#d97706') },
-    uOpacity: { value: darkMode ? 0.38 : 0.22 }
+    uColorHigh: { value: new THREE.Color(darkMode ? '#6366f1' : '#ddd0c2') },
+    uColorLow: { value: new THREE.Color(darkMode ? '#06b6d4' : '#f7f2ec') },
+    uColorBoundary: { value: new THREE.Color(darkMode ? '#f59e0b' : '#d5b7af') },
+    uOpacity: { value: darkMode ? 0.38 : 0.16 }
   }), [darkMode]);
 
   useFrame((_, delta) => {
@@ -147,7 +147,7 @@ export function NeuralPointCloudGroup({ darkMode }: { darkMode: boolean }) {
 
     const colors = darkMode 
       ? ['#38bdf8', '#818cf8', '#fbbf24', '#34d399', '#c084fc'] 
-      : ['#0284c7', '#6366f1', '#d97706', '#059669', '#7c3aed'];
+      : ['#B79C8A', '#D5B7AF', '#C48B71', '#D4A373', '#7E675A'];
 
     for (let i = 0; i < count; i++) {
       const x = (rnd() - 0.5) * 24;

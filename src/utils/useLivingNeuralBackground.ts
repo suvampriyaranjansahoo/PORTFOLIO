@@ -849,13 +849,13 @@ export function useLivingNeuralBackground(
         };
       } else {
         return {
-          indigo: '79, 70, 229',
-          cyan: '8, 145, 178',
-          amber: '217, 119, 6',
-          violet: '109, 40, 217',
-          baseText: '16, 20, 29',
-          lineAlpha: 0.14,
-          nodeAlpha: 0.50,
+          indigo: '183, 156, 138', // warm taupe
+          cyan: '200, 138, 117',   // copper
+          amber: '212, 163, 115',  // warm golden amber
+          violet: '213, 183, 175', // soft blush
+          baseText: '126, 103, 90',// primary mocha dark text
+          lineAlpha: 0.18,
+          nodeAlpha: 0.65,
         };
       }
     };
@@ -2015,7 +2015,7 @@ export function useLivingNeuralBackground(
         ctx.fill();
 
         // High-contrast pinpoint center
-        ctx.fillStyle = isDarkRef.current ? '#ffffff' : '#4338ca';
+        ctx.fillStyle = isDarkRef.current ? '#ffffff' : '#7e675a';
         ctx.beginPath();
         ctx.arc(x1, y1, Math.max(0.6, currentRadius2 * 0.35), 0, Math.PI * 2);
         ctx.fill();

@@ -168,21 +168,21 @@ export const Header: React.FC<HeaderProps> = ({
         <a 
           href="#top" 
           id="brand-logo-link"
-          className="font-display font-bold text-base sm:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1.5 whitespace-nowrap text-[#101318] dark:text-white"
+          className="font-display font-bold text-base sm:text-lg tracking-tight hover:opacity-80 transition-opacity flex items-center gap-1.5 whitespace-nowrap text-[#2b1f1a] dark:text-white"
         >
           <span>{PERSONAL_INFO.name}</span>
-          <span className="text-[#a66a12]">.</span>
+          <span className="text-[#7e675a] dark:text-[#fbbf24]">.</span>
         </a>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm text-[#5c6472] dark:text-[#a0a8b5]" aria-label="Main Navigation">
-          <a href="#about" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.about}</a>
-          <a href="#work" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.work}</a>
-          <a href="#demos" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.demos}</a>
-          <a href="#experience" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.experience}</a>
-          <a href="#skills" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.toolbox}</a>
-          <a href="#academics" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.academics}</a>
-          <a href="#contact" className="hover:text-[#101318] dark:hover:text-white transition-colors">{t.contact}</a>
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-[#5c4a3e] dark:text-[#a0a8b5]" aria-label="Main Navigation">
+          <a href="#about" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.about}</a>
+          <a href="#work" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.work}</a>
+          <a href="#demos" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.demos}</a>
+          <a href="#experience" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.experience}</a>
+          <a href="#skills" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.toolbox}</a>
+          <a href="#academics" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.academics}</a>
+          <a href="#contact" className="hover:text-[#2b1f1a] dark:hover:text-white transition-colors">{t.contact}</a>
         </nav>
 
         {/* Action Controls */}
@@ -192,14 +192,14 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="language-switcher-btn"
               onClick={() => setLangMenuOpen(!langMenuOpen)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-white dark:bg-[#161b24]/90 border border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] hover:border-[#a66a12] dark:hover:border-white/30 transition-all cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-[#fefcf9] dark:bg-[#161b24]/90 border border-[#b79c8a]/50 dark:border-white/15 text-[#2b1f1a] dark:text-[#f1f5f9] hover:border-[#7e675a] dark:hover:border-white/30 transition-all cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
               title="Switch Portfolio Language"
               aria-label="Language selector"
               aria-expanded={langMenuOpen}
             >
-              <Globe className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
+              <Globe className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />
               <span className="uppercase font-bold">{language}</span>
-              <ChevronDown className={`w-3 h-3 text-[#64748b] dark:text-[#94a3b8] transition-transform ${langMenuOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-3 h-3 text-[#7e675a] dark:text-[#94a3b8] transition-transform ${langMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {langMenuOpen && (
@@ -207,24 +207,24 @@ export const Header: React.FC<HeaderProps> = ({
                 id="language-dropdown-menu"
                 className="absolute right-0 top-full mt-2 w-[160px] card-level-1 p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="text-[10px] font-mono uppercase text-[#8b93a1] px-2 py-1 border-b border-[#dfe3e9] dark:border-white/[0.08] mb-1">
+                <div className="text-[10px] font-mono uppercase text-[#7e675a] dark:text-[#8b93a1] px-2 py-1 border-b border-[#b79c8a]/30 dark:border-white/[0.08] mb-1">
                   Language / Sprache
                 </div>
                 {languages.map((l) => (
                   <button
                     key={l.code}
                     onClick={() => handleLangChange(l.code)}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono text-left transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono text-left transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:outline-none ${
                       language === l.code
-                        ? 'bg-[#a66a12]/15 text-[#a66a12] dark:text-[#fbbf24] font-semibold'
-                        : 'text-[#101318] dark:text-white hover:bg-[#f6f7f9] dark:hover:bg-[#21262d]'
+                        ? 'bg-[#d5b7af]/35 dark:bg-[#fbbf24]/15 text-[#7e675a] dark:text-[#fbbf24] font-semibold'
+                        : 'text-[#2b1f1a] dark:text-white hover:bg-[#f2ebe1] dark:hover:bg-[#21262d]'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <span>{l.flag}</span>
                       <span>{l.label}</span>
                     </div>
-                    {language === l.code && <CheckCircle2 className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />}
+                    {language === l.code && <CheckCircle2 className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />}
                   </button>
                 ))}
               </div>
@@ -235,10 +235,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="recruiter-mode-btn"
             onClick={onOpenRecruiter}
-            className="hidden sm:inline-flex items-center gap-1.5 btn-accent-subtle focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+            className="hidden sm:inline-flex items-center gap-1.5 btn-accent-subtle focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
             title="Open quick 60-second summary for hiring managers"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />
             <span>{t.recruiterMode}</span>
           </button>
 
@@ -247,13 +247,13 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="resume-dropdown-btn"
               onClick={() => setResumeMenuOpen(!resumeMenuOpen)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-white dark:bg-[#161b24]/90 border border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] shadow-xs hover:border-[#a66a12] dark:hover:border-white/30 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fefcf9] dark:bg-[#161b24]/90 border border-[#b79c8a]/50 dark:border-white/15 text-[#2b1f1a] dark:text-[#f1f5f9] shadow-xs hover:border-[#7e675a] dark:hover:border-white/30 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
               aria-expanded={resumeMenuOpen}
               aria-haspopup="true"
             >
-              <FileText className="w-3.5 h-3.5 text-[#a66a12] dark:text-[#fbbf24]" />
+              <FileText className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />
               <span>{t.resume}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-[#64748b] dark:text-[#94a3b8] transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 text-[#7e675a] dark:text-[#94a3b8] transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {resumeMenuOpen && (
@@ -261,11 +261,11 @@ export const Header: React.FC<HeaderProps> = ({
                 id="resume-dropdown-menu"
                 className="absolute right-0 top-full mt-2 w-[320px] sm:w-[350px] card-level-1 p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               >
-                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#dfe3e9] dark:border-white/[0.08] mb-1.5">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#8b93a1]">
+                <div className="flex items-center justify-between px-2 py-1.5 border-b border-[#b79c8a]/30 dark:border-white/[0.08] mb-1.5">
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#7e675a] dark:text-[#8b93a1]">
                     Tailored Resumes (5 Roles)
                   </span>
-                  <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                  <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> ATS-Ready
                   </span>
                 </div>
@@ -283,16 +283,16 @@ export const Header: React.FC<HeaderProps> = ({
                           handleDownload(role);
                         }
                       }}
-                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f6f7f9] dark:hover:bg-[#21262d] focus:bg-[#f6f7f9] dark:focus:bg-[#21262d] focus-visible:ring-2 focus-visible:ring-[#d98b18] outline-none transition-colors cursor-pointer"
+                      className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#f2ebe1] dark:hover:bg-[#21262d] focus:bg-[#f2ebe1] dark:focus:bg-[#21262d] focus-visible:ring-2 focus-visible:ring-[#7e675a] outline-none transition-colors cursor-pointer"
                       onClick={() => handleDownload(role)}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <span className="text-base">{role.icon}</span>
                         <div className="text-left truncate">
-                          <div className="text-xs font-semibold text-[#101318] dark:text-white group-hover:text-[#a66a12] dark:group-hover:text-[#fbbf24] transition-colors">
+                          <div className="text-xs font-semibold text-[#2b1f1a] dark:text-white group-hover:text-[#7e675a] dark:group-hover:text-[#fbbf24] transition-colors">
                             {role.title}
                           </div>
-                          <div className="text-[10px] font-mono text-[#5c6472] dark:text-[#8b93a1] truncate">
+                          <div className="text-[10px] font-mono text-[#5c4a3e] dark:text-[#8b93a1] truncate">
                             {role.subtitle}
                           </div>
                         </div>
@@ -304,7 +304,7 @@ export const Header: React.FC<HeaderProps> = ({
                           onClick={(e) => handlePreview(role, e)}
                           title="Preview in browser"
                           aria-label={`Preview ${role.title} resume in browser`}
-                          className="p-1.5 rounded-md text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none cursor-pointer"
+                          className="p-1.5 rounded-md text-[#5c4a3e] dark:text-[#8b93a1] hover:text-[#2b1f1a] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:outline-none cursor-pointer"
                         >
                           <Eye className="w-3.5 h-3.5" />
                         </button>
@@ -313,7 +313,7 @@ export const Header: React.FC<HeaderProps> = ({
                           onClick={(e) => handleDownload(role, e)}
                           title="Download PDF"
                           aria-label={`Download ${role.title} PDF resume`}
-                          className="p-1.5 rounded-md text-[#a66a12] dark:text-[#fbbf24] hover:bg-[#a66a12]/10 dark:hover:bg-[#fbbf24]/10 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none cursor-pointer"
+                          className="p-1.5 rounded-md text-[#7e675a] dark:text-[#fbbf24] hover:bg-[#d5b7af]/30 dark:hover:bg-[#fbbf24]/10 focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:outline-none cursor-pointer"
                         >
                           <Download className="w-3.5 h-3.5" />
                         </button>
@@ -322,7 +322,7 @@ export const Header: React.FC<HeaderProps> = ({
                   ))}
                 </div>
 
-                <div className="mt-2 pt-2 border-t border-[#dfe3e9] dark:border-[#30363d] px-2 text-[10px] font-mono text-[#8b93a1] text-center">
+                <div className="mt-2 pt-2 border-t border-[#b79c8a]/30 dark:border-[#30363d] px-2 text-[10px] font-mono text-[#7e675a] dark:text-[#8b93a1] text-center">
                   Click any role for instant tailored PDF download
                 </div>
               </div>
@@ -333,17 +333,17 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="theme-toggle-btn"
             onClick={onToggleTheme}
-            className="w-9 h-9 flex items-center justify-center rounded-xl border border-[#cbd5e1] dark:border-white/15 bg-white dark:bg-[#161b24]/90 text-[#5c6472] dark:text-[#94a3b8] hover:text-[#101318] dark:hover:text-white hover:border-[#94a3b8] dark:hover:border-white/30 transition-all cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+            className="w-9 h-9 flex items-center justify-center rounded-xl border border-[#b79c8a]/50 dark:border-white/15 bg-[#fefcf9] dark:bg-[#161b24]/90 text-[#5c4a3e] dark:text-[#94a3b8] hover:text-[#2b1f1a] dark:hover:text-white hover:border-[#7e675a] dark:hover:border-white/30 transition-all cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
             aria-label="Toggle theme"
           >
-            {darkMode ? <Sun className="w-4 h-4 text-[#fbbf24]" /> : <Moon className="w-4 h-4 text-[#475569]" />}
+            {darkMode ? <Sun className="w-4 h-4 text-[#fbbf24]" /> : <Moon className="w-4 h-4 text-[#7e675a]" />}
           </button>
 
           {/* Mobile Menu Toggle */}
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl border border-[#cbd5e1] dark:border-white/15 bg-white dark:bg-[#161b24]/90 text-[#101318] dark:text-white cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl border border-[#b79c8a]/50 dark:border-white/15 bg-[#fefcf9] dark:bg-[#161b24]/90 text-[#2b1f1a] dark:text-white cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

@@ -198,7 +198,7 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
       />
 
       {/* ─── LAYER 2: SLOWLY MOVING AMBIENT LIGHT SOURCES (20s - 60s DRIFT + DEPTH PARALLAX) ─── */}
-      {/* Light Mode Atmosphere across Entire Screen */}
+      {/* Light Mode Atmosphere: Oat Beige, Soft Blush Nude & Warm Golden Atmosphere */}
       <div 
         className="absolute inset-0 opacity-100 dark:opacity-0 transition-opacity duration-700 pointer-events-none"
         style={{
@@ -206,32 +206,32 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
           willChange: 'transform',
         }}
       >
-        {/* Soft cool-indigo nebula (top-right drifting) */}
+        {/* Soft Oat Beige & Warm Ivory nebula (top-right drifting) */}
         <div
           className="ambient-light ambient-light-indigo absolute -top-[10%] -right-[8%] w-[900px] h-[900px] rounded-full blur-[140px]"
           style={{
-            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.16) 0%, rgba(199, 210, 254, 0.18) 40%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(221, 208, 194, 0.45) 0%, rgba(247, 242, 236, 0.35) 45%, transparent 70%)',
           }}
         />
-        {/* Warm amber energy field (mid-left drifting) */}
+        {/* Warm Blush Nude energy field (mid-left drifting) */}
         <div
           className="ambient-light ambient-light-amber absolute top-[30%] -left-[10%] w-[850px] h-[850px] rounded-full blur-[150px]"
           style={{
-            background: 'radial-gradient(circle, rgba(217, 139, 24, 0.13) 0%, rgba(254, 243, 199, 0.20) 45%, transparent 72%)',
+            background: 'radial-gradient(circle, rgba(213, 183, 175, 0.38) 0%, rgba(243, 236, 226, 0.30) 45%, transparent 72%)',
           }}
         />
-        {/* Central analytical atmospheric glow (behind main section cards) */}
+        {/* Central analytical warm golden atmospheric glow (behind main section cards) */}
         <div
           className="ambient-light ambient-light-cyan absolute top-[52%] left-[22%] w-[850px] h-[850px] rounded-full blur-[160px]"
           style={{
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, rgba(224, 231, 255, 0.16) 48%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(212, 163, 115, 0.22) 0%, rgba(221, 208, 194, 0.32) 48%, transparent 70%)',
           }}
         />
-        {/* Soft cyan analytical glow (lower right & bottom) */}
+        {/* Soft Warm Taupe analytical glow (lower right & bottom) */}
         <div
           className="ambient-light ambient-light-cyan absolute bottom-[4%] right-[6%] w-[900px] h-[900px] rounded-full blur-[150px]"
           style={{
-            background: 'radial-gradient(circle, rgba(8, 145, 178, 0.12) 0%, rgba(224, 231, 255, 0.20) 50%, transparent 72%)',
+            background: 'radial-gradient(circle, rgba(183, 156, 138, 0.28) 0%, rgba(247, 242, 236, 0.35) 50%, transparent 72%)',
           }}
         />
       </div>
@@ -296,11 +296,11 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
         <Global3DBackground motionEnabled={motionEnabled && !systemPrefersReducedMotion} />
       </ThreeCanvasErrorBoundary>
 
-      {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH ─── */}
+      {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH (LIGHT: SOFT WARM TAUPE, DARK: DEEP OBSIDIAN) ─── */}
       <div
-        className="absolute inset-0 opacity-35 dark:opacity-65 pointer-events-none"
+        className="absolute inset-0 opacity-40 dark:opacity-75 pointer-events-none transition-opacity duration-700"
         style={{
-          background: 'radial-gradient(circle 80% 80% at 50% 50%, transparent 60%, rgba(10, 14, 22, 0.4) 100%)',
+          background: 'radial-gradient(circle 80% 80% at 50% 50%, transparent 62%, var(--border-subtle) 100%)',
           zIndex: 3,
         }}
       />
