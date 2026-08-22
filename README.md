@@ -2,7 +2,7 @@
 
 > **Data → Product → Business**  
 > Computer Science Engineering Graduate (Class of 2026) | Data Analyst, Product Analyst & Data Engineer  
-> [Live Portfolio Demo](https://suvampriyaranjansahooportfolio.vercel.app/e) · [GitHub Profile](https://github.com/suvampriyaranjansahoo) · [LinkedIn](https://linkedin.com/in/suvampriyaranjansahoo)
+> [Live Portfolio Demo](https://suvampriyaranjansahooportfolio.vercel.app/) · [GitHub Profile](https://github.com/suvampriyaranjansahoo) · [LinkedIn](https://linkedin.com/in/suvampriyaranjansahoo)
 
 ---
 
