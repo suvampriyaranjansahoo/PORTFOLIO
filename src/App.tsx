@@ -19,12 +19,14 @@ import { ResumePreviewModal } from './components/ResumePreviewModal';
 import { CommandPalette } from './components/CommandPalette';
 import { Toast } from './components/Toast';
 import { GlobalBackground } from './components/GlobalBackground';
+import { useTilt3DCards } from './utils/useTilt3DCards';
 import { ProjectCategory, ResumeRole } from './types';
 import { generateResumePDF } from './utils/pdfGenerator';
 import { PERSONAL_INFO } from './data/portfolioData';
 import { Language } from './data/translations';
 
 export default function App() {
+  useTilt3DCards();
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
