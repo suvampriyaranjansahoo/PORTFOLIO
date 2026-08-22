@@ -761,6 +761,37 @@ input[type="range"] {
   }
 }
 
+/* The decorative SVG background gets a slow, peripheral signal pulse. Its
+   elements have no semantic or interactive role and remain behind all content. */
+#global-page-background svg {
+  animation: constellation-drift 20s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.data-node {
+  animation: data-node-pulse 3.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.data-node-delayed { animation-delay: -1.4s; }
+.data-node-amber { animation-delay: -2.6s; }
+
+@keyframes constellation-drift {
+  from { transform: translate3d(-0.25%, -0.2%, 0); }
+  to { transform: translate3d(0.25%, 0.2%, 0); }
+}
+
+@keyframes data-node-pulse {
+  0%, 100% { opacity: 0.42; transform: scale(0.82); }
+  48% { opacity: 0.95; transform: scale(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #global-page-background svg,
+  .data-node { animation: none; }
+}
+
 /* All existing controls get tactile depth while their handlers and labels remain unchanged. */
 button, a, [role="button"] { transition-timing-function: var(--ease-premium); }
 button:not(:disabled):active, [role="button"]:active { transform: translateY(1px) scale(.985); }
@@ -819,7 +850,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--accent-secondary
     transform: none !important;
   }
 
-<<<<<<< HEAD
+}
+
 /* ─── AMBIENT DATA-UNIVERSE FINISH ───
    Presentation-only refinements layered over the existing component system.
    These rules deliberately do not affect sizing, visibility, focus behavior,
@@ -868,10 +900,9 @@ main > section {
   }
 }
 
-=======
+@media (prefers-reduced-motion: reduce) {
   .card-level-1::after,
   .card-level-2::after {
     display: none !important;
   }
 }
->>>>>>> 2583f7dc4c7d46105f5857100dde1239549ec909

@@ -133,9 +133,9 @@ export const GlobalBackground: React.FC = React.memo(() => {
             strokeWidth="0.75"
             transform="rotate(-15, 1200, 100)"
           />
-          <circle cx="82%" cy="14%" r="2" className="fill-indigo-500/40 dark:fill-indigo-400/60" />
-          <circle cx="75%" cy="6%" r="1.5" className="fill-slate-400/40 dark:fill-indigo-300/50" />
-          <circle cx="94%" cy="22%" r="2.5" className="fill-amber-500/40 dark:fill-amber-400/50" />
+          <circle cx="82%" cy="14%" r="2" className="data-node fill-indigo-500/40 dark:fill-indigo-400/60" />
+          <circle cx="75%" cy="6%" r="1.5" className="data-node data-node-delayed fill-slate-400/40 dark:fill-indigo-300/50" />
+          <circle cx="94%" cy="22%" r="2.5" className="data-node data-node-amber fill-amber-500/40 dark:fill-amber-400/50" />
           <line
             x1="82%"
             y1="14%"
@@ -162,9 +162,9 @@ export const GlobalBackground: React.FC = React.memo(() => {
             transform="rotate(22, 100, 500)"
           />
           {/* Sparse Analytical Data Nodes */}
-          <circle cx="8%" cy="42%" r="2" className="fill-indigo-500/40 dark:fill-indigo-400/60" />
-          <circle cx="14%" cy="54%" r="2" className="fill-amber-500/40 dark:fill-amber-400/60" />
-          <circle cx="4%" cy="60%" r="1.5" className="fill-slate-400/30 dark:fill-slate-500/40" />
+          <circle cx="8%" cy="42%" r="2" className="data-node data-node-delayed fill-indigo-500/40 dark:fill-indigo-400/60" />
+          <circle cx="14%" cy="54%" r="2" className="data-node data-node-amber fill-amber-500/40 dark:fill-amber-400/60" />
+          <circle cx="4%" cy="60%" r="1.5" className="data-node fill-slate-400/30 dark:fill-slate-500/40" />
           <line
             x1="8%"
             y1="42%"
@@ -205,8 +205,8 @@ export const GlobalBackground: React.FC = React.memo(() => {
             strokeWidth="0.75"
             strokeDasharray="8 12"
           />
-          <circle cx="80%" cy="84%" r="2" className="fill-indigo-500/40 dark:fill-indigo-400/50" />
-          <circle cx="91%" cy="92%" r="2.5" className="fill-amber-500/30 dark:fill-amber-400/50" />
+          <circle cx="80%" cy="84%" r="2" className="data-node data-node-delayed fill-indigo-500/40 dark:fill-indigo-400/50" />
+          <circle cx="91%" cy="92%" r="2.5" className="data-node data-node-amber fill-amber-500/30 dark:fill-amber-400/50" />
           <line
             x1="80%"
             y1="84%"
