@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, Component, ReactNode, ErrorInfo } from 'react';
 import { useLivingNeuralBackground, MouseCoordinates } from '../utils/useLivingNeuralBackground';
-import { NeuralSettings } from '../types';
+import { NeuralSettings, BackgroundPresetMode } from '../types';
 import {
   Global3DBackground,
   CameraParallax,
@@ -80,6 +80,7 @@ export interface GlobalBackgroundProps {
   interactionStrength?: number;
   settings?: Partial<NeuralSettings>;
   systemPrefersReducedMotion?: boolean;
+  presetMode?: BackgroundPresetMode;
 }
 
 export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({ 
@@ -92,11 +93,13 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
   visibility: propVisibility,
   interactionStrength: propInteractionStrength,
   settings,
-  systemPrefersReducedMotion
+  systemPrefersReducedMotion,
+  presetMode: propPresetMode
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const effectivePresetMode = propPresetMode ?? settings?.presetMode ?? 'cosmic';
   const effectiveConnectionDensity = propConnectionDensity ?? settings?.connectionDensity ?? 1.0;
   const effectivePulseFrequency = propPulseFrequency ?? settings?.pulseFrequency ?? 1.0;
   const effectiveParticleSpeed = propParticleSpeed ?? settings?.particleSpeed ?? 1.0;
@@ -293,7 +296,10 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = React.memo(({
 
       {/* ─── 3D SPATIAL DEPTH SCENE WITH PERSPECTIVE CAMERA PARALLAX & POST-PROCESSING (SAFE ERROR BOUNDARY) ─── */}
       <ThreeCanvasErrorBoundary>
-        <Global3DBackground motionEnabled={motionEnabled && !systemPrefersReducedMotion} />
+        <Global3DBackground 
+          motionEnabled={motionEnabled && !systemPrefersReducedMotion} 
+          presetMode={effectivePresetMode}
+        />
       </ThreeCanvasErrorBoundary>
 
       {/* ─── VIGNETTE FOR CLEAN CINEMATIC DEPTH (LIGHT: SOFT WARM TAUPE, DARK: DEEP OBSIDIAN) ─── */}

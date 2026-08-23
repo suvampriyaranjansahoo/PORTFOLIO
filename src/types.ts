@@ -88,6 +88,8 @@ export interface AcademicMilestone {
   badge: string;
 }
 
+export type BackgroundPresetMode = 'cosmic' | 'topographic' | 'constellation' | 'quantum' | 'zen';
+
 export interface NeuralSettings {
   connectionDensity: number;    // 0.4 to 2.0 (default 1.0)
   pulseFrequency: number;       // 0.3 to 2.5 (default 1.0)
@@ -95,6 +97,9 @@ export interface NeuralSettings {
   sensitivity?: number;         // 0.6 to 2.4 (default 1.4)
   visibility?: number;          // 0.6 to 2.2 (default 1.2)
   interactionStrength?: number; // 0.5 to 2.0 (default 1.2)
+  presetMode?: BackgroundPresetMode; // 'cosmic' | 'topographic' | 'constellation' | 'quantum' | 'zen'
+  shockwavesEnabled?: boolean;
+  synapticSparksEnabled?: boolean;
 }
 
 

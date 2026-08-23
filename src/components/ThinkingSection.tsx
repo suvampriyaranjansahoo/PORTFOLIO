@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, CheckCircle2, ChevronRight, HelpCircle, Lightbulb, LineChart, Target, Wrench } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
+import { SectionHeader } from './SectionHeader';
 
 interface ThinkingSectionProps {
   language?: Language;
@@ -46,31 +47,27 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
   ];
 
   return (
-    <section id="thinking" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
+    <section id="thinking" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#fecdd3]/70 dark:border-[#262c36] overflow-hidden">
       {/* Thematic Ambient Light Shift (Warm Golden Amber & Epistemic Bronze Glow) */}
       <SectionAmbientAtmosphere />
 
       <div className="relative z-10 max-w-[1160px] mx-auto px-5 sm:px-6">
-        <div className="font-mono text-xs text-[#a66a12] tracking-widest uppercase mb-2">
-          {t?.label || "05 · HOW I THINK"}
-        </div>
+        <SectionHeader
+          label={t?.label || "05 · HOW I THINK"}
+          heading={t?.heading || "From question to measurable action."}
+          subheading={t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
+        />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-4 space-y-4">
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#101318] dark:text-white tracking-tight">
-              {t?.heading || "From question to measurable action."}
-            </h2>
-            <p className="text-sm text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
-              {t?.copy || "I don't stop at what happened. I try to understand why it happened, what should change, and how we measure whether the change worked."}
-            </p>
-            <div className="card-level-2 p-4 space-y-2 text-xs font-mono text-[#5c6472] dark:text-[#8b93a1]">
-              <div className="flex items-center gap-2 text-[#101318] dark:text-white font-semibold">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <div className="card-level-2 p-5 space-y-3 text-xs font-mono text-[#5e3240] dark:text-[#8b93a1] bg-white/90 dark:bg-[#141924]/85 border border-[#fecdd3] dark:border-white/10 shadow-xs">
+              <div className="flex items-center gap-2 text-[#2d151c] dark:text-white font-semibold">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>
                   {language === 'de' ? "Ganzheitliche Problemlösung" : language === 'fr' ? "Résolution de Bout en Bout" : language === 'hi' ? "समग्र समस्या समाधान" : "End-to-End Problem Ownership"}
                 </span>
               </div>
-              <p className="text-[11px] leading-relaxed">
+              <p className="text-[11px] leading-relaxed text-[#5e3240] dark:text-[#9ea7b4]">
                 {language === 'de'
                   ? "Ob Kundenabwanderung bei VOIS oder Insolvenzrisiken – jede Analyse schließt mit einer klaren Geschäftsempfehlung ab."
                   : language === 'fr'
@@ -87,17 +84,17 @@ export const ThinkingSection: React.FC<ThinkingSectionProps> = ({ language = 'en
               {steps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="card-level-2 p-4 hover:border-[#a66a12] transition-colors"
+                  className="card-level-2 p-4 hover:border-[#e11d48] dark:hover:border-white/30 transition-all bg-white/90 dark:bg-[#141924]/80 border border-[#fecdd3] dark:border-white/10"
                 >
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-mono text-xs font-bold text-[#a66a12]">
+                    <span className="font-mono text-xs font-bold text-[#e11d48] dark:text-[#fbbf24]">
                       0{idx + 1}
                     </span>
-                    <span className="font-mono text-xs font-bold text-[#101318] dark:text-white tracking-tight">
+                    <span className="font-mono text-xs font-bold text-[#2d151c] dark:text-white tracking-tight">
                       {step.title}
                     </span>
                   </div>
-                  <p className="text-xs text-[#5c6472] dark:text-[#9ea7b4] leading-relaxed">
+                  <p className="text-xs text-[#5e3240] dark:text-[#9ea7b4] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>

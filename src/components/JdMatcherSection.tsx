@@ -202,29 +202,29 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
   };
 
   return (
-    <div id="jd-matcher-container" className="card-level-1 overflow-hidden">
+    <div id="jd-matcher-container" className="card-level-1 overflow-hidden bg-white/95 dark:bg-[#141924]/90 border border-[#fecdd3] dark:border-white/10 shadow-xs">
       {/* Top Banner */}
-      <div className="p-5 border-b border-[#dfe3e9] dark:border-white/[0.08] bg-[#f8fafc] dark:bg-[#111622]/90 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 border-b border-[#fecdd3]/70 dark:border-white/[0.08] bg-[#fff5f7]/70 dark:bg-[#111622]/90 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-amber-500/10 text-[#a66a12]">
+          <div className="p-2 rounded-xl bg-rose-500/10 dark:bg-amber-500/10 text-[#e11d48] dark:text-[#fbbf24]">
             <Target className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#8b93a1]">
+            <div className="text-[10px] font-mono uppercase tracking-wider text-[#a06b7a] dark:text-[#8b93a1] font-semibold">
               Recruiter Evaluation Tool • Powered by Gemini AI
             </div>
-            <div className="font-display font-bold text-lg text-[#101318] dark:text-white">
+            <div className="font-display font-bold text-lg text-[#2d151c] dark:text-white">
               Instant Job Description (JD) Matcher & Skills Analyzer
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-[#5c6472] dark:text-[#8b93a1]">Match Engine:</span>
+          <span className="font-mono text-xs text-[#5e3240] dark:text-[#8b93a1]">Match Engine:</span>
           {isAnalyzing ? (
             <div 
               id="jd-evaluating-badge"
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-300 font-mono text-xs font-semibold animate-pulse"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-[#e11d48] dark:text-amber-300 font-mono text-xs font-semibold animate-pulse"
             >
               <Cpu className="w-3.5 h-3.5 animate-spin" />
               <span>Scanning with Gemini...</span>
@@ -243,15 +243,15 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
 
       <div className="p-6 space-y-6">
         {/* Mode Switcher Tabs */}
-        <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-[#dfe3e9]/60 dark:border-white/[0.06]">
+        <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-[#fecdd3]/60 dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
             <button
               id="jd-tab-preset-roles"
               onClick={() => setIsCustomMode(false)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
                 !isCustomMode
-                  ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-xs'
-                  : 'bg-white dark:bg-[#161b24] text-[#5c6472] dark:text-[#9ea7b4] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#262c36]'
+                  ? 'bg-[#2d151c] text-white dark:bg-white dark:text-[#101318] shadow-xs'
+                  : 'bg-white dark:bg-[#161b24] text-[#5e3240] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white border border-[#fecdd3] dark:border-[#262c36]'
               }`}
             >
               Role Presets (5 Archetypes)
@@ -261,17 +261,17 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
               onClick={() => setIsCustomMode(true)}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
                 isCustomMode
-                  ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] shadow-xs'
-                  : 'bg-white dark:bg-[#161b24] text-[#5c6472] dark:text-[#9ea7b4] hover:text-[#101318] dark:hover:text-white border border-[#dfe3e9] dark:border-[#262c36]'
+                  ? 'bg-[#2d151c] text-white dark:bg-white dark:text-[#101318] shadow-xs'
+                  : 'bg-white dark:bg-[#161b24] text-[#5e3240] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white border border-[#fecdd3] dark:border-[#262c36]'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <Sparkles className="w-3.5 h-3.5 text-[#e11d48] dark:text-[#fbbf24]" />
               <span>Paste Custom JD / AI Match</span>
             </button>
           </div>
 
-          <div className="text-[11px] font-mono text-[#8b93a1] flex items-center gap-1">
-            <Zap className="w-3 h-3 text-amber-500" />
+          <div className="text-[11px] font-mono text-[#a06b7a] dark:text-[#8b93a1] flex items-center gap-1">
+            <Zap className="w-3 h-3 text-[#e11d48] dark:text-amber-500" />
             <span>ATS keyword & semantic match engine</span>
           </div>
         </div>
@@ -279,7 +279,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
         {/* Preset Selector View */}
         {!isCustomMode && (
           <div>
-            <label className="block text-xs font-mono text-[#8b93a1] uppercase mb-2">
+            <label className="block text-xs font-mono text-[#a06b7a] dark:text-[#8b93a1] uppercase mb-2 font-semibold">
               Select Your Target Hiring Role or Open Position:
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" role="group" aria-label="Target hiring role presets">
@@ -294,17 +294,17 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                     setIsCustomMode(false);
                     setCustomAnalysis(null);
                   }}
-                  className={`p-3 rounded-xl text-left transition-all cursor-pointer flex flex-col justify-between border focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
+                  className={`p-3 rounded-xl text-left transition-all cursor-pointer flex flex-col justify-between border focus-visible:ring-2 focus-visible:ring-[#e11d48] focus-visible:outline-none ${
                     !isCustomMode && selectedPresetIndex === idx
-                      ? 'bg-[#101318] text-white dark:bg-white dark:text-[#101318] border-transparent shadow-xs'
-                      : 'bg-white dark:bg-[#161b24]/90 border-[#cbd5e1] dark:border-white/15 text-[#101318] dark:text-[#f1f5f9] hover:border-[#a66a12] dark:hover:border-white/30'
+                      ? 'bg-[#2d151c] text-white dark:bg-white dark:text-[#101318] border-transparent shadow-xs'
+                      : 'bg-white dark:bg-[#161b24]/90 border-[#fecdd3] dark:border-white/15 text-[#2d151c] dark:text-[#f1f5f9] hover:border-[#e11d48] dark:hover:border-white/30'
                   }`}
                 >
                   <span className="text-xs font-semibold line-clamp-2 leading-tight">
                     {preset.title}
                   </span>
                   <span className={`text-[10px] font-mono mt-2 ${
-                    !isCustomMode && selectedPresetIndex === idx ? 'text-amber-300 dark:text-amber-700 font-bold' : 'text-[#a66a12] dark:text-[#fbbf24]'
+                    !isCustomMode && selectedPresetIndex === idx ? 'text-rose-200 dark:text-amber-700 font-bold' : 'text-[#e11d48] dark:text-[#fbbf24] font-medium'
                   }`}>
                     {94 + (idx % 5)}% Fit →
                   </span>
@@ -318,18 +318,18 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
         {isCustomMode && (
           <div className="space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <label htmlFor="custom-jd-textarea" className="text-xs font-mono text-[#8b93a1] uppercase flex items-center gap-1.5">
-                <FileText className="w-3.5 h-3.5 text-amber-500" />
+              <label htmlFor="custom-jd-textarea" className="text-xs font-mono text-[#a06b7a] dark:text-[#8b93a1] uppercase flex items-center gap-1.5 font-semibold">
+                <FileText className="w-3.5 h-3.5 text-[#e11d48] dark:text-amber-500" />
                 Paste Job Description or Requirements:
               </label>
               <div className="flex items-center gap-1.5 text-[11px] font-mono">
-                <span className="text-[#8b93a1]">Try sample:</span>
+                <span className="text-[#a06b7a] dark:text-[#8b93a1]">Try sample:</span>
                 {SAMPLE_CUSTOM_JDS.map((sample, sIdx) => (
                   <button
                     key={sIdx}
                     id={`sample-jd-btn-${sIdx}`}
                     onClick={() => handleSelectSampleJd(sample.text)}
-                    className="px-2 py-0.5 rounded bg-white dark:bg-[#151920] border border-[#dfe3e9] dark:border-[#262c36] hover:border-[#a66a12] text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white transition-colors cursor-pointer"
+                    className="px-2 py-0.5 rounded bg-white dark:bg-[#151920] border border-[#fecdd3] dark:border-[#262c36] hover:border-[#e11d48] text-[#5e3240] dark:text-[#8b93a1] hover:text-[#2d151c] dark:hover:text-white transition-colors cursor-pointer"
                   >
                     {sample.label.split(' ')[0]}
                   </button>
@@ -344,7 +344,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
                 placeholder="Paste any Job Description, requirements, or tech stack here (e.g., 'We need a Product Analyst with SQL, Power BI, DAX, and RICE prioritization experience')..."
-                className="w-full p-3 text-xs font-mono rounded-xl bg-white dark:bg-[#111622] border border-[#dfe3e9] dark:border-[#262c36] text-[#101318] dark:text-white placeholder-[#8b93a1] focus:ring-2 focus:ring-[#d98b18] focus:border-transparent outline-none transition-all resize-y"
+                className="w-full p-3 text-xs font-mono rounded-xl bg-white dark:bg-[#111622] border border-[#fecdd3] dark:border-[#262c36] text-[#2d151c] dark:text-white placeholder-[#a06b7a] focus:ring-2 focus:ring-[#e11d48] focus:border-transparent outline-none transition-all resize-y"
               />
             </div>
 
@@ -353,7 +353,7 @@ export const JdMatcherSection: React.FC<JdMatcherProps> = ({
                 id="run-gemini-jd-analysis-btn"
                 disabled={isAnalyzing || !customText.trim()}
                 onClick={() => handleRunAiAnalysis()}
-                className="btn-primary !py-2 !px-4 text-xs font-mono flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18]"
+                className="btn-primary !py-2 !px-4 text-xs font-mono flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[#e11d48]"
               >
                 {isAnalyzing ? (
                   <>

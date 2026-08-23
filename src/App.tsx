@@ -175,9 +175,10 @@ export default function App() {
     }
   };
 
-  // Dedicated Neural Network Tuning Settings (Connection Density, Pulse Frequency, Particle Speed, Sensitivity, Visibility, Interaction Strength)
+  // Dedicated Neural Network Tuning Settings (Connection Density, Pulse Frequency, Particle Speed, Sensitivity, Visibility, Interaction Strength, Preset Mode)
   const [neuralSettings, setNeuralSettings] = useState<NeuralSettings>(() => {
     if (typeof window !== 'undefined') {
+      const savedPreset = localStorage.getItem('neural-preset-mode') as any;
       const savedConn = localStorage.getItem('neural-connection-density');
       const savedPulse = localStorage.getItem('neural-pulse-frequency');
       const savedSpeed = localStorage.getItem('neural-particle-speed');
@@ -185,6 +186,7 @@ export default function App() {
       const savedVis = localStorage.getItem('neural-visibility');
       const savedInteract = localStorage.getItem('neural-interaction-strength');
       return {
+        presetMode: (savedPreset && ['cosmic', 'topographic', 'constellation', 'quantum', 'zen'].includes(savedPreset)) ? savedPreset : 'cosmic',
         connectionDensity: savedConn ? Math.max(0.4, Math.min(2.0, parseFloat(savedConn) || 1.0)) : 1.0,
         pulseFrequency: savedPulse ? Math.max(0.3, Math.min(2.5, parseFloat(savedPulse) || 1.0)) : 1.0,
         particleSpeed: savedSpeed ? Math.max(0.3, Math.min(2.5, parseFloat(savedSpeed) || 1.0)) : 1.0,
@@ -194,6 +196,7 @@ export default function App() {
       };
     }
     return {
+      presetMode: 'cosmic',
       connectionDensity: 1.0,
       pulseFrequency: 1.0,
       particleSpeed: 1.0,
@@ -207,6 +210,9 @@ export default function App() {
     setNeuralSettings(prev => {
       const next = { ...prev, ...updates };
       if (typeof window !== 'undefined') {
+        if (updates.presetMode !== undefined) {
+          localStorage.setItem('neural-preset-mode', updates.presetMode);
+        }
         if (updates.connectionDensity !== undefined) {
           localStorage.setItem('neural-connection-density', updates.connectionDensity.toString());
         }
@@ -232,6 +238,7 @@ export default function App() {
 
   const handleResetNeuralSettings = () => {
     const defaults: NeuralSettings = {
+      presetMode: 'cosmic',
       connectionDensity: 1.0,
       pulseFrequency: 1.0,
       particleSpeed: 1.0,
@@ -241,6 +248,7 @@ export default function App() {
     };
     setNeuralSettings(defaults);
     if (typeof window !== 'undefined') {
+      localStorage.setItem('neural-preset-mode', 'cosmic');
       localStorage.setItem('neural-connection-density', '1.0');
       localStorage.setItem('neural-pulse-frequency', '1.0');
       localStorage.setItem('neural-particle-speed', '1.0');
@@ -513,13 +521,18 @@ export default function App() {
         nodeDensity={nodeDensity}
       />
 
-      {/* Floating Accessibility Motion & Node Density Control Button */}
+      {/* Floating Accessibility Motion & 3D Atmosphere Presets Control Button */}
       <MotionAccessibilityToggle
         motionEnabled={motionEnabled}
         onToggle={handleToggleMotion}
         systemPrefersReducedMotion={systemPrefersReducedMotion}
         nodeDensity={nodeDensity}
         onNodeDensityChange={handleNodeDensityChange}
+        presetMode={neuralSettings.presetMode || 'cosmic'}
+        onPresetModeChange={(mode) => handleUpdateNeuralSettings({ presetMode: mode })}
+        onEmitShockwave={() => {
+          showToast('3D Kinetic Shockwave impulse emitted', 'info');
+        }}
       />
 
       {/* Case Study Deep-Dive Modal */}
