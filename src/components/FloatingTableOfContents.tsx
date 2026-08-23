@@ -287,7 +287,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
         onClick={handleRestore}
         title="Show Table of Contents"
         aria-label="Show Table of Contents"
-        className="fixed right-4 bottom-20 z-40 hidden xl:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/95 dark:bg-[#131823]/95 backdrop-blur-md border border-[#fecdd3] dark:border-white/10 shadow-xl text-xs font-mono text-[#643644] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white hover:border-[#e11d48] dark:hover:border-[#fbbf24] transition-all cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#e11d48] focus-visible:outline-none"
+        className="fixed right-4 bottom-20 z-40 hidden xl:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/95 dark:bg-[#131823]/95 backdrop-blur-md border border-[#fecdd3] dark:border-white/10 shadow-xl text-xs font-mono text-[#5e3240] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white hover:border-[#e11d48] dark:hover:border-[#fbbf24] transition-all cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#e11d48] focus-visible:outline-none"
       >
         <Compass className="w-3.5 h-3.5 text-[#e11d48] dark:text-[#fbbf24] group-hover:rotate-45 transition-transform" />
         <span className="font-semibold">{language === 'de' ? 'Inhalt' : language === 'fr' ? 'Sommaire' : language === 'hi' ? 'सूची' : 'Contents'}</span>
@@ -325,7 +325,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
             onClick={handleDismiss}
             title={language === 'de' ? 'Inhaltsverzeichnis ausblenden' : language === 'fr' ? 'Masquer le sommaire' : language === 'hi' ? 'हटाएं' : 'Hide Table of Contents'}
             aria-label="Hide Table of Contents"
-            className="p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-white/10 text-[#a06b7a] hover:text-[#2d151c] dark:hover:text-white transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#e11d48] focus-visible:outline-none"
+            className="p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-white/10 text-[#885465] hover:text-[#2d151c] dark:hover:text-white transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#e11d48] focus-visible:outline-none"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -333,11 +333,11 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
 
         {/* Global Reading / Scroll Depth Progress Bar */}
         <div className="mt-2 space-y-1">
-          <div className="flex items-center justify-between text-[9.5px] font-mono text-[#a06b7a]">
+          <div className="flex items-center justify-between text-[9.5px] font-mono text-[#885465]">
             <span className="truncate">Current: <strong className="text-[#e11d48] dark:text-[#fbbf24]">{activeSection.shortLabel}</strong></span>
             <span>{scrollPercentage}%</span>
           </div>
-          <div className="w-full h-1 bg-[#fce7ec] dark:bg-white/10 rounded-full overflow-hidden">
+          <div className="w-full h-1 bg-[#fce4e8] dark:bg-white/10 rounded-full overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-[#e11d48] to-[#f43f5e] dark:from-[#fbbf24] dark:to-[#f59e0b] rounded-full transition-all duration-150 ease-out"
               style={{ width: `${scrollPercentage}%` }}
@@ -347,7 +347,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
 
         {/* Quick-Filter Search Field */}
         <div className="relative mt-2.5">
-          <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#a06b7a]">
+          <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#885465]">
             <Search className="w-3 h-3" />
           </div>
           <input
@@ -357,12 +357,12 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleSearchKeyDown}
             placeholder={language === 'de' ? 'Abschnitt suchen...' : language === 'fr' ? 'Filtrer les sections...' : language === 'hi' ? 'खोजें...' : 'Search sections...'}
-            className="w-full pl-7 pr-7 py-1 text-[11px] font-mono rounded-lg bg-[#fff5f7] dark:bg-[#0e1116] border border-[#fecdd3] dark:border-white/10 text-[#2d151c] dark:text-white placeholder-[#a06b7a] focus:outline-none focus:border-[#e11d48] dark:focus:border-[#fbbf24] focus:ring-1 focus:ring-[#e11d48] transition-colors"
+            className="w-full pl-7 pr-7 py-1 text-[11px] font-mono rounded-lg bg-[#fff5f7] dark:bg-[#0e1116] border border-[#fecdd3] dark:border-white/10 text-[#2d151c] dark:text-white placeholder-[#885465] focus:outline-none focus:border-[#e11d48] dark:focus:border-[#fbbf24] focus:ring-1 focus:ring-[#e11d48] transition-colors"
           />
           {searchQuery && (
             <button
               onClick={() => { setSearchQuery(''); searchInputRef.current?.focus(); }}
-              className="absolute inset-y-0 right-0 pr-2 flex items-center text-[#a06b7a] hover:text-[#2d151c] dark:hover:text-white cursor-pointer"
+              className="absolute inset-y-0 right-0 pr-2 flex items-center text-[#885465] hover:text-[#2d151c] dark:hover:text-white cursor-pointer"
               title="Clear search"
             >
               <X className="w-3 h-3" />
@@ -371,7 +371,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
         </div>
 
         {/* Expand All & Collapse All Controls */}
-        <div className="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono text-[#a06b7a]">
+        <div className="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono text-[#885465]">
           <div className="flex items-center gap-1">
             <button
               id="toc-expand-all-btn"
@@ -389,7 +389,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
               title="Collapse/hide all toggleable sections"
               className="flex items-center gap-1 px-1.5 py-0.5 rounded hover:bg-rose-50 dark:hover:bg-white/10 hover:text-[#2d151c] dark:hover:text-white transition-colors cursor-pointer"
             >
-              <Minimize2 className="w-2.5 h-2.5 text-[#a06b7a]" />
+              <Minimize2 className="w-2.5 h-2.5 text-[#885465]" />
               <span>Collapse All</span>
             </button>
           </div>
@@ -407,7 +407,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
         aria-label="Page Sections Navigation"
       >
         {filteredSections.length === 0 ? (
-          <div className="py-4 text-center text-xs font-mono text-[#a06b7a]">
+          <div className="py-4 text-center text-xs font-mono text-[#885465]">
             <p>No section matches "{searchQuery}"</p>
             <button
               onClick={() => setSearchQuery('')}
@@ -430,8 +430,8 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
                   isActive
                     ? 'bg-gradient-to-r from-rose-500/15 via-rose-500/10 to-transparent dark:from-amber-500/25 dark:via-amber-500/15 text-[#2d151c] dark:text-white font-bold border-l-[3px] border-l-[#e11d48] dark:border-l-[#fbbf24] shadow-xs scale-[1.02] hover:scale-[1.03]'
                     : isHidden
-                    ? 'opacity-60 text-[#a06b7a] hover:opacity-100 hover:bg-rose-50/50 dark:hover:bg-white/5 border-l-[3px] border-l-transparent'
-                    : 'text-[#643644] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white hover:bg-rose-50/70 dark:hover:bg-white/5 hover:translate-x-0.5 border-l-[3px] border-l-transparent'
+                    ? 'opacity-60 text-[#885465] hover:opacity-100 hover:bg-rose-50/50 dark:hover:bg-white/5 border-l-[3px] border-l-transparent'
+                    : 'text-[#5e3240] dark:text-[#9ea7b4] hover:text-[#2d151c] dark:hover:text-white hover:bg-rose-50/70 dark:hover:bg-white/5 hover:translate-x-0.5 border-l-[3px] border-l-transparent'
                 }`}
               >
                 {/* Main Link click target (scrolls & reveals if hidden) */}
@@ -446,8 +446,8 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
                     isActive 
                       ? 'bg-[#e11d48] dark:bg-[#fbbf24] text-white dark:text-[#101318] font-bold shadow-xs' 
                       : isHidden
-                      ? 'bg-[#fce7ec] dark:bg-white/5 text-[#a06b7a]'
-                      : 'text-[#a06b7a] group-hover:text-[#643644] dark:group-hover:text-white'
+                      ? 'bg-[#fce4e8] dark:bg-white/5 text-[#885465]'
+                      : 'text-[#885465] group-hover:text-[#2d151c] dark:group-hover:text-white'
                   }`}>
                     {section.num}
                   </span>
@@ -457,7 +457,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
                     isActive 
                       ? 'font-bold text-[#2d151c] dark:text-white' 
                       : isHidden
-                      ? 'line-through text-[#a06b7a]'
+                      ? 'line-through text-[#885465]'
                       : 'font-normal'
                   }`}>
                     {section.label}
@@ -478,7 +478,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
                       className={`p-1 rounded-md transition-colors cursor-pointer ${
                         isHidden 
                           ? 'text-rose-700/80 dark:text-amber-400/80 hover:bg-rose-500/20' 
-                          : 'text-[#a06b7a] opacity-40 group-hover:opacity-100 hover:text-[#2d151c] dark:hover:text-white hover:bg-rose-100/50 dark:hover:bg-white/10'
+                          : 'text-[#885465] opacity-40 group-hover:opacity-100 hover:text-[#2d151c] dark:hover:text-white hover:bg-rose-100/50 dark:hover:bg-white/10'
                       }`}
                     >
                       {isHidden ? (
@@ -498,7 +498,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
                   )}
 
                   {!isActive && !isHidden && (
-                    <ChevronRight className="w-3 h-3 text-[#a06b7a] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ChevronRight className="w-3 h-3 text-[#885465] opacity-0 group-hover:opacity-100 transition-opacity" />
                   )}
                 </div>
               </div>
@@ -508,7 +508,7 @@ export const FloatingTableOfContents: React.FC<FloatingTableOfContentsProps> = (
       </nav>
 
       {/* Minimal Footer Info & Hide Shortcut */}
-      <div className="mt-2.5 pt-2 border-t border-[#fecdd3] dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-[#a06b7a] shrink-0">
+      <div className="mt-2.5 pt-2 border-t border-[#fecdd3] dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-[#885465] shrink-0">
         <span className="flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           Viewport sync

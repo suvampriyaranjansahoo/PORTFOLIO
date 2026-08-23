@@ -22,9 +22,9 @@
     --page-bg-secondary: #fce4e8;
     --bg-elevated: #ffffff;
     --bg-card: rgba(255, 252, 253, 0.95);
-    --bg-card-subtle: #fdf0f2;
-    --bg-glass: rgba(255, 246, 248, 0.92);
-    --bg-surface-hover: #fce7ec;
+    --bg-card-subtle: #fce4e8;
+    --bg-glass: rgba(255, 245, 247, 0.92);
+    --bg-surface-hover: #fce4e8;
 
     /* Typography */
     --text-primary: #2d151c;
@@ -33,20 +33,20 @@
     --text-inverse: #ffffff;
 
     /* Borders */
-    --border-subtle: rgba(235, 175, 192, 0.28);
-    --border-standard: rgba(224, 150, 172, 0.40);
-    --border-default: rgba(224, 150, 172, 0.36);
-    --border-hover: rgba(219, 74, 114, 0.72);
-    --border-accent: rgba(225, 29, 72, 0.45);
+    --border-subtle: #fecdd3;
+    --border-standard: #fecdd3;
+    --border-default: #fecdd3;
+    --border-hover: #e11d48;
+    --border-accent: #e11d48;
 
     /* Accents & States */
-    --accent-primary: #d9486c;
-    --accent-primary-hover: #b82b50;
-    --accent-primary-subtle: rgba(251, 113, 133, 0.18);
+    --accent-primary: #e11d48;
+    --accent-primary-hover: #be123c;
+    --accent-primary-subtle: rgba(225, 29, 72, 0.14);
     --accent-secondary: #e11d48;
-    --accent-secondary-subtle: rgba(253, 164, 175, 0.28);
-    --accent-data: #e05375;
-    --accent-data-subtle: rgba(224, 83, 117, 0.16);
+    --accent-secondary-subtle: rgba(254, 205, 211, 0.35);
+    --accent-data: #e11d48;
+    --accent-data-subtle: rgba(225, 29, 72, 0.14);
     --accent-success: #059669;
     --accent-success-subtle: rgba(5, 150, 105, 0.12);
 
@@ -61,11 +61,11 @@
     /* Premium visual-system aliases */
     --surface: rgba(255, 252, 253, 0.95);
     --surface-elevated: rgba(255, 255, 255, 0.98);
-    --surface-glass: rgba(255, 246, 248, 0.90);
+    --surface-glass: rgba(255, 245, 247, 0.90);
     --shadow-sm: 0 2px 8px rgba(140, 24, 60, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.92);
     --shadow-md: 0 8px 24px rgba(140, 24, 60, 0.06), 0 2px 6px rgba(140, 24, 60, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     --shadow-lg: 0 16px 40px rgba(140, 24, 60, 0.08), 0 4px 12px rgba(140, 24, 60, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.98);
-    --glow-primary: 0 14px 36px rgba(217, 72, 108, 0.16);
+    --glow-primary: 0 14px 36px rgba(225, 29, 72, 0.16);
     --glow-secondary: 0 14px 36px rgba(225, 29, 72, 0.18);
     --radius-sm: 12px;
     --radius-md: 18px;
@@ -75,9 +75,9 @@
     --ease-premium: cubic-bezier(.16, 1, .3, 1);
 
     /* ─── SECTION THEMATIC AMBIENT LIGHTING DEFAULTS (LIGHT MODE) ─── */
-    --section-ambient-primary: rgba(253, 164, 175, 0.38);
-    --section-ambient-secondary: rgba(254, 205, 211, 0.42);
-    --section-ambient-accent: rgba(251, 113, 133, 0.28);
+    --section-ambient-primary: rgba(254, 205, 211, 0.45);
+    --section-ambient-secondary: rgba(252, 228, 232, 0.50);
+    --section-ambient-accent: rgba(251, 113, 133, 0.30);
   }
 
   /* ─── DARK MODE DESIGN TOKENS (Premium obsidian, charcoal & indigo foundation) ─── */
@@ -1053,14 +1053,14 @@ button:not(:disabled):active, [role="button"]:active { transform: translateY(1px
 
 .btn-primary {
   border-radius: 14px;
-  background: linear-gradient(135deg, #7e675a, #655146 58%, #4a3528);
-  border-color: rgba(126, 103, 90, 0.7);
+  background: linear-gradient(135deg, #e11d48, #c0143c 58%, #9f1239);
+  border-color: rgba(225, 29, 72, 0.7);
   color: #ffffff !important;
-  box-shadow: 0 8px 20px rgba(126, 103, 90, 0.22), inset 0 1px 0 rgba(255,255,255,.28);
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.25), inset 0 1px 0 rgba(255,255,255,.28);
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, #6c574b, #574438 56%, #3e2d23);
-  box-shadow: 0 12px 28px rgba(126, 103, 90, 0.30), 0 0 0 3px rgba(183, 156, 138, 0.25), inset 0 1px 0 rgba(255,255,255,.32);
+  background: linear-gradient(135deg, #f43f5e, #e11d48 56%, #be123c);
+  box-shadow: 0 12px 28px rgba(225, 29, 72, 0.35), 0 0 0 3px rgba(254, 205, 211, 0.40), inset 0 1px 0 rgba(255,255,255,.32);
   transform: translateY(-2px);
 }
 .dark .btn-primary {
@@ -1109,12 +1109,12 @@ button:not(:disabled):active, [role="button"]:active { transform: translateY(1px
    syncing with the living neural node background pulse frequency (~4.2s cycle). */
 @keyframes card-synaptic-pulse-light {
   0%, 100% {
-    border-color: rgba(183, 156, 138, 0.40);
-    box-shadow: 0 1px 3px 0 rgba(78, 56, 42, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+    border-color: rgba(254, 205, 211, 0.60);
+    box-shadow: 0 1px 3px 0 rgba(140, 24, 60, 0.03), inset 0 1px 0 0 rgba(255, 255, 255, 0.92);
   }
   50% {
-    border-color: rgba(166, 106, 18, 0.50);
-    box-shadow: 0 4px 18px -2px rgba(166, 106, 18, 0.10), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+    border-color: rgba(225, 29, 72, 0.50);
+    box-shadow: 0 4px 18px -2px rgba(225, 29, 72, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.98);
   }
 }
 
@@ -1182,9 +1182,9 @@ html[data-reduce-motion="true"] .card-level-2 {
 }
 
 header {
-  background: rgba(247, 242, 236, 0.88) !important;
-  border-color: rgba(183, 156, 138, 0.40) !important;
-  box-shadow: 0 4px 20px rgba(78, 56, 42, 0.05);
+  background: rgba(255, 245, 247, 0.90) !important;
+  border-color: rgba(254, 205, 211, 0.70) !important;
+  box-shadow: 0 4px 20px rgba(140, 24, 60, 0.04);
   backdrop-filter: blur(24px) saturate(150%);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
 }
@@ -1199,7 +1199,7 @@ header {
 /* Refined separators and elevated panels across the existing information architecture. */
 section { border-color: var(--border-subtle) !important; }
 input, textarea, select { transition: border-color var(--duration-ui) ease, box-shadow var(--duration-ui) ease, background var(--duration-ui) ease; }
-input:focus, textarea:focus, select:focus { border-color: var(--accent-secondary) !important; box-shadow: 0 0 0 4px rgba(166, 106, 18, 0.14); outline: none; }
+input:focus, textarea:focus, select:focus { border-color: var(--accent-secondary) !important; box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.14); outline: none; }
 
 @supports not (backdrop-filter: blur(1px)) {
   .card-level-1, .card-level-2, .card-level-3 { background: var(--bg-elevated); }
@@ -1236,15 +1236,15 @@ main > section {
 }
 
 main > section:nth-of-type(3n + 1) {
-  background-image: radial-gradient(ellipse 70% 105% at 92% 6%, rgba(221, 208, 194, 0.25), transparent 70%);
+  background-image: radial-gradient(ellipse 70% 105% at 92% 6%, rgba(254, 205, 211, 0.35), transparent 70%);
 }
 
 main > section:nth-of-type(3n + 2) {
-  background-image: radial-gradient(ellipse 70% 105% at 8% 50%, rgba(213, 183, 175, 0.20), transparent 72%);
+  background-image: radial-gradient(ellipse 70% 105% at 8% 50%, rgba(252, 228, 232, 0.30), transparent 72%);
 }
 
 main > section:nth-of-type(3n) {
-  background-image: radial-gradient(ellipse 80% 100% at 84% 94%, rgba(200, 138, 117, 0.15), transparent 72%);
+  background-image: radial-gradient(ellipse 80% 100% at 84% 94%, rgba(251, 113, 133, 0.20), transparent 72%);
 }
 
 .dark main > section {
