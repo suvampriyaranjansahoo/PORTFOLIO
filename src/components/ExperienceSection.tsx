@@ -2,6 +2,7 @@ import React from 'react';
 import { Briefcase, Building2, CheckCircle2, TrendingUp, Zap, Clock, FileSpreadsheet } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
+import { ExperienceTimeline } from './ExperienceTimeline';
 
 interface ExperienceSectionProps {
   language?: Language;
@@ -121,6 +122,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ language =
               </p>
             </div>
           </div>
+
+          {/* Scroll-Triggered Interactive Milestone Timeline */}
+          <ExperienceTimeline language={language} />
         </div>
       </div>
     </section>

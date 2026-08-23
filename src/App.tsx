@@ -26,9 +26,10 @@ import { useTilt3DCards } from './utils/useTilt3DCards';
 import { useButtonSparkles } from './utils/useButtonSparkles';
 import { useViewportHeadingReveal } from './utils/useViewportHeadingReveal';
 import { ProjectCategory, ResumeRole, NeuralSettings } from './types';
-import { generateResumePDF } from './utils/pdfGenerator';
+import { generateResumePDF, generateFullPortfolioPDF } from './utils/pdfGenerator';
 import { PERSONAL_INFO } from './data/portfolioData';
 import { Language } from './data/translations';
+import { FloatingTableOfContents } from './components/FloatingTableOfContents';
 
 export default function App() {
   useTilt3DCards();
@@ -265,6 +266,20 @@ export default function App() {
     }
   };
 
+  const handleDownloadFullPortfolio = () => {
+    try {
+      generateFullPortfolioPDF();
+      showToast('Master Portfolio Dossier (PDF) downloaded successfully!');
+      confetti({
+        particleCount: 65,
+        spread: 75,
+        origin: { y: 0.8 }
+      });
+    } catch (err) {
+      showToast('Generating Master Portfolio PDF...', 'info');
+    }
+  };
+
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -285,6 +300,9 @@ export default function App() {
       />
 
       <div id="top" />
+
+      {/* Floating Table of Contents on Right Side */}
+      <FloatingTableOfContents language={language} />
 
       {/* Primary Sticky Header */}
       <Header
@@ -360,6 +378,7 @@ export default function App() {
           language={language}
           onCopyEmail={handleCopyEmail}
           onOpenRecruiter={() => setRecruiterModalOpen(true)}
+          onDownloadFullPortfolio={handleDownloadFullPortfolio}
           motionEnabled={motionEnabled}
           onToggleMotion={handleToggleMotion}
           systemPrefersReducedMotion={systemPrefersReducedMotion}

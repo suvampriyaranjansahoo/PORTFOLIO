@@ -78,52 +78,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className={`flex flex-col justify-between ${
-                project.featured
-                  ? 'md:col-span-2 card-level-1 p-6 sm:p-8 !bg-[#111419] dark:!bg-[#131823]/95 text-white border-[#262c36] dark:border-white/[0.1] shadow-xl hover:border-amber-500/40'
-                  : 'card-level-2 p-6 sm:p-7 hover:border-[#a66a12] dark:hover:border-[#a66a12]'
-              }`}
+              className="card-level-2 p-6 sm:p-7 hover:border-[#a66a12] dark:hover:border-[#a66a12] flex flex-col justify-between transition-all"
             >
               <div>
                 {/* Header Badge */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
-                    {project.featured && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                        <Sparkles className="w-3 h-3" />
-                        FLAGSHIP PROOF
-                      </span>
-                    )}
-                    <span className={`text-[10px] font-mono font-semibold uppercase ${
-                      project.featured ? 'text-[#a0a8b5]' : 'text-[#8b93a1]'
-                    }`}>
+                    <span className="text-[10px] font-mono font-semibold uppercase text-[#8b93a1]">
                       {project.meta}
                     </span>
                   </div>
 
-                  <span className={`text-xs font-mono font-bold ${
-                    project.featured ? 'text-amber-300' : 'text-[#a66a12]'
-                  }`}>
+                  <span className="text-xs font-mono font-bold text-[#a66a12] dark:text-[#fbbf24]">
                     {project.metrics[0]?.value} {project.metrics[0]?.label}
                   </span>
                 </div>
 
                 {/* Project Title */}
-                <h3 className={`font-display font-bold text-xl sm:text-2xl mb-1.5 tracking-tight ${
-                  project.featured ? 'text-white' : 'text-[#101318] dark:text-white'
-                }`}>
+                <h3 className="font-display font-bold text-xl sm:text-2xl mb-1.5 tracking-tight text-[#101318] dark:text-white">
                   {project.title}
                 </h3>
-                <div className={`text-xs font-mono mb-4 ${
-                  project.featured ? 'text-amber-200/80' : 'text-[#a66a12]'
-                }`}>
+                <div className="text-xs font-mono mb-4 text-[#a66a12] dark:text-[#d8a34f]">
                   {project.tagline}
                 </div>
 
                 {/* Description */}
-                <p className={`text-sm leading-relaxed mb-5 ${
-                  project.featured ? 'text-[#c6cad1]' : 'text-[#5c6472] dark:text-[#9ea7b4]'
-                }`}>
+                <p className="text-sm leading-relaxed mb-5 text-[#5c6472] dark:text-[#9ea7b4]">
                   {project.description}
                 </p>
 
@@ -132,20 +112,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   {project.metrics.map((m, mIdx) => (
                     <div
                       key={mIdx}
-                      className={`p-2.5 rounded-xl border ${
-                        project.featured
-                          ? 'bg-[#181d24] border-[#2c3240]'
-                          : 'card-level-3'
-                      }`}
+                      className="card-level-3 p-2.5 rounded-xl border"
                     >
-                      <div className={`font-mono font-bold text-sm sm:text-base ${
-                        project.featured ? 'text-amber-300' : 'text-[#a66a12]'
-                      }`}>
+                      <div className="font-mono font-bold text-sm sm:text-base text-[#a66a12] dark:text-[#fbbf24]">
                         {m.value}
                       </div>
-                      <div className={`text-[10px] font-mono uppercase mt-0.5 line-clamp-1 ${
-                        project.featured ? 'text-[#8b93a1]' : 'text-[#5c6472] dark:text-[#8b93a1]'
-                      }`}>
+                      <div className="text-[10px] font-mono uppercase mt-0.5 line-clamp-1 text-[#5c6472] dark:text-[#8b93a1]">
                         {m.label}
                       </div>
                     </div>
@@ -157,11 +129,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className={`px-2 py-0.5 rounded text-[11px] font-mono border ${
-                        project.featured
-                          ? 'bg-[#212630] border-[#303846] text-[#c6cad1]'
-                          : 'card-level-3 text-[#5c6472] dark:text-[#8b93a1]'
-                      }`}
+                      className="card-level-3 px-2 py-0.5 rounded text-[11px] font-mono border text-[#5c6472] dark:text-[#8b93a1]"
                     >
                       {tag}
                     </span>
@@ -170,16 +138,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               </div>
 
               {/* Actions */}
-              <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
-                project.featured ? 'border-[#2c3240]' : 'border-[#dfe3e9] dark:border-[#262c36]'
-              }`}>
+              <div className="pt-4 border-t border-[#dfe3e9] dark:border-[#262c36] flex items-center justify-between gap-3">
                 {project.caseStudyId ? (
                   <button
                     id={`case-study-btn-${project.id}`}
                     onClick={() => onOpenCaseStudy(project.caseStudyId!)}
-                    className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline cursor-pointer rounded px-1 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
-                      project.featured ? 'text-amber-300 dark:text-[#fbbf24]' : 'text-[#a66a12] dark:text-[#fbbf24]'
-                    }`}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline cursor-pointer rounded px-1 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none text-[#a66a12] dark:text-[#fbbf24]"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>{t?.caseStudyBtn || "View Case Study →"}</span>
@@ -192,11 +156,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1 text-xs font-mono transition-colors rounded px-1.5 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none ${
-                    project.featured 
-                      ? 'text-[#c6cad1] hover:text-white' 
-                      : 'text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white'
-                  }`}
+                  className="inline-flex items-center gap-1 text-xs font-mono transition-colors rounded px-1.5 py-0.5 focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:outline-none text-[#5c6472] dark:text-[#8b93a1] hover:text-[#101318] dark:hover:text-white"
                 >
                   <span>{t?.repoBtn || "Repository"}</span>
                   <ExternalLink className="w-3.5 h-3.5" />

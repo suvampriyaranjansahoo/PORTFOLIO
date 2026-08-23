@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Copy, ArrowUpRight, MapPin, Sparkles, Check } from 'lucide-react';
+import { Mail, Copy, ArrowUpRight, MapPin, Sparkles, Check, FileDown } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Language, TRANSLATIONS } from '../data/translations';
 import { SectionAmbientAtmosphere } from './SectionAmbientAtmosphere';
@@ -8,6 +8,7 @@ interface ContactSectionProps {
   language?: Language;
   onCopyEmail: () => void;
   onOpenRecruiter: () => void;
+  onDownloadFullPortfolio?: () => void;
   motionEnabled?: boolean;
   onToggleMotion?: () => void;
   systemPrefersReducedMotion?: boolean;
@@ -17,11 +18,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   language = 'en',
   onCopyEmail, 
   onOpenRecruiter,
+  onDownloadFullPortfolio,
   motionEnabled = true,
   onToggleMotion,
   systemPrefersReducedMotion = false,
 }) => {
   const t = TRANSLATIONS[language]?.contact;
+
+  const downloadFullPortfolioLabel = 
+    language === 'de' ? 'Gesamtes Portfolio-PDF herunterladen' :
+    language === 'fr' ? 'Télécharger Portfolio Complet (PDF)' :
+    language === 'hi' ? 'पूर्ण पोर्टफोलियो PDF डाउनलोड करें' :
+    'Download Full Portfolio PDF';
 
   return (
     <section id="contact" className="section-ambient-container ambient-theme-warm py-16 sm:py-20 border-t border-[#dfe3e9] dark:border-[#262c36] overflow-hidden">
@@ -57,7 +65,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            {onDownloadFullPortfolio && (
+              <button
+                id="contact-download-full-portfolio-btn"
+                onClick={onDownloadFullPortfolio}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#a66a12] to-[#c88a75] hover:from-[#925c0e] hover:to-[#b67965] text-white font-mono text-sm font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#131823] focus-visible:outline-none"
+              >
+                <FileDown className="w-4 h-4" />
+                <span>{downloadFullPortfolioLabel}</span>
+              </button>
+            )}
+
             <a
               href={PERSONAL_INFO.links.email}
               id="contact-email-action"
