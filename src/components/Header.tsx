@@ -214,17 +214,17 @@ export const Header: React.FC<HeaderProps> = ({
                   <button
                     key={l.code}
                     onClick={() => handleLangChange(l.code)}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono text-left transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono text-left transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#6e5444] focus-visible:outline-none ${
                       language === l.code
-                        ? 'bg-[#d5b7af]/35 dark:bg-[#fbbf24]/15 text-[#7e675a] dark:text-[#fbbf24] font-semibold'
-                        : 'text-[#2b1f1a] dark:text-white hover:bg-[#f2ebe1] dark:hover:bg-[#21262d]'
+                        ? 'bg-[#e6ded3] dark:bg-[#fbbf24]/15 text-[#6e5444] dark:text-[#fbbf24] font-semibold'
+                        : 'text-[#241b16] dark:text-white hover:bg-[#f3ece2] dark:hover:bg-[#21262d]'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <span>{l.flag}</span>
                       <span>{l.label}</span>
                     </div>
-                    {language === l.code && <CheckCircle2 className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />}
+                    {language === l.code && <CheckCircle2 className="w-3.5 h-3.5 text-[#6e5444] dark:text-[#fbbf24]" />}
                   </button>
                 ))}
               </div>
@@ -235,10 +235,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="recruiter-mode-btn"
             onClick={onOpenRecruiter}
-            className="hidden sm:inline-flex items-center gap-1.5 btn-accent-subtle focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+            className="hidden sm:inline-flex items-center gap-1.5 btn-accent-subtle focus-visible:ring-2 focus-visible:ring-[#6e5444] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
             title="Open quick 60-second summary for hiring managers"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#6e5444] dark:text-[#fbbf24]" />
             <span>{t.recruiterMode}</span>
           </button>
 
@@ -247,13 +247,13 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="resume-dropdown-btn"
               onClick={() => setResumeMenuOpen(!resumeMenuOpen)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fefcf9] dark:bg-[#161b24]/90 border border-[#b79c8a]/50 dark:border-white/15 text-[#2b1f1a] dark:text-[#f1f5f9] shadow-xs hover:border-[#7e675a] dark:hover:border-white/30 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fefcf9] dark:bg-[#161b24]/90 border border-[#b79c8a]/50 dark:border-white/15 text-[#241b16] dark:text-[#f1f5f9] shadow-xs hover:border-[#6e5444] dark:hover:border-white/30 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-[#6e5444] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0e1116] focus-visible:outline-none"
               aria-expanded={resumeMenuOpen}
               aria-haspopup="true"
             >
-              <FileText className="w-3.5 h-3.5 text-[#7e675a] dark:text-[#fbbf24]" />
+              <FileText className="w-3.5 h-3.5 text-[#6e5444] dark:text-[#fbbf24]" />
               <span>{t.resume}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-[#7e675a] dark:text-[#94a3b8] transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 text-[#6e5444] dark:text-[#94a3b8] transition-transform ${resumeMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {resumeMenuOpen && (
@@ -313,7 +313,7 @@ export const Header: React.FC<HeaderProps> = ({
                           onClick={(e) => handleDownload(role, e)}
                           title="Download PDF"
                           aria-label={`Download ${role.title} PDF resume`}
-                          className="p-1.5 rounded-md text-[#7e675a] dark:text-[#fbbf24] hover:bg-[#d5b7af]/30 dark:hover:bg-[#fbbf24]/10 focus-visible:ring-2 focus-visible:ring-[#7e675a] focus-visible:outline-none cursor-pointer"
+                          className="p-1.5 rounded-md text-[#6e5444] dark:text-[#fbbf24] hover:bg-[#e6ded3] dark:hover:bg-[#fbbf24]/10 focus-visible:ring-2 focus-visible:ring-[#6e5444] focus-visible:outline-none cursor-pointer"
                         >
                           <Download className="w-3.5 h-3.5" />
                         </button>

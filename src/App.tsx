@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import { Eye, EyeOff } from 'lucide-react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
@@ -48,6 +49,89 @@ export default function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastType, setToastType] = useState<'success' | 'info'>('success');
+
+  // Section Visibility / Folding state for Floating Table of Contents
+  const [hiddenSections, setHiddenSections] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio_hidden_sections');
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return {};
+  });
+
+  const handleToggleSection = (sectionId: string) => {
+    setHiddenSections((prev) => {
+      const updated = { ...prev, [sectionId]: !prev[sectionId] };
+      try {
+        localStorage.setItem('portfolio_hidden_sections', JSON.stringify(updated));
+      } catch {
+        // ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleCollapseAll = () => {
+    const collapsed = {
+      about: true,
+      capabilities: true,
+      work: true,
+      demos: true,
+      thinking: true,
+      experience: true,
+      skills: true,
+      academics: true,
+    };
+    setHiddenSections(collapsed);
+    try {
+      localStorage.setItem('portfolio_hidden_sections', JSON.stringify(collapsed));
+    } catch {
+      // ignore
+    }
+    showToast('All collapsible sections hidden', 'info');
+  };
+
+  const handleExpandAll = () => {
+    setHiddenSections({});
+    try {
+      localStorage.removeItem('portfolio_hidden_sections');
+    } catch {
+      // ignore
+    }
+    showToast('All portfolio sections expanded', 'success');
+  };
+
+  const renderCollapsibleSection = (
+    id: string,
+    title: string,
+    children: React.ReactNode
+  ) => {
+    const isHidden = !!hiddenSections[id];
+
+    if (isHidden) {
+      return (
+        <div id={id} className="scroll-mt-24 max-w-[1160px] mx-auto px-5 sm:px-6 my-6 transition-all duration-300">
+          <div className="flex items-center justify-between p-4 rounded-2xl border border-dashed border-[#b79c8a]/40 dark:border-white/10 bg-[#f7f3ed]/60 dark:bg-white/[0.02] backdrop-blur-xs text-xs font-mono text-[#796556] dark:text-[#9ea7b4] shadow-xs">
+            <div className="flex items-center gap-2.5">
+              <EyeOff className="w-4 h-4 text-[#a66a12] dark:text-[#fbbf24]" />
+              <span>Section hidden: <strong className="text-[#241b16] dark:text-white">{title}</strong></span>
+            </div>
+            <button
+              onClick={() => handleToggleSection(id)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-[#a66a12] dark:text-[#fbbf24] hover:bg-amber-500/20 font-semibold cursor-pointer transition-colors"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Show Section</span>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return <>{children}</>;
+  };
 
   // Accessibility: OS-level Reduced Motion Detection & Neural Motion Toggle
   const [systemPrefersReducedMotion, setSystemPrefersReducedMotion] = useState<boolean>(() => {
@@ -302,7 +386,13 @@ export default function App() {
       <div id="top" />
 
       {/* Floating Table of Contents on Right Side */}
-      <FloatingTableOfContents language={language} />
+      <FloatingTableOfContents 
+        language={language}
+        hiddenSections={hiddenSections}
+        onToggleSection={handleToggleSection}
+        onCollapseAll={handleCollapseAll}
+        onExpandAll={handleExpandAll}
+      />
 
       {/* Primary Sticky Header */}
       <Header
@@ -328,27 +418,43 @@ export default function App() {
         <ProofStrip language={language} />
 
         {/* 01 · Who I Am & Professional Profile */}
-        <AboutSection
-          language={language}
-          onOpenRecruiter={() => setRecruiterModalOpen(true)}
-        />
+        {renderCollapsibleSection(
+          'about',
+          language === 'de' ? 'Über mich & Säulen' : language === 'fr' ? 'Profil & Piliers' : language === 'hi' ? 'परिचय व मुख्य स्तंभ' : 'About & Pillars',
+          <AboutSection
+            language={language}
+            onOpenRecruiter={() => setRecruiterModalOpen(true)}
+          />
+        )}
 
         {/* 02 · What I Do (Capabilities Grid) */}
-        <CapabilitiesSection 
-          language={language}
-          onSelectCategory={setSelectedCategory} 
-        />
+        {renderCollapsibleSection(
+          'capabilities',
+          language === 'de' ? 'Kernkompetenzen' : language === 'fr' ? 'Compétences Clés' : language === 'hi' ? 'मुख्य क्षमताएं' : 'Capabilities Grid',
+          <CapabilitiesSection 
+            language={language}
+            onSelectCategory={setSelectedCategory} 
+          />
+        )}
 
         {/* 03 · Selected Work (Featured Case Studies & Filtering) */}
-        <ProjectsSection
-          language={language}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          onOpenCaseStudy={(id) => setCaseStudyId(id)}
-        />
+        {renderCollapsibleSection(
+          'work',
+          language === 'de' ? 'Ausgewählte Projekte' : language === 'fr' ? 'Projets Phares' : language === 'hi' ? 'चयनित परियोजनाएं' : 'Selected Projects',
+          <ProjectsSection
+            language={language}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            onOpenCaseStudy={(id) => setCaseStudyId(id)}
+          />
+        )}
 
         {/* 04 · Interactive Demos (RICE, Risk, SQL Runner, Pipeline, Cohort) */}
-        <InteractiveDemos language={language} />
+        {renderCollapsibleSection(
+          'demos',
+          language === 'de' ? 'Interaktive Demos' : language === 'fr' ? 'Démonstrateurs' : language === 'hi' ? 'इंटरैक्टिव डेमो' : 'Interactive Demos',
+          <InteractiveDemos language={language} />
+        )}
 
         {/* Recruiter Evaluation Engine · Instant Job Description (JD) Matcher */}
         <section className="section-ambient-container ambient-theme-violet my-16 overflow-hidden">
@@ -362,16 +468,32 @@ export default function App() {
         </section>
 
         {/* 05 · How I Think (8-step Analytical Decision Framework) */}
-        <ThinkingSection language={language} />
+        {renderCollapsibleSection(
+          'thinking',
+          language === 'de' ? 'Analytische Methodik' : language === 'fr' ? 'Méthodologie' : language === 'hi' ? 'निर्णय कार्यप्रणाली' : 'How I Think (Methodology)',
+          <ThinkingSection language={language} />
+        )}
 
         {/* 06 · Enterprise Experience (Vodafone Intelligent Solutions VOIS) */}
-        <ExperienceSection language={language} />
+        {renderCollapsibleSection(
+          'experience',
+          language === 'de' ? 'Unternehmenserfahrung' : language === 'fr' ? 'Expérience VOIS' : language === 'hi' ? 'व्यावसायिक अनुभव' : 'Enterprise VOIS Experience',
+          <ExperienceSection language={language} />
+        )}
 
         {/* 07 · Technical Toolbox & Verified Certifications */}
-        <SkillsCertificationsSection language={language} />
+        {renderCollapsibleSection(
+          'skills',
+          language === 'de' ? 'Technologie-Toolbox' : language === 'fr' ? 'Boîte à Outils' : language === 'hi' ? 'तकनीकी उपकरण' : 'Toolbox & Certifications',
+          <SkillsCertificationsSection language={language} />
+        )}
 
         {/* 08 · Scholastic Foundation & Academic Credentials */}
-        <AcademicsSection language={language} />
+        {renderCollapsibleSection(
+          'academics',
+          language === 'de' ? 'Akademischer Werdegang' : language === 'fr' ? 'Formation Académique' : language === 'hi' ? 'शैक्षणिक योग्यता' : 'Academics & Scholastic Foundation',
+          <AcademicsSection language={language} />
+        )}
 
         {/* 09 · Currently Exploring & Contact */}
         <ContactSection

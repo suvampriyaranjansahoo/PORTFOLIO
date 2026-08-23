@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({ language = 'en', onOpenCommand, onOp
   const t = TRANSLATIONS[language]?.hero || TRANSLATIONS['en'].hero;
 
   return (
-    <section className="section-ambient-container ambient-theme-indigo relative pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-5 sm:px-6 overflow-hidden">
+    <section id="hero" className="section-ambient-container ambient-theme-indigo relative pt-12 sm:pt-20 pb-12 sm:pb-16 max-w-[1160px] mx-auto px-5 sm:px-6 overflow-hidden">
       {/* Thematic Ambient Light Shift (Hero Deep Analytical Indigo & Warm Gold Glow) */}
       <SectionAmbientAtmosphere />
 

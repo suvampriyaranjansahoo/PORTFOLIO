@@ -15,58 +15,58 @@
     --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
 
-    /* ─── LIGHT MODE DESIGN TOKENS (Editorial Soft Ivory, Oat Beige & Mocha Brown) ─── */
+    /* ─── LIGHT MODE DESIGN TOKENS (Editorial Crisp Warm Ivory, Oat Linen & Rich Espresso Brown) ─── */
     /* Backgrounds */
-    --bg-page: #f7f2ec;
-    --page-bg: #f7f2ec;
-    --page-bg-secondary: #ddd0c2;
+    --bg-page: #f7f3ed;
+    --page-bg: #f7f3ed;
+    --page-bg-secondary: #e6ded3;
     --bg-elevated: #ffffff;
-    --bg-card: rgba(253, 250, 246, 0.94);
-    --bg-card-subtle: #f2ebe1;
-    --bg-glass: rgba(250, 246, 240, 0.92);
-    --bg-surface-hover: #ece3d7;
+    --bg-card: rgba(254, 252, 248, 0.95);
+    --bg-card-subtle: #f3ece2;
+    --bg-glass: rgba(252, 249, 244, 0.94);
+    --bg-surface-hover: #ede5da;
 
     /* Typography */
-    --text-primary: #2b1f1a;
-    --text-secondary: #5c4a3e;
-    --text-muted: #7e675a;
+    --text-primary: #241b16;
+    --text-secondary: #57463a;
+    --text-muted: #796556;
     --text-inverse: #ffffff;
 
     /* Borders */
-    --border-subtle: rgba(183, 156, 138, 0.25);
-    --border-standard: rgba(183, 156, 138, 0.45);
-    --border-default: rgba(183, 156, 138, 0.42);
-    --border-hover: rgba(140, 110, 92, 0.75);
+    --border-subtle: rgba(180, 154, 132, 0.24);
+    --border-standard: rgba(180, 154, 132, 0.42);
+    --border-default: rgba(180, 154, 132, 0.38);
+    --border-hover: rgba(135, 102, 78, 0.75);
     --border-accent: rgba(166, 106, 18, 0.45);
 
     /* Accents & States */
-    --accent-primary: #7e675a;
-    --accent-primary-hover: #655146;
-    --accent-primary-subtle: rgba(213, 183, 175, 0.28);
+    --accent-primary: #6e5444;
+    --accent-primary-hover: #564032;
+    --accent-primary-subtle: rgba(180, 148, 122, 0.20);
     --accent-secondary: #a66a12;
-    --accent-secondary-subtle: rgba(221, 208, 194, 0.35);
-    --accent-data: #c88a75;
-    --accent-data-subtle: rgba(200, 138, 117, 0.18);
+    --accent-secondary-subtle: rgba(217, 180, 140, 0.28);
+    --accent-data: #9c6032;
+    --accent-data-subtle: rgba(156, 96, 50, 0.16);
     --accent-success: #2d6a4f;
     --accent-success-subtle: rgba(45, 106, 79, 0.12);
 
     /* Effects & Atmosphere */
-    --shadow-subtle: 0 1px 3px 0 rgba(78, 56, 42, 0.04);
-    --shadow-elevated: 0 8px 24px -4px rgba(78, 56, 42, 0.08), 0 2px 6px -2px rgba(78, 56, 42, 0.04);
-    --shadow-card: 0 2px 8px -1px rgba(78, 56, 42, 0.06), 0 1px 3px -1px rgba(78, 56, 42, 0.04);
+    --shadow-subtle: 0 1px 3px 0 rgba(70, 48, 34, 0.04);
+    --shadow-elevated: 0 8px 24px -4px rgba(70, 48, 34, 0.07), 0 2px 6px -2px rgba(70, 48, 34, 0.03);
+    --shadow-card: 0 2px 8px -1px rgba(70, 48, 34, 0.05), 0 1px 3px -1px rgba(70, 48, 34, 0.03);
     --glass-blur: 14px;
-    --glow-accent: 0 0 24px -4px rgba(213, 183, 175, 0.35);
+    --glow-accent: 0 0 24px -4px rgba(166, 106, 18, 0.20);
     --grid-opacity: 0.035;
 
     /* Premium visual-system aliases */
-    --surface: rgba(253, 250, 246, 0.92);
-    --surface-elevated: rgba(255, 253, 250, 0.96);
-    --surface-glass: rgba(247, 242, 236, 0.88);
-    --shadow-sm: 0 2px 8px rgba(78, 56, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.92);
-    --shadow-md: 0 8px 24px rgba(78, 56, 42, 0.07), 0 2px 6px rgba(78, 56, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    --shadow-lg: 0 16px 40px rgba(78, 56, 42, 0.09), 0 4px 12px rgba(78, 56, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.98);
-    --glow-primary: 0 14px 36px rgba(126, 103, 90, 0.16);
-    --glow-secondary: 0 14px 36px rgba(213, 183, 175, 0.22);
+    --surface: rgba(254, 252, 248, 0.94);
+    --surface-elevated: rgba(255, 254, 252, 0.98);
+    --surface-glass: rgba(247, 243, 237, 0.90);
+    --shadow-sm: 0 2px 8px rgba(70, 48, 34, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    --shadow-md: 0 8px 24px rgba(70, 48, 34, 0.06), 0 2px 6px rgba(70, 48, 34, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    --shadow-lg: 0 16px 40px rgba(70, 48, 34, 0.08), 0 4px 12px rgba(70, 48, 34, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.98);
+    --glow-primary: 0 14px 36px rgba(110, 84, 68, 0.14);
+    --glow-secondary: 0 14px 36px rgba(166, 106, 18, 0.16);
     --radius-sm: 12px;
     --radius-md: 18px;
     --radius-lg: 24px;
@@ -75,9 +75,9 @@
     --ease-premium: cubic-bezier(.16, 1, .3, 1);
 
     /* ─── SECTION THEMATIC AMBIENT LIGHTING DEFAULTS (LIGHT MODE) ─── */
-    --section-ambient-primary: rgba(221, 208, 194, 0.45);
-    --section-ambient-secondary: rgba(213, 183, 175, 0.35);
-    --section-ambient-accent: rgba(200, 138, 117, 0.25);
+    --section-ambient-primary: rgba(226, 216, 204, 0.40);
+    --section-ambient-secondary: rgba(216, 198, 178, 0.32);
+    --section-ambient-accent: rgba(198, 172, 142, 0.22);
   }
 
   /* ─── DARK MODE DESIGN TOKENS (Premium obsidian, charcoal & indigo foundation) ─── */
@@ -143,9 +143,9 @@
   /* ─── THEMATIC SECTION AMBIENT LIGHT COLOR SHIFTS (CSS VARIABLES) ─── */
   /* Warmer Theme: Skills & Certifications, Thinking Framework, Contact */
   .ambient-theme-warm {
-    --section-ambient-primary: rgba(212, 163, 115, 0.38);
-    --section-ambient-secondary: rgba(221, 208, 194, 0.42);
-    --section-ambient-accent: rgba(213, 183, 175, 0.30);
+    --section-ambient-primary: rgba(218, 178, 134, 0.35);
+    --section-ambient-secondary: rgba(228, 218, 204, 0.40);
+    --section-ambient-accent: rgba(198, 162, 126, 0.28);
   }
   .dark .ambient-theme-warm {
     --section-ambient-primary: rgba(245, 158, 11, 0.24);
@@ -155,9 +155,9 @@
 
   /* Cooler Theme: Projects & Case Studies */
   .ambient-theme-cool {
-    --section-ambient-primary: rgba(213, 183, 175, 0.38);
-    --section-ambient-secondary: rgba(221, 208, 194, 0.42);
-    --section-ambient-accent: rgba(183, 156, 138, 0.30);
+    --section-ambient-primary: rgba(206, 218, 228, 0.38);
+    --section-ambient-secondary: rgba(226, 220, 212, 0.40);
+    --section-ambient-accent: rgba(178, 160, 142, 0.28);
   }
   .dark .ambient-theme-cool {
     --section-ambient-primary: rgba(56, 189, 248, 0.24);
@@ -167,9 +167,9 @@
 
   /* Emerald Theme: Interactive Demos & Academics */
   .ambient-theme-emerald {
-    --section-ambient-primary: rgba(213, 183, 175, 0.35);
-    --section-ambient-secondary: rgba(221, 208, 194, 0.40);
-    --section-ambient-accent: rgba(200, 138, 117, 0.25);
+    --section-ambient-primary: rgba(204, 222, 212, 0.35);
+    --section-ambient-secondary: rgba(226, 218, 206, 0.40);
+    --section-ambient-accent: rgba(184, 164, 140, 0.25);
   }
   .dark .ambient-theme-emerald {
     --section-ambient-primary: rgba(16, 185, 129, 0.22);
@@ -179,9 +179,9 @@
 
   /* Indigo Theme: Capabilities & Experience */
   .ambient-theme-indigo {
-    --section-ambient-primary: rgba(221, 208, 194, 0.45);
-    --section-ambient-secondary: rgba(213, 183, 175, 0.38);
-    --section-ambient-accent: rgba(212, 163, 115, 0.28);
+    --section-ambient-primary: rgba(226, 218, 206, 0.42);
+    --section-ambient-secondary: rgba(214, 202, 188, 0.36);
+    --section-ambient-accent: rgba(206, 172, 130, 0.26);
   }
   .dark .ambient-theme-indigo {
     --section-ambient-primary: rgba(99, 102, 241, 0.24);
@@ -191,9 +191,9 @@
 
   /* Violet Fusion Theme: JD Matcher & About */
   .ambient-theme-violet {
-    --section-ambient-primary: rgba(213, 183, 175, 0.42);
-    --section-ambient-secondary: rgba(221, 208, 194, 0.38);
-    --section-ambient-accent: rgba(212, 163, 115, 0.28);
+    --section-ambient-primary: rgba(218, 208, 224, 0.35);
+    --section-ambient-secondary: rgba(226, 216, 204, 0.38);
+    --section-ambient-accent: rgba(204, 176, 140, 0.25);
   }
   .dark .ambient-theme-violet {
     --section-ambient-primary: rgba(167, 139, 250, 0.22);
@@ -565,18 +565,18 @@ input[type="range"] {
   font-weight: 600;
   border-radius: 0.625rem;
   padding: 0.4375rem 0.875rem;
-  background-color: rgba(213, 183, 175, 0.32);
-  color: #7e4835;
-  border: 1px solid rgba(183, 156, 138, 0.55);
-  box-shadow: 0 1px 2px 0 rgba(126, 103, 90, 0.05);
+  background-color: rgba(180, 148, 122, 0.20);
+  color: #57463a;
+  border: 1px solid rgba(180, 154, 132, 0.45);
+  box-shadow: 0 1px 2px 0 rgba(70, 48, 34, 0.04);
   cursor: pointer;
   transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-accent-subtle:hover {
-  background-color: rgba(213, 183, 175, 0.48);
-  border-color: rgba(140, 110, 92, 0.8);
-  color: #5c2d1f;
+  background-color: rgba(180, 148, 122, 0.32);
+  border-color: rgba(135, 102, 78, 0.75);
+  color: #382518;
   transform: translateY(-1px);
 }
 
@@ -803,11 +803,11 @@ input[type="range"] {
   transition: opacity 0.3s var(--ease-premium, cubic-bezier(.16,1,.3,1));
   background: radial-gradient(
     420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(213, 183, 175, 0.25),
-    rgba(221, 208, 194, 0.12) 45%,
+    rgba(218, 196, 174, 0.22),
+    rgba(226, 218, 206, 0.12) 45%,
     transparent 70%
   ),
-  linear-gradient(90deg, rgba(183, 156, 138, 0.22), transparent 22%, transparent 76%, rgba(166, 106, 18, 0.18)) top / 100% 1px no-repeat;
+  linear-gradient(90deg, rgba(180, 154, 132, 0.22), transparent 22%, transparent 76%, rgba(166, 106, 18, 0.18)) top / 100% 1px no-repeat;
 }
 
 .dark .card-level-1::after,
@@ -862,7 +862,7 @@ input[type="range"] {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(125deg, rgba(255,255,255,.5), transparent 34%, rgba(213,183,175,.10) 72%, rgba(221,208,194,.14));
+  background: linear-gradient(125deg, rgba(255,255,255,.5), transparent 34%, rgba(218,196,174,.10) 72%, rgba(226,218,206,.14));
   opacity: .82;
 }
 

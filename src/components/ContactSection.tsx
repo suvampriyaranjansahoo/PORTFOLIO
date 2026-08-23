@@ -70,7 +70,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <button
                 id="contact-download-full-portfolio-btn"
                 onClick={onDownloadFullPortfolio}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#a66a12] to-[#c88a75] hover:from-[#925c0e] hover:to-[#b67965] text-white font-mono text-sm font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#131823] focus-visible:outline-none"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#a66a12] to-[#b45309] hover:from-[#925c0e] hover:to-[#9a4308] text-white font-mono text-sm font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-[#d98b18] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#131823] focus-visible:outline-none"
               >
                 <FileDown className="w-4 h-4" />
                 <span>{downloadFullPortfolioLabel}</span>
