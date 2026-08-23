@@ -113,14 +113,14 @@ export default function App() {
     if (isHidden) {
       return (
         <div id={id} className="scroll-mt-24 max-w-[1160px] mx-auto px-5 sm:px-6 my-6 transition-all duration-300">
-          <div className="flex items-center justify-between p-4 rounded-2xl border border-dashed border-[#b79c8a]/40 dark:border-white/10 bg-[#f7f3ed]/60 dark:bg-white/[0.02] backdrop-blur-xs text-xs font-mono text-[#796556] dark:text-[#9ea7b4] shadow-xs">
+          <div className="flex items-center justify-between p-4 rounded-2xl border border-dashed border-[#fecdd3] dark:border-white/10 bg-[#fff5f7]/80 dark:bg-white/[0.02] backdrop-blur-xs text-xs font-mono text-[#643644] dark:text-[#9ea7b4] shadow-xs">
             <div className="flex items-center gap-2.5">
-              <EyeOff className="w-4 h-4 text-[#a66a12] dark:text-[#fbbf24]" />
-              <span>Section hidden: <strong className="text-[#241b16] dark:text-white">{title}</strong></span>
+              <EyeOff className="w-4 h-4 text-[#e11d48] dark:text-[#fbbf24]" />
+              <span>Section hidden: <strong className="text-[#2d151c] dark:text-white">{title}</strong></span>
             </div>
             <button
               onClick={() => handleToggleSection(id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-[#a66a12] dark:text-[#fbbf24] hover:bg-amber-500/20 font-semibold cursor-pointer transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 dark:bg-amber-500/20 text-[#e11d48] dark:text-[#fbbf24] hover:bg-rose-500/20 font-semibold cursor-pointer transition-colors"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>Show Section</span>
