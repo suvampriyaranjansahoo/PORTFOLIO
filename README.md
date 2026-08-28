@@ -2,7 +2,7 @@
 
 > **Data → Product → Business**  
 > Computer Science Engineering Graduate (Class of 2026) | Data Analyst, Product Analyst & Data Engineer  
-> [Live Portfolio Demo](https://suvampriyaranjansahooportfolio.vercel.app/) · [GitHub Profile](https://github.com/suvampriyaranjansahoo) · [LinkedIn](https://linkedin.com/in/suvampriyaranjansahoo)
+> [Live Portfolio Demo](https://suvampriyaranjansahooportfolio.vercel.app/) · [GitHub Profile](https://github.com/suvampriyaranjansahoo) · [LinkedIn](www.linkedin.com/in/suvam-priyaranjan-sahoo-18b7412bb)
 
 ---
 
@@ -110,7 +110,7 @@ An interactive, production-grade portfolio and technical proof showcase for **Su
 ## 📬 Contact & Inquiries
 
 - **Email**: [sahoosuvampriyaranjan10@gmail.com](mailto:sahoosuvampriyaranjan10@gmail.com)
-- **LinkedIn**: [linkedin.com/in/suvampriyaranjansahoo](https://linkedin.com/in/suvampriyaranjansahoo)
+- **LinkedIn**: [linkedin.com/in/suvampriyaranjansahoo](www.linkedin.com/in/suvam-priyaranjan-sahoo-18b7412bb)
 - **GitHub**: [github.com/suvampriyaranjansahoo](https://github.com/suvampriyaranjansahoo)
 - **Location**: Bhubaneswar / Gurgaon / Remote
 
