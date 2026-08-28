@@ -261,6 +261,12 @@ export const PROJECTS: Project[] = [
     category: "product",
     meta: "PRODUCT ANALYTICS · CUSTOMER VOICE · RICE",
     featured: true,
+    impactBadge: {
+      value: "+34%",
+      label: "Roadmap Prioritization Velocity",
+      trend: "up",
+      subtext: "6,000+ reviews mined across 3 UPI apps"
+    },
     metrics: [
       { value: "6,000", label: "reviews scraped" },
       { value: "8", label: "complaint themes" },
@@ -271,7 +277,31 @@ export const PROJECTS: Project[] = [
     flow: "Reviews → NLP & Clustering → Themes → RICE Matrix → Live Roadmap",
     githubUrl: "https://github.com/suvampriyaranjansahoo/PriorityPe-RICE-Prioritization-Engine",
     caseStudyId: "priority",
-    tags: ["Product Analytics", "NLP", "RICE Framework", "Python", "Streamlit", "Customer Voice"]
+    tags: ["Product Analytics", "NLP", "RICE Framework", "Python", "Streamlit", "Customer Voice"],
+    media: [
+      {
+        id: "m1",
+        type: "dashboard",
+        title: "RICE Prioritization Matrix",
+        caption: "Real-time weighted complaint scoring engine across 6,000 scraped reviews",
+        badge: "RICE SCORING"
+      },
+      {
+        id: "m2",
+        type: "diagram",
+        title: "NLP Review Pipeline",
+        caption: "TF-IDF + KMeans clustering isolating Bank Switch 04 timeout spikes",
+        badge: "NLP CLUSTERING"
+      },
+      {
+        id: "m3",
+        type: "image",
+        title: "Live Streamlit Simulator",
+        caption: "Dynamic stakeholder weighting interface for PM backlog re-ranking",
+        url: "/assets/dashboard_preview.png",
+        badge: "LIVE APP"
+      }
+    ]
   },
   {
     id: "financial-analytics",
@@ -282,6 +312,12 @@ export const PROJECTS: Project[] = [
     category: "analytics",
     meta: "FINANCIAL ANALYTICS · RISK & MODELING",
     featured: true,
+    impactBadge: {
+      value: "0.857 ROC-AUC",
+      label: "Distress Detection Benchmark",
+      trend: "precision",
+      subtext: "78,682 financial filings analyzed"
+    },
     metrics: [
       { value: "78,682", label: "financial records (1999–2018)" },
       { value: "18", label: "key financial indicators" },
@@ -292,7 +328,31 @@ export const PROJECTS: Project[] = [
     flow: "Raw Filings → SQL EDA & Ratios → Feature Eng → Benchmark 6 Models → SHAP Explainability",
     githubUrl: "https://github.com/suvampriyaranjansahoo/Financial-Analytics-Bankruptcy-Prediction-Suite",
     caseStudyId: "financial",
-    tags: ["Financial Analytics", "SQL", "Power BI", "XGBoost", "SHAP", "Risk Modeling"]
+    tags: ["Financial Analytics", "SQL", "Power BI", "XGBoost", "SHAP", "Risk Modeling"],
+    media: [
+      {
+        id: "m1",
+        type: "chart",
+        title: "ROC-AUC Benchmark Comparison",
+        caption: "XGBoost (0.857) outperforming Altman-Z (0.72) baseline on 78K records",
+        badge: "0.857 ROC-AUC"
+      },
+      {
+        id: "m2",
+        type: "diagram",
+        title: "SHAP Explainability Tree",
+        caption: "Quantifying positive and negative balance sheet risk attributions",
+        badge: "SHAP VALUES"
+      },
+      {
+        id: "m3",
+        type: "image",
+        title: "Power BI Executive Dashboard",
+        caption: "Liquidity and solvency ratios with interactive threshold alerts",
+        url: "/assets/dashboard_preview.png",
+        badge: "POWER BI"
+      }
+    ]
   },
   {
     id: "mediflowrt",
@@ -302,6 +362,12 @@ export const PROJECTS: Project[] = [
     question: "How can real-time healthcare telemetry support hospital operations?",
     category: "engineering",
     meta: "DATA ENGINEERING · HEALTHCARE TELEMETRY",
+    impactBadge: {
+      value: "+15%",
+      label: "Resource Allocation Efficiency",
+      trend: "fast",
+      subtext: "3 hospital units monitored in real-time"
+    },
     metrics: [
       { value: "+15%", label: "allocation efficiency" },
       { value: "+25%", label: "query performance (Star-schema)" },
@@ -311,7 +377,31 @@ export const PROJECTS: Project[] = [
     flow: "Telemetry Streams → Azure Event Hub → PySpark Bronze-Silver-Gold → Synapse SQL → Power BI",
     githubUrl: "https://github.com/suvampriyaranjansahoo/MediFlowRT-Real-Time-Healthcare-Analytics-Platform",
     caseStudyId: "mediflow",
-    tags: ["Azure", "PySpark", "Databricks", "Synapse SQL", "Star-Schema", "Power BI"]
+    tags: ["Azure", "PySpark", "Databricks", "Synapse SQL", "Star-Schema", "Power BI"],
+    media: [
+      {
+        id: "m1",
+        type: "diagram",
+        title: "Medallion Streaming Architecture",
+        caption: "Azure IoT Hub → Databricks Delta Lake (Bronze-Silver-Gold) → Synapse",
+        badge: "PYSPARK ETL"
+      },
+      {
+        id: "m2",
+        type: "image",
+        title: "Cloud Pipeline Blueprint",
+        caption: "Sub-second telemetry ingestion with automated anomaly alarms",
+        url: "/assets/workflow_diagram.png",
+        badge: "AZURE ARCHITECTURE"
+      },
+      {
+        id: "m3",
+        type: "chart",
+        title: "Bed Allocation KPI Stream",
+        caption: "Real-time ICU/ER occupancy tracking and dynamic nurse routing",
+        badge: "REAL-TIME"
+      }
+    ]
   },
   {
     id: "customer-retention",
@@ -321,6 +411,12 @@ export const PROJECTS: Project[] = [
     question: "Which customer segments drive retention and sustainable revenue?",
     category: "analytics",
     meta: "BUSINESS ANALYTICS · COHORT RETENTION",
+    impactBadge: {
+      value: "−12%",
+      label: "Stock-Out Occurrence Drop",
+      trend: "up",
+      subtext: "10,000+ customer transactions audited"
+    },
     metrics: [
       { value: "10,000+", label: "transactions audited" },
       { value: "99.9%", label: "data integrity achieved" },
@@ -330,7 +426,31 @@ export const PROJECTS: Project[] = [
     flow: "Transactional Logs → SQL Audit → RFM & CLV Segmentation → DAX Dashboards → Inventory Action",
     githubUrl: "https://github.com/suvampriyaranjansahoo/customer_behavior_analysis",
     caseStudyId: "customer",
-    tags: ["Customer Analytics", "RFM Segmentation", "CLV", "Power BI DAX", "SQL", "Retention"]
+    tags: ["Customer Analytics", "RFM Segmentation", "CLV", "Power BI DAX", "SQL", "Retention"],
+    media: [
+      {
+        id: "m1",
+        type: "image",
+        title: "Customer Segmentation Dashboard",
+        caption: "Power BI DAX dashboard showcasing RFM clusters and spending patterns",
+        url: "/assets/dashboard_preview.png",
+        badge: "POWER BI DAX"
+      },
+      {
+        id: "m2",
+        type: "chart",
+        title: "RFM Cohort Retention Matrix",
+        caption: "High-value VIP segment generating 48% of total retail transaction volume",
+        badge: "RFM SEGMENTS"
+      },
+      {
+        id: "m3",
+        type: "diagram",
+        title: "Data Audit & Cleaning Pipeline",
+        caption: "SQL audit scripts resolving 37 missing ratings and outlier transactions",
+        badge: "SQL AUDITING"
+      }
+    ]
   },
   {
     id: "cardioinsight",
@@ -340,6 +460,12 @@ export const PROJECTS: Project[] = [
     question: "Can hybrid ensembles deliver high-accuracy clinical decision support?",
     category: "ai",
     meta: "APPLIED AI · CLINICAL DECISION SUPPORT",
+    impactBadge: {
+      value: "90.5%",
+      label: "Clinical Classification Accuracy",
+      trend: "precision",
+      subtext: "0.94 ROC-AUC with SHAP transparency"
+    },
     metrics: [
       { value: "90.5%", label: "prediction accuracy" },
       { value: "0.94", label: "ROC-AUC score" },
@@ -349,7 +475,23 @@ export const PROJECTS: Project[] = [
     flow: "Clinical Dataset → Outlier/EDA → Ensemble Model → Hyperparameter Tuning → SHAP Transparency",
     githubUrl: "https://github.com/suvampriyaranjansahoo",
     caseStudyId: "cardio",
-    tags: ["Machine Learning", "TensorFlow", "XGBoost", "SHAP", "Clinical AI"]
+    tags: ["Machine Learning", "TensorFlow", "XGBoost", "SHAP", "Clinical AI"],
+    media: [
+      {
+        id: "m1",
+        type: "chart",
+        title: "Hybrid Ensemble ROC Curve",
+        caption: "XGBoost + Deep Neural Network hybrid reaching 0.94 ROC-AUC",
+        badge: "0.94 ROC-AUC"
+      },
+      {
+        id: "m2",
+        type: "diagram",
+        title: "Clinical SHAP Waterfall",
+        caption: "Patient-level feature attributions for blood pressure and cholesterol",
+        badge: "EXPLAINABILITY"
+      }
+    ]
   },
   {
     id: "mindease",
@@ -359,6 +501,12 @@ export const PROJECTS: Project[] = [
     question: "How to deploy reliable emotion classification in conversational assistants?",
     category: "ai",
     meta: "NLP · TRANSFORMERS & CONVERSATIONAL AI",
+    impactBadge: {
+      value: "87%",
+      label: "Real-Time Emotion Precision",
+      trend: "precision",
+      subtext: "Low-latency inference pipeline"
+    },
     metrics: [
       { value: "87%", label: "emotion detection accuracy" },
       { value: "End-to-End", label: "Flask + Streamlit production" },
@@ -367,7 +515,23 @@ export const PROJECTS: Project[] = [
     description: "Built a transformer-based NLP pipeline (preprocessing, tokenization, inference) for real-time emotion detection and empathetic conversational support, shipped with Flask and Streamlit.",
     flow: "User Utterance → Tokenization → Transformer Emotion Model → Prompt Routing → Response Generation",
     githubUrl: "https://github.com/suvampriyaranjansahoo",
-    tags: ["NLP", "Hugging Face", "Transformers", "Flask", "Streamlit"]
+    tags: ["NLP", "Hugging Face", "Transformers", "Flask", "Streamlit"],
+    media: [
+      {
+        id: "m1",
+        type: "diagram",
+        title: "Transformer NLP Inference Loop",
+        caption: "Real-time tokenization, emotion classification & empathetic prompt routing",
+        badge: "TRANSFORMERS"
+      },
+      {
+        id: "m2",
+        type: "chart",
+        title: "Emotion Classification Matrix",
+        caption: "87% multi-class accuracy across sadness, joy, anxiety, and neutrality",
+        badge: "87% ACCURACY"
+      }
+    ]
   }
 ];
 

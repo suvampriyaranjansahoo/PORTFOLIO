@@ -1288,3 +1288,71 @@ main > section:nth-of-type(3n) {
     transform: translateX(200%);
   }
 }
+
+/* ─── ELEVATED PROJECT CARD & TYPOGRAPHIC DESIGN SYSTEM ─── */
+.project-card-interactive {
+  position: relative;
+  isolation: isolate;
+  border-radius: 18px;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.project-card-interactive:hover {
+  transform: translateY(-4px) scale(1.012);
+  border-color: rgba(225, 29, 72, 0.8);
+  box-shadow: 
+    0 4px 12px 0 rgba(140, 24, 60, 0.06),
+    0 16px 36px -4px rgba(140, 24, 60, 0.12),
+    0 0 28px -4px rgba(225, 29, 72, 0.18),
+    inset 0 1px 0 0 #ffffff;
+}
+
+.dark .project-card-interactive:hover {
+  transform: translateY(-4px) scale(1.012);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 
+    0 4px 16px 0 rgba(0, 0, 0, 0.45),
+    0 20px 48px -6px rgba(0, 0, 0, 0.75),
+    0 0 32px -4px rgba(56, 189, 248, 0.16),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-interactive:hover {
+    transform: none !important;
+  }
+}
+
+/* Status dot pulse animation for impact badges */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Metric data strip styling */
+.metric-strip-card {
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metric-strip-card:hover {
+  background-color: rgba(225, 29, 72, 0.08);
+  border-color: rgba(225, 29, 72, 0.3);
+}
+
+.dark .metric-strip-card:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}

@@ -6,6 +6,13 @@ export interface ProjectMetric {
   highlight?: boolean;
 }
 
+export interface ProjectImpactBadge {
+  value: string;
+  label: string;
+  trend?: 'up' | 'down' | 'neutral' | 'fast' | 'precision';
+  subtext?: string;
+}
+
 export interface CaseStudyTab {
   title: string;
   content: string;
@@ -33,6 +40,16 @@ export interface CaseStudy {
   };
 }
 
+export interface ProjectMedia {
+  id: string;
+  type: 'image' | 'diagram' | 'chart' | 'dashboard';
+  title: string;
+  caption: string;
+  url?: string;
+  badge?: string;
+  icon?: string;
+}
+
 export interface Project {
   id: string;
   index: string;
@@ -42,12 +59,14 @@ export interface Project {
   category: ProjectCategory;
   meta: string;
   featured?: boolean;
+  impactBadge?: ProjectImpactBadge;
   metrics: ProjectMetric[];
   description: string;
   flow?: string;
   githubUrl: string;
   caseStudyId?: string;
   tags: string[];
+  media?: ProjectMedia[];
 }
 
 export interface ResumeRole {
